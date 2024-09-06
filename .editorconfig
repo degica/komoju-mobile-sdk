@@ -1,0 +1,25 @@
+# http_//editorconfig.org
+root = true
+
+# Ignore paths
+[**/build/**]
+generated_code = true
+ktlint_standard = disabled
+
+[*.{java,kt,kts,xml}]
+indent_size = 4
+max_line_length = 180
+
+[**/test/**]
+ktlint_standard_class-naming = disabled
+
+
+[*.{kt,kts}]
+ij_kotlin_allow_trailing_comma = true
+ij_kotlin_allow_trailing_comma_on_call_site = true
+ktlint_code_style = android_studio
+insert_final_newline = true
+ktlint_standard_filename = disabled
+ktlint_standard_package-name = disabled
+ktlint_standard_enum-entry-name-case = disabled
+ktlint_standard_function-naming = disabled
