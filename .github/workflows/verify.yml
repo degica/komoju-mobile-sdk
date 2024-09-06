@@ -15,7 +15,7 @@ jobs:
       - name: ktlint
         uses: ScaCap/action-ktlint@master
         with:
-          github_token: ${{ secrets.github_token }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review
   androidLint:
     name: Run Android Lint
