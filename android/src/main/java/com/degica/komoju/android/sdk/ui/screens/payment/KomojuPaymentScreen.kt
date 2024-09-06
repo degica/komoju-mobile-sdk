@@ -22,6 +22,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -65,7 +66,7 @@ fun KomojuPaymentScreen(sdkConfiguration: KomojuSDK.Configuration, onCompleted: 
             onDismissRequest = {
                 onCompleted()
             },
-            containerColor = MaterialTheme.colorScheme.surface,
+            containerColor = Color.White,
             shape = RectangleShape,
             sheetState = modalBottomSheetState,
             dragHandle = { PaymentSheetHandle(LocalI18nTextsProvider.current["PAYMENT_OPTIONS"], onCloseClicked = {}) },
@@ -75,7 +76,6 @@ fun KomojuPaymentScreen(sdkConfiguration: KomojuSDK.Configuration, onCompleted: 
                     else -> SecureFlagPolicy.SecureOn
                 },
                 shouldDismissOnBackPress = false,
-                isFocusable = true,
             ),
         ) {
             Box(

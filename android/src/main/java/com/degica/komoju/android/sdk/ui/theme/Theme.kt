@@ -23,9 +23,6 @@ private val LightColorScheme = lightColorScheme(
     primary = KomojuLightGreen,
     secondary = KomojuDarkGreen,
     tertiary = KomojuLightGreen,
-    surface = Color.White,
-    surfaceBright = Color.White,
-    surfaceContainer = Color.White,
 )
 
 @Composable
