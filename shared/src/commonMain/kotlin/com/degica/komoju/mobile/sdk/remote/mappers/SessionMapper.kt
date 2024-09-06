@@ -164,8 +164,15 @@ internal object SessionMapper {
                     secondIcon = paymentMethod.secondIcon.orEmpty(),
                     displayName = i18nTexts[paymentMethodType],
                 )
-
-                else -> null
+                null -> null
+                else -> PaymentMethod.Other(
+                    hashedGateway = paymentMethod.hashedGateway.orEmpty(),
+                    exchangeRate = paymentMethod.exchangeRate ?: 1.0,
+                    currency = paymentMethod.currency.orEmpty(),
+                    amount = paymentMethod.amount ?: 0.0,
+                    additionalFields = paymentMethod.additionalFields?.filterNotNull().orEmpty(),
+                    displayName = i18nTexts[paymentMethodType],
+                )
             }
         }.orEmpty(),
     )

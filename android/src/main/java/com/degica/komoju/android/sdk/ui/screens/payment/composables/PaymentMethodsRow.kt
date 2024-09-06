@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -51,7 +50,7 @@ private fun PaymentMethodComposable(paymentMethod: PaymentMethod, isSelected: Bo
             .clickable(onClick = onSelected)
             .padding(16.dp),
     ) {
-        Image(painter = painterResource(paymentMethod.displayIcon), contentDescription = "${paymentMethod.displayName} icon", modifier = Modifier.size(32.dp))
+        Image(painter = painterResource(paymentMethod.displayIcon), contentDescription = "${paymentMethod.displayName} icon", modifier = Modifier.height(32.dp))
         Spacer(modifier = Modifier.height(4.dp))
         Text(paymentMethod.displayName)
     }
@@ -59,20 +58,21 @@ private fun PaymentMethodComposable(paymentMethod: PaymentMethod, isSelected: Bo
 
 private val PaymentMethod.displayIcon
     get() = when (this) {
-        is PaymentMethod.AliPay -> R.drawable.komoju_ic_credit_card
+        is PaymentMethod.AliPay -> R.drawable.komoju_ic_alipay
         is PaymentMethod.AuPay -> R.drawable.komoju_ic_au_pay
         is PaymentMethod.BankTransfer -> R.drawable.komoju_ic_bank_transfer
         is PaymentMethod.BitCash -> R.drawable.komoju_ic_bitcash
         is PaymentMethod.CreditCard -> R.drawable.komoju_ic_credit_card
         is PaymentMethod.Konbini -> R.drawable.komoju_ic_konbini
         is PaymentMethod.LinePay -> R.drawable.komoju_ic_linepay
-        is PaymentMethod.MerPay -> R.drawable.komoju_ic_credit_card
+        is PaymentMethod.MerPay -> R.drawable.komoju_ic_merpay
         is PaymentMethod.NetCash -> R.drawable.komoju_ic_credit_card
         is PaymentMethod.Paidy -> R.drawable.komoju_ic_paidy
         is PaymentMethod.PayEasy -> R.drawable.komoju_ic_credit_card
         is PaymentMethod.PayPay -> R.drawable.komoju_ic_paypay
         is PaymentMethod.RakutenPay -> R.drawable.komoju_ic_rakuten_pay
         is PaymentMethod.WebMoney -> R.drawable.komoju_ic_credit_card
+        is PaymentMethod.Other -> R.drawable.komoju_ic_credit_card
     }
 
 @Composable
@@ -108,6 +108,5 @@ private fun PaymentMethodComposablePreview() {
             displayName = "PayPay",
         ),
     )
-    PaymentMethodsRow(paymentMethods, paymentMethods.first()) {
-    }
+    PaymentMethodsRow(paymentMethods, paymentMethods.first()) {}
 }
