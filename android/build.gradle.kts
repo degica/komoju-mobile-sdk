@@ -42,7 +42,7 @@ android {
     buildFeatures {
         compose = true
     }
-    lint {
+    lint{
         warningsAsErrors = true
     }
 }
