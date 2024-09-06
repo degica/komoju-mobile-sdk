@@ -1,17 +1,10 @@
 package com.degica.komoju.android.sdk.ui.screens.payment.composables
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.degica.komoju.mobile.sdk.entities.PaymentMethod
 
 @Composable
@@ -67,8 +60,20 @@ internal fun PaymentMethodForm(paymentMethod: PaymentMethod) {
             },
         )
 
-        else -> Box(modifier = Modifier.height(420.dp).fillMaxWidth(), contentAlignment = Alignment.Center) {
-            Text("// TODO")
-        }
+        is PaymentMethod.AliPay,
+        is PaymentMethod.AuPay,
+        is PaymentMethod.LinePay,
+        is PaymentMethod.MerPay,
+        is PaymentMethod.PayPay,
+        is PaymentMethod.RakutenPay,
+        -> AppPayForm(paymentMethod)
+
+        is PaymentMethod.BankTransfer -> Unit
+        is PaymentMethod.BitCash -> Unit
+        is PaymentMethod.NetCash -> Unit
+        is PaymentMethod.Paidy -> Unit
+        is PaymentMethod.PayEasy -> Unit
+        is PaymentMethod.WebMoney -> Unit
+        is PaymentMethod.Other -> Unit
     }
 }

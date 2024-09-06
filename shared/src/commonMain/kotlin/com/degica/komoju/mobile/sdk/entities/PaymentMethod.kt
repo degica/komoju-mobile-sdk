@@ -162,4 +162,13 @@ sealed interface PaymentMethod {
             data class SeicoMart(override val key: String) : KonbiniBrand
         }
     }
+
+    data class Other(
+        override val displayName: String,
+        override val hashedGateway: String,
+        override val exchangeRate: Double,
+        override val currency: String,
+        override val amount: Double,
+        override val additionalFields: List<String>,
+    ) : PaymentMethod
 }
