@@ -1,11 +1,18 @@
 name: Verify PR
 
-on: [ pull_request ]
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+concurrency:
+  group: github-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   ktlint:
     name: Run Kotlin lint
     runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
     permissions:
       contents: write
       pull-requests: write
@@ -25,11 +32,7 @@ jobs:
     name: Run Android Lint
     needs: [ ktlint ]
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-      discussions: write
-      repository-projects: write
+    if: github.event.pull_request.draft == false
     steps:
       - uses: actions/checkout@v3
       - name: Validate Gradle Wrapper
@@ -39,11 +42,5 @@ jobs:
           distribution: zulu
           java-version: 17
           cache: gradle
-      - name: Run Gradle build
-        run: ./gradlew :android:build
-      - name: Run Android Lint
-        uses: dvdandroid/action-android-lint@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          lint_xml_file: android/build/reports/lint-results.xml
-          reporter: github-pr-review
+      - name: Run Gradle
+        run: ./gradlew :android:lintDebug
