@@ -1,0 +1,35 @@
+name: Verify PR
+
+on: [ pull_request ]
+
+jobs:
+  ktlint:
+    name: Run Kotlin lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1
+      - name: ktlint
+        uses: ScaCap/action-ktlint@master
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: reviewDog
+  androidLint:
+    name: Run Android Lint
+    needs: [ ktlint ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1
+      - name: Run Gradle build
+        run: ./gradlew build
+      - name: Run Android Lint
+        uses: dvdandroid/action-android-lint@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          lint_xml_file: android/build/reports/lint-results.xml
+          reporter: reviewDog
