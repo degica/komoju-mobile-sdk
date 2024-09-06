@@ -44,7 +44,7 @@ android {
     }
     lint {
         warningsAsErrors = true
-        abortOnError = false
+        abortOnError = true
     }
 }
 

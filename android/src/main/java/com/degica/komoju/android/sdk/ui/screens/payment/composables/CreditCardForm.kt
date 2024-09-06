@@ -211,7 +211,7 @@ internal fun CreditCardForm(
 
         PaymentButton(modifier = Modifier.padding(16.dp).fillMaxWidth(), text = "${LocalI18nTextsProvider.current["PAY"]} $displayPayableAmount") { }
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
             Checkbox(saveCard, onSaveCardChange, colors = CheckboxDefaults.colors(checkedColor = Color.Black, uncheckedColor = Color.Black))
             Text(LocalI18nTextsProvider.current["SAVE_CARD"])
         }
