@@ -19,6 +19,13 @@ internal fun PaymentMethodForm(paymentMethod: PaymentMethod) {
     var konbiniBrand by remember { mutableStateOf<PaymentMethod.Konbini.KonbiniBrand?>(null) }
     var userEmailAddress by remember { mutableStateOf("") }
 
+    var lastName by remember { mutableStateOf("") }
+    var firstName by remember { mutableStateOf("") }
+    var lastNamePhonetic by remember { mutableStateOf("") }
+    var firstNamePhonetic by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var phoneNumber by remember { mutableStateOf("") }
+
     when (paymentMethod) {
         is PaymentMethod.CreditCard -> CreditCardForm(
             creditCard = paymentMethod,
@@ -68,7 +75,33 @@ internal fun PaymentMethodForm(paymentMethod: PaymentMethod) {
         is PaymentMethod.RakutenPay,
         -> AppPayForm(paymentMethod)
 
-        is PaymentMethod.BankTransfer -> Unit
+        is PaymentMethod.BankTransfer -> BankForm(
+            bankTransfer = paymentMethod,
+            lastName = lastName,
+            onLastNameChange = {
+                lastName = it
+            },
+            firstName = firstName,
+            onFirstNameChange = {
+                firstName = it
+            },
+            lastNamePhonetic = lastNamePhonetic,
+            onLastNamePhoneticChange = {
+                lastNamePhonetic = it
+            },
+            firstNamePhonetic = firstNamePhonetic,
+            onFirstNamePhoneticChange = {
+                firstNamePhonetic = it
+            },
+            email = email,
+            onEmailChange = {
+                email = it
+            },
+            phoneNumber = phoneNumber,
+            onPhoneNumberChange = {
+                phoneNumber = it
+            },
+        )
         is PaymentMethod.BitCash -> Unit
         is PaymentMethod.NetCash -> Unit
         is PaymentMethod.Paidy -> Unit
