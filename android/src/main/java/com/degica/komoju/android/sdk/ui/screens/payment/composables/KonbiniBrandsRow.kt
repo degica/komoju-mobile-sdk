@@ -54,11 +54,7 @@ private fun KonbiniBrand(konbiniBrand: KonbiniBrand, isSelected: Boolean, onSele
             .padding(4.dp)
             .clip(RoundedCornerShape(8.dp))
             .border(1.dp, if (isSelected) KomojuDarkGreen else Gray200, RoundedCornerShape(8.dp))
-            .clickable(
-                onClick = onSelected,
-                indication = rememberRipple(bounded = true),
-                interactionSource = remember { MutableInteractionSource() },
-            )
+            .clickable(onClick = onSelected,)
             .padding(16.dp),
     ) {
         Image(painter = painterResource(konbiniBrand.displayIcon), contentDescription = "${konbiniBrand.key} icon", modifier = Modifier.size(32.dp))

@@ -51,11 +51,7 @@ private fun PaymentMethodComposable(paymentMethod: PaymentMethod, isSelected: Bo
             .padding(8.dp)
             .clip(RoundedCornerShape(8.dp))
             .border(1.dp, if (isSelected) KomojuDarkGreen else Gray200, RoundedCornerShape(8.dp))
-            .clickable(
-                onClick = onSelected,
-                indication = rememberRipple(bounded = true),
-                interactionSource = remember { MutableInteractionSource() },
-            )
+            .clickable(onClick = onSelected)
             .padding(16.dp),
     ) {
         Image(painter = painterResource(paymentMethod.displayIcon), contentDescription = "${paymentMethod.displayName} icon", modifier = Modifier.size(32.dp))

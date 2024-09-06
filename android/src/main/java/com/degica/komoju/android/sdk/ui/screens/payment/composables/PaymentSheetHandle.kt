@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Text
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -34,7 +35,7 @@ internal fun PaymentSheetHandle(title: String, onCloseClicked: () -> Unit) {
             contentDescription = "Close Payment Sheet",
             modifier = Modifier
                 .clickable(
-                    indication = rememberRipple(bounded = true, radius = 24.dp),
+                    indication = ripple(bounded = true, radius = 24.dp),
                     interactionSource = remember { MutableInteractionSource() },
                     onClick = onCloseClicked,
                 )
