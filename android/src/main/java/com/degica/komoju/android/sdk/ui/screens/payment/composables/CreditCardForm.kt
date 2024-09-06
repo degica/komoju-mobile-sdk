@@ -21,7 +21,6 @@ import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -29,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
@@ -66,41 +66,15 @@ internal fun CreditCardForm(
     onSaveCardChange: (Boolean) -> Unit,
 ) {
     var cardScheme by remember { mutableStateOf(CardScheme.UNKNOWN) }
-    var textFieldHeight by remember { mutableIntStateOf(0) }
+    var expiryCvvExpiryHeight by remember { mutableStateOf(0.dp) }
+    val localDensity = LocalDensity.current
     val displayPayableAmount by remember(creditCard.amount) {
         derivedStateOf {
             AmountUtils.formatToDecimal(Currency.parse(creditCard.currency), creditCard.amount)
         }
     }
-    Column(modifier = Modifier.padding(vertical = 16.dp)) {
-        Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            text = LocalI18nTextsProvider.current["CARD_HOLDER_NAME"],
-        )
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp)
-                .border(1.dp, Gray200, shape = RoundedCornerShape(8.dp))
-                .padding(16.dp),
-        ) {
-            BasicTextField(
-                modifier = Modifier.fillMaxWidth(),
-                value = fullNameOnCard,
-                onValueChange = onFullNameOnCardChange,
-                textStyle = TextStyle(fontSize = 16.sp, color = Color.Black),
-                singleLine = true,
-            )
-            if (fullNameOnCard.isEmpty()) {
-                Text(
-                    text = LocalI18nTextsProvider.current["FULL_NAME_ON_CARD"],
-                    style = TextStyle(fontSize = 16.sp, color = Gray500),
-                )
-            }
-        }
-
+    Column {
+        TextField(fullNameOnCard, "CARD_HOLDER_NAME", "FULL_NAME_ON_CARD", onFullNameOnCardChange)
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
@@ -114,16 +88,15 @@ internal fun CreditCardForm(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 8.dp)
-                .border(1.dp, Gray200, shape = RoundedCornerShape(8.dp)),
+                .border(1.dp, Gray200, shape = RoundedCornerShape(8.dp)).onGloballyPositioned {
+                    expiryCvvExpiryHeight = with(localDensity) { it.size.height.div(2).toDp() }
+                },
         ) {
             Column {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
-                        .padding(16.dp)
-                        .onGloballyPositioned {
-                            textFieldHeight = it.size.height
-                        },
+                        .padding(16.dp),
                 ) {
                     Box(modifier = Modifier.weight(1f)) {
                         BasicTextField(
@@ -156,12 +129,9 @@ internal fun CreditCardForm(
 
                 HorizontalDivider(thickness = 1.dp, color = Gray200)
                 Row(
-                    modifier = Modifier
-                        .height(textFieldHeight.dp)
-                        .padding(horizontal = 16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Box(modifier = Modifier.weight(1f)) {
+                    Box(modifier = Modifier.weight(1f).padding(16.dp)) {
                         BasicTextField(
                             modifier = Modifier.fillMaxWidth(),
                             value = creditCardExpiryDate,
@@ -182,7 +152,7 @@ internal fun CreditCardForm(
                             )
                         }
                     }
-                    VerticalDivider(thickness = 1.dp, color = Gray200)
+                    VerticalDivider(thickness = 1.dp, color = Gray200, modifier = Modifier.height(expiryCvvExpiryHeight))
                     Spacer(Modifier.width(16.dp))
                     Row(modifier = Modifier.weight(1f)) {
                         Box {
