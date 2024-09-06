@@ -1,0 +1,46 @@
+name: Verify PR
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+concurrency:
+  group: github-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ktlint:
+    name: Run Kotlin lint
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    permissions:
+      contents: write
+      pull-requests: write
+      discussions: write
+      repository-projects: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: ktlint
+        uses: ScaCap/action-ktlint@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          fail_on_error: true
+  androidLint:
+    name: Run Android Lint
+    needs: [ ktlint ]
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    steps:
+      - uses: actions/checkout@v3
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1
+      - uses: actions/setup-java@v2
+        with:
+          distribution: zulu
+          java-version: 17
+          cache: gradle
+      - name: Run Gradle
+        run: ./gradlew :android:lintDebug
