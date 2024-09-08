@@ -12,12 +12,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.degica.komoju.android.sdk.types.Currency
+import com.degica.komoju.android.sdk.ui.screens.payment.NetCashDisplayData
 import com.degica.komoju.android.sdk.ui.theme.LocalI18nTextsProvider
 import com.degica.komoju.android.sdk.utils.AmountUtils
 import com.degica.komoju.mobile.sdk.entities.PaymentMethod
 
 @Composable
-internal fun NetCashForm(netCash: PaymentMethod.NetCash, netCashId: String, onNetCashIdChange: (String) -> Unit) {
+internal fun NetCashForm(
+    netCash: PaymentMethod.NetCash,
+    netCashDisplayData: NetCashDisplayData,
+    onNetCashDisplayDataChange: (NetCashDisplayData) -> Unit,
+    onPayButtonClicked: () -> Unit,
+) {
     val displayPayableAmount by remember(netCash.amount) {
         derivedStateOf {
             AmountUtils.formatToDecimal(Currency.parse(netCash.currency), netCash.amount)
@@ -25,10 +31,12 @@ internal fun NetCashForm(netCash: PaymentMethod.NetCash, netCashId: String, onNe
     }
     Column {
         TextField(
-            value = netCashId,
+            value = netCashDisplayData.netCashId,
             titleKey = "BIT_CASH_INPUT_LABEL",
             placeholderKey = "BIT_CASH_INPUT_PLACEHOLDER",
-            onValueChange = onNetCashIdChange,
+            onValueChange = {
+                onNetCashDisplayDataChange(netCashDisplayData.copy(netCashId = it))
+            },
         )
         Spacer(modifier = Modifier.height(16.dp))
         PaymentButton(
@@ -36,6 +44,7 @@ internal fun NetCashForm(netCash: PaymentMethod.NetCash, netCashId: String, onNe
                 .padding(16.dp)
                 .fillMaxWidth(),
             text = "${LocalI18nTextsProvider.current["PAY"]} $displayPayableAmount",
-        ) { }
+            onClick = onPayButtonClicked,
+        )
     }
 }

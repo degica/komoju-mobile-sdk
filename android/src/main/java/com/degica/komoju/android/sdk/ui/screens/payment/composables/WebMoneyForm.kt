@@ -12,12 +12,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.degica.komoju.android.sdk.types.Currency
+import com.degica.komoju.android.sdk.ui.screens.payment.WebMoneyDisplayData
 import com.degica.komoju.android.sdk.ui.theme.LocalI18nTextsProvider
 import com.degica.komoju.android.sdk.utils.AmountUtils
 import com.degica.komoju.mobile.sdk.entities.PaymentMethod
 
 @Composable
-internal fun WebMoneyForm(webMoney: PaymentMethod.WebMoney, prepaidNumber: String, onPrepaidNumberChange: (String) -> Unit) {
+internal fun WebMoneyForm(
+    webMoney: PaymentMethod.WebMoney,
+    webMoneyDisplayData: WebMoneyDisplayData,
+    onWebMoneyDisplayDataChange: (WebMoneyDisplayData) -> Unit,
+    onPayButtonClicked: () -> Unit,
+) {
     val displayPayableAmount by remember(webMoney.amount) {
         derivedStateOf {
             AmountUtils.formatToDecimal(Currency.parse(webMoney.currency), webMoney.amount)
@@ -25,10 +31,12 @@ internal fun WebMoneyForm(webMoney: PaymentMethod.WebMoney, prepaidNumber: Strin
     }
     Column {
         TextField(
-            value = prepaidNumber,
+            value = webMoneyDisplayData.prepaidNumber,
             titleKey = "WEB_MONEY_INPUT_LABEL",
             placeholderKey = "WEB_MONEY_INPUT_PLACEHOLDER",
-            onValueChange = onPrepaidNumberChange,
+            onValueChange = {
+                onWebMoneyDisplayDataChange(webMoneyDisplayData.copy(prepaidNumber = it))
+            },
         )
         Spacer(modifier = Modifier.height(16.dp))
         PaymentButton(
@@ -36,6 +44,7 @@ internal fun WebMoneyForm(webMoney: PaymentMethod.WebMoney, prepaidNumber: Strin
                 .padding(16.dp)
                 .fillMaxWidth(),
             text = "${LocalI18nTextsProvider.current["PAY"]} $displayPayableAmount",
-        ) { }
+            onClick = onPayButtonClicked,
+        )
     }
 }

@@ -12,10 +12,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.degica.komoju.android.sdk.types.Currency
 import com.degica.komoju.android.sdk.types.Language
+import com.degica.komoju.android.sdk.ui.screens.payment.CommonDisplayData
+import com.degica.komoju.android.sdk.ui.screens.payment.KonbiniDisplayData
 import com.degica.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
 import com.degica.komoju.android.sdk.ui.theme.LocalI18nTextsProvider
 import com.degica.komoju.android.sdk.utils.AmountUtils
@@ -25,12 +28,11 @@ import com.degica.komoju.mobile.sdk.entities.PaymentMethod.Konbini.KonbiniBrand
 @Composable
 internal fun KonbiniForm(
     konbini: PaymentMethod.Konbini,
-    receiptName: String,
-    onReceiptNameChange: (String) -> Unit,
-    email: String,
-    onEmailChange: (String) -> Unit,
-    selectedKonbiniBrand: KonbiniBrand?,
-    onKonbiniBrandChange: (KonbiniBrand) -> Unit,
+    commonDisplayData: CommonDisplayData,
+    konbiniDisplayData: KonbiniDisplayData,
+    onCommonDisplayDataChange: (CommonDisplayData) -> Unit,
+    onKonbiniDisplayDataChange: (KonbiniDisplayData) -> Unit,
+    onPayButtonClicked: () -> Unit,
 ) {
     val displayPayableAmount by remember {
         derivedStateOf {
@@ -39,20 +41,37 @@ internal fun KonbiniForm(
     }
     Column {
         TextField(
-            receiptName,
-            "NAME_SHOWN_ON_RECEIPT",
-            "FULL_NAME_ON_RECEIPT",
-            onReceiptNameChange,
+            konbiniDisplayData.receiptName,
+            titleKey = "NAME_SHOWN_ON_RECEIPT",
+            placeholderKey = "FULL_NAME_ON_RECEIPT",
+            onValueChange = {
+                onKonbiniDisplayDataChange(konbiniDisplayData.copy(receiptName = it))
+            },
         )
         TextField(
-            email,
-            "EMAIL",
-            "EXAMPLE_EMAIL",
-            onEmailChange,
+            commonDisplayData.email,
+            titleKey = "EMAIL",
+            placeholderKey = "EXAMPLE_EMAIL",
+            onValueChange = {
+                onCommonDisplayDataChange(commonDisplayData.copy(email = it))
+            },
+            keyboardType = KeyboardType.Email,
         )
         Spacer(modifier = Modifier.height(8.dp))
-        KonbiniBrandsRow(konbini.brands, selectedKonbiniBrand, onKonbiniBrandChange)
-        PaymentButton(modifier = Modifier.padding(16.dp).fillMaxWidth(), text = "${LocalI18nTextsProvider.current["PAY"]} $displayPayableAmount") { }
+        KonbiniBrandsRow(
+            konbini.brands,
+            konbiniDisplayData.selectedKonbiniBrand,
+            onSelected = {
+                onKonbiniDisplayDataChange(konbiniDisplayData.copy(selectedKonbiniBrand = it))
+            },
+        )
+        PaymentButton(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            text = "${LocalI18nTextsProvider.current["PAY"]} $displayPayableAmount",
+            onClick = onPayButtonClicked,
+        )
     }
 }
 
@@ -79,22 +98,22 @@ private fun KonbiniFormPreview() {
         displayName = "Konbini",
         customerFee = 0,
     )
-    var reciptName by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
+
+    var commonDisplayData by remember { mutableStateOf(CommonDisplayData()) }
+    var konbiniDisplayData by remember { mutableStateOf(KonbiniDisplayData()) }
 
     KomojuMobileSdkTheme(language = Language.ENGLISH) {
         KonbiniForm(
             konbini,
-            reciptName,
-            onReceiptNameChange = {
-                reciptName = it
+            konbiniDisplayData = konbiniDisplayData,
+            commonDisplayData = commonDisplayData,
+            onCommonDisplayDataChange = {
+                commonDisplayData = it
             },
-            email,
-            onEmailChange = {
-                email = it
+            onKonbiniDisplayDataChange = {
+                konbiniDisplayData = it
             },
-            selectedKonbiniBrand = konbini.brands.first(),
-            onKonbiniBrandChange = {
+            onPayButtonClicked = {
             },
         )
     }

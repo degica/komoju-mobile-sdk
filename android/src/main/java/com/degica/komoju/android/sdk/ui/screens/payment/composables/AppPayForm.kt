@@ -30,7 +30,7 @@ import com.degica.komoju.android.sdk.ui.theme.LocalI18nTextsProvider
 import com.degica.komoju.mobile.sdk.entities.PaymentMethod
 
 @Composable
-internal fun AppPayForm(paymentMethod: PaymentMethod) {
+internal fun AppPayForm(paymentMethod: PaymentMethod, onPayButtonClicked: () -> Unit) {
     val titleKey = remember(paymentMethod) {
         when (paymentMethod) {
             is PaymentMethod.AliPay -> "PAYMENT_VIA_ALI_PAY"
@@ -88,7 +88,7 @@ internal fun AppPayForm(paymentMethod: PaymentMethod) {
                 Text(text = LocalI18nTextsProvider.current["LIGHT_BOX_CONTENT"])
             }
             Spacer(modifier = Modifier.height(32.dp))
-            PaymentButton(LocalI18nTextsProvider.current[paymentButtonKey], modifier = Modifier.fillMaxWidth()) { }
+            PaymentButton(LocalI18nTextsProvider.current[paymentButtonKey], modifier = Modifier.fillMaxWidth(), onPayButtonClicked)
         }
     }
 }
@@ -107,6 +107,6 @@ private fun AppPayFormPreview() {
                 additionalFields = listOf(),
                 isOffsite = false,
             ),
-        )
+        ) { }
     }
 }

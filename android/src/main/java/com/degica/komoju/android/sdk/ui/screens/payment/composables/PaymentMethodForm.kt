@@ -1,73 +1,49 @@
 package com.degica.komoju.android.sdk.ui.screens.payment.composables
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import com.degica.komoju.android.sdk.ui.screens.payment.BitCashDisplayData
+import com.degica.komoju.android.sdk.ui.screens.payment.CommonDisplayData
+import com.degica.komoju.android.sdk.ui.screens.payment.CreditCardDisplayData
+import com.degica.komoju.android.sdk.ui.screens.payment.KonbiniDisplayData
+import com.degica.komoju.android.sdk.ui.screens.payment.NetCashDisplayData
+import com.degica.komoju.android.sdk.ui.screens.payment.WebMoneyDisplayData
 import com.degica.komoju.mobile.sdk.entities.PaymentMethod
 
 @Composable
-internal fun PaymentMethodForm(paymentMethod: PaymentMethod) {
-    var cardHolderName by remember { mutableStateOf("") }
-    var creditCardNumber by remember { mutableStateOf("") }
-    var creditCardExpiryDate by remember { mutableStateOf("") }
-    var creditCardCvv by remember { mutableStateOf("") }
-    var saveCard by remember { mutableStateOf(false) }
-
-    var konbiniReceiptName by remember { mutableStateOf("") }
-    var konbiniBrand by remember { mutableStateOf<PaymentMethod.Konbini.KonbiniBrand?>(null) }
-    var userEmailAddress by remember { mutableStateOf("") }
-
-    var lastName by remember { mutableStateOf("") }
-    var firstName by remember { mutableStateOf("") }
-    var lastNamePhonetic by remember { mutableStateOf("") }
-    var firstNamePhonetic by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var phoneNumber by remember { mutableStateOf("") }
-
-    var bitCashId by remember { mutableStateOf("") }
-    var netCashId by remember { mutableStateOf("") }
-    var webMoneyPrepaidNumber by remember { mutableStateOf("") }
-
+internal fun PaymentMethodForm(
+    paymentMethod: PaymentMethod,
+    commonDisplayData: CommonDisplayData,
+    onCommonDisplayDataChange: (CommonDisplayData) -> Unit,
+    creditCardDisplayData: CreditCardDisplayData,
+    onCreditCardDisplayDataChange: (CreditCardDisplayData) -> Unit,
+    konbiniDisplayData: KonbiniDisplayData,
+    onKonbiniDisplayDataChange: (KonbiniDisplayData) -> Unit,
+    bitCashDisplayData: BitCashDisplayData,
+    onBitCashDisplayDataChange: (BitCashDisplayData) -> Unit,
+    netCashDisplayData: NetCashDisplayData,
+    onNetCashDisplayDataChange: (NetCashDisplayData) -> Unit,
+    webMoneyDisplayData: WebMoneyDisplayData,
+    onWebMoneyDisplayDataChange: (WebMoneyDisplayData) -> Unit,
+    onPaymentRequested: (PaymentMethod) -> Unit,
+) {
     when (paymentMethod) {
         is PaymentMethod.CreditCard -> CreditCardForm(
             creditCard = paymentMethod,
-            fullNameOnCard = cardHolderName,
-            onFullNameOnCardChange = {
-                cardHolderName = it
-            },
-            creditCardNumber = creditCardNumber,
-            onCardNumberChange = {
-                creditCardNumber = it
-            },
-            creditCardExpiryDate = creditCardExpiryDate,
-            onCardExpiryDateChange = {
-                creditCardExpiryDate = it
-            },
-            creditCardCvv = creditCardCvv,
-            onCardCvvChange = {
-                creditCardCvv = it
-            },
-            saveCard = saveCard,
-            onSaveCardChange = {
-                saveCard = it
+            creditCardDisplayData = creditCardDisplayData,
+            onCreditCardDisplayDataChange = onCreditCardDisplayDataChange,
+            onPayButtonClicked = {
+                onPaymentRequested(paymentMethod)
             },
         )
 
         is PaymentMethod.Konbini -> KonbiniForm(
             konbini = paymentMethod,
-            receiptName = konbiniReceiptName,
-            onReceiptNameChange = {
-                konbiniReceiptName = it
-            },
-            email = userEmailAddress,
-            onEmailChange = {
-                userEmailAddress = it
-            },
-            selectedKonbiniBrand = konbiniBrand ?: paymentMethod.brands.firstOrNull(),
-            onKonbiniBrandChange = {
-                konbiniBrand = it
+            commonDisplayData = commonDisplayData,
+            konbiniDisplayData = konbiniDisplayData,
+            onCommonDisplayDataChange = onCommonDisplayDataChange,
+            onKonbiniDisplayDataChange = onKonbiniDisplayDataChange,
+            onPayButtonClicked = {
+                onPaymentRequested(paymentMethod)
             },
         )
 
@@ -77,60 +53,48 @@ internal fun PaymentMethodForm(paymentMethod: PaymentMethod) {
         is PaymentMethod.MerPay,
         is PaymentMethod.PayPay,
         is PaymentMethod.RakutenPay,
-        -> AppPayForm(paymentMethod)
+        -> AppPayForm(paymentMethod, onPayButtonClicked = {
+            onPaymentRequested(paymentMethod)
+        })
 
         is PaymentMethod.BankTransfer -> BankForm(
             bankTransfer = paymentMethod,
-            lastName = lastName,
-            onLastNameChange = {
-                lastName = it
-            },
-            firstName = firstName,
-            onFirstNameChange = {
-                firstName = it
-            },
-            lastNamePhonetic = lastNamePhonetic,
-            onLastNamePhoneticChange = {
-                lastNamePhonetic = it
-            },
-            firstNamePhonetic = firstNamePhonetic,
-            onFirstNamePhoneticChange = {
-                firstNamePhonetic = it
-            },
-            email = email,
-            onEmailChange = {
-                email = it
-            },
-            phoneNumber = phoneNumber,
-            onPhoneNumberChange = {
-                phoneNumber = it
+            commonDisplayData = commonDisplayData,
+            onCommonDisplayDataChange = onCommonDisplayDataChange,
+            onPayButtonClicked = {
+                onPaymentRequested(paymentMethod)
             },
         )
 
         is PaymentMethod.BitCash -> BitCashForm(
             bitCash = paymentMethod,
-            bitCashId = bitCashId,
-            onBitCashIdChange = {
-                bitCashId = it
+            bitCashDisplayData = bitCashDisplayData,
+            onBitCashDisplayDataChange = onBitCashDisplayDataChange,
+            onPayButtonClicked = {
+                onPaymentRequested(paymentMethod)
             },
         )
 
         is PaymentMethod.NetCash -> NetCashForm(
             netCash = paymentMethod,
-            netCashId,
-            onNetCashIdChange = {
-                netCashId = it
+            netCashDisplayData = netCashDisplayData,
+            onNetCashDisplayDataChange = onNetCashDisplayDataChange,
+            onPayButtonClicked = {
+                onPaymentRequested(paymentMethod)
             },
         )
-        is PaymentMethod.Paidy -> Unit
-        is PaymentMethod.PayEasy -> Unit
+
         is PaymentMethod.WebMoney -> WebMoneyForm(
             webMoney = paymentMethod,
-            prepaidNumber = webMoneyPrepaidNumber,
-            onPrepaidNumberChange = {
-                webMoneyPrepaidNumber = it
+            webMoneyDisplayData = webMoneyDisplayData,
+            onWebMoneyDisplayDataChange = onWebMoneyDisplayDataChange,
+            onPayButtonClicked = {
+                onPaymentRequested(paymentMethod)
             },
         )
+
+        is PaymentMethod.Paidy -> Unit
+        is PaymentMethod.PayEasy -> Unit
 
         is PaymentMethod.Other -> Unit
     }
