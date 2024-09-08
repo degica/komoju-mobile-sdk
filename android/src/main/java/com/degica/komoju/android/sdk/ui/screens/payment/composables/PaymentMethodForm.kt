@@ -26,6 +26,10 @@ internal fun PaymentMethodForm(paymentMethod: PaymentMethod) {
     var email by remember { mutableStateOf("") }
     var phoneNumber by remember { mutableStateOf("") }
 
+    var bitCashId by remember { mutableStateOf("") }
+    var netCashId by remember { mutableStateOf("") }
+    var webMoneyPrepaidNumber by remember { mutableStateOf("") }
+
     when (paymentMethod) {
         is PaymentMethod.CreditCard -> CreditCardForm(
             creditCard = paymentMethod,
@@ -102,11 +106,32 @@ internal fun PaymentMethodForm(paymentMethod: PaymentMethod) {
                 phoneNumber = it
             },
         )
-        is PaymentMethod.BitCash -> Unit
-        is PaymentMethod.NetCash -> Unit
+
+        is PaymentMethod.BitCash -> BitCashForm(
+            bitCash = paymentMethod,
+            bitCashId = bitCashId,
+            onBitCashIdChange = {
+                bitCashId = it
+            },
+        )
+
+        is PaymentMethod.NetCash -> NetCashForm(
+            netCash = paymentMethod,
+            netCashId,
+            onNetCashIdChange = {
+                netCashId = it
+            },
+        )
         is PaymentMethod.Paidy -> Unit
         is PaymentMethod.PayEasy -> Unit
-        is PaymentMethod.WebMoney -> Unit
+        is PaymentMethod.WebMoney -> WebMoneyForm(
+            webMoney = paymentMethod,
+            prepaidNumber = webMoneyPrepaidNumber,
+            onPrepaidNumberChange = {
+                webMoneyPrepaidNumber = it
+            },
+        )
+
         is PaymentMethod.Other -> Unit
     }
 }
