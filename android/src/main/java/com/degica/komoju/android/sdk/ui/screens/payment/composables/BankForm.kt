@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.degica.komoju.android.sdk.types.Currency
 import com.degica.komoju.android.sdk.types.Language
+import com.degica.komoju.android.sdk.ui.screens.payment.CommonDisplayData
 import com.degica.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
 import com.degica.komoju.android.sdk.ui.theme.LocalI18nTextsProvider
 import com.degica.komoju.android.sdk.utils.AmountUtils
@@ -25,18 +26,9 @@ import com.degica.komoju.mobile.sdk.entities.PaymentMethod
 @Composable
 internal fun BankForm(
     bankTransfer: PaymentMethod.BankTransfer,
-    lastName: String,
-    onLastNameChange: (String) -> Unit,
-    firstName: String,
-    onFirstNameChange: (String) -> Unit,
-    lastNamePhonetic: String,
-    onLastNamePhoneticChange: (String) -> Unit,
-    firstNamePhonetic: String,
-    onFirstNamePhoneticChange: (String) -> Unit,
-    email: String,
-    onEmailChange: (String) -> Unit,
-    phoneNumber: String,
-    onPhoneNumberChange: (String) -> Unit,
+    commonDisplayData: CommonDisplayData,
+    onCommonDisplayDataChange: (CommonDisplayData) -> Unit,
+    onPayButtonClicked: () -> Unit,
 ) {
     val displayPayableAmount by remember(bankTransfer.amount) {
         derivedStateOf {
@@ -45,41 +37,53 @@ internal fun BankForm(
     }
     Column {
         TextField(
-            value = lastName,
+            value = commonDisplayData.lastName,
             titleKey = "LAST_NAME",
             placeholderKey = "LAST_NAME",
-            onValueChange = onLastNameChange,
+            onValueChange = {
+                onCommonDisplayDataChange(commonDisplayData.copy(lastName = it))
+            },
         )
         TextField(
-            value = firstName,
+            value = commonDisplayData.firstName,
             titleKey = "FIRST_NAME",
             placeholderKey = "FIRST_NAME",
-            onValueChange = onFirstNameChange,
+            onValueChange = {
+                onCommonDisplayDataChange(commonDisplayData.copy(firstName = it))
+            },
         )
         TextField(
-            value = lastNamePhonetic,
+            value = commonDisplayData.lastNamePhonetic,
             titleKey = "LAST_NAME_PHONETIC",
             placeholderKey = "LAST_NAME_PHONETIC",
-            onValueChange = onLastNamePhoneticChange,
+            onValueChange = {
+                onCommonDisplayDataChange(commonDisplayData.copy(lastNamePhonetic = it))
+            },
         )
         TextField(
-            value = firstNamePhonetic,
+            value = commonDisplayData.firstNamePhonetic,
             titleKey = "FIRST_NAME_PHONETIC",
             placeholderKey = "FIRST_NAME_PHONETIC",
-            onValueChange = onFirstNamePhoneticChange,
+            onValueChange = {
+                onCommonDisplayDataChange(commonDisplayData.copy(firstNamePhonetic = it))
+            },
         )
         TextField(
-            value = email,
+            value = commonDisplayData.email,
             titleKey = "EMAIL",
             placeholderKey = "EXAMPLE_EMAIL",
-            onValueChange = onEmailChange,
+            onValueChange = {
+                onCommonDisplayDataChange(commonDisplayData.copy(email = it))
+            },
             keyboardType = KeyboardType.Email,
         )
         TextField(
-            value = phoneNumber,
+            value = commonDisplayData.phoneNumber,
             titleKey = "TELEPHONE_NUMBER",
             placeholderKey = "TELEPHONE_NUMBER_PLACEHOLDER",
-            onValueChange = onPhoneNumberChange,
+            onValueChange = {
+                onCommonDisplayDataChange(commonDisplayData.copy(phoneNumber = it))
+            },
             keyboardType = KeyboardType.Number,
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -88,7 +92,8 @@ internal fun BankForm(
                 .padding(16.dp)
                 .fillMaxWidth(),
             text = "${LocalI18nTextsProvider.current["PAY"]} $displayPayableAmount",
-        ) { }
+            onClick = onPayButtonClicked,
+        )
     }
 }
 
@@ -105,37 +110,14 @@ private fun BankFormPreview() {
         customerFee = 10,
     )
     KomojuMobileSdkTheme(Language.ENGLISH) {
-        var lastName by remember { mutableStateOf("") }
-        var firstName by remember { mutableStateOf("") }
-        var lastNamePhonetic by remember { mutableStateOf("") }
-        var firstNamePhonetic by remember { mutableStateOf("") }
-        var email by remember { mutableStateOf("") }
-        var phoneNumber by remember { mutableStateOf("") }
+        var commonDisplayData by remember { mutableStateOf(CommonDisplayData()) }
         BankForm(
             bankTransfer,
-            lastName,
-            onLastNameChange = {
-                lastName = it
+            commonDisplayData,
+            onCommonDisplayDataChange = {
+                commonDisplayData = it
             },
-            firstName,
-            onFirstNameChange = {
-                firstName = it
-            },
-            lastNamePhonetic,
-            onLastNamePhoneticChange = {
-                lastNamePhonetic = it
-            },
-            firstNamePhonetic,
-            onFirstNamePhoneticChange = {
-                firstNamePhonetic = it
-            },
-            email,
-            onEmailChange = {
-                email = it
-            },
-            phoneNumber,
-            onPhoneNumberChange = {
-                phoneNumber = it
+            onPayButtonClicked = {
             },
         )
     }

@@ -33,4 +33,37 @@ internal class KomojuPaymentViewModel : ViewModel() {
     fun onNewPaymentMethodSelected(paymentMethod: PaymentMethod) {
         _uiState.update { it.copy(selectedPaymentMethod = paymentMethod) }
     }
+
+    fun onCommonDisplayDataChange(commonDisplayData: CommonDisplayData) = _uiState.update {
+        it.copy(commonDisplayData = commonDisplayData)
+    }
+
+    fun onCreditCardDisplayDataChange(creditCardDisplayData: CreditCardDisplayData) {
+        if (creditCardDisplayData.creditCardNumber.length <= 16 &&
+            creditCardDisplayData.creditCardExpiryDate.length <= 4 &&
+            creditCardDisplayData.creditCardCvv.length <= 7
+        ) {
+            _uiState.update { it.copy(creditCardDisplayData = creditCardDisplayData) }
+        }
+    }
+
+    fun onKonbiniDisplayDataChange(konbiniDisplayData: KonbiniDisplayData) = _uiState.update {
+        it.copy(konbiniDisplayData = konbiniDisplayData)
+    }
+
+    fun onBitCashDisplayDataChange(bitCashDisplayData: BitCashDisplayData) = _uiState.update {
+        it.copy(bitCashDisplayData = bitCashDisplayData)
+    }
+
+    fun onNetCashDisplayDataChange(netCashDisplayData: NetCashDisplayData) = _uiState.update {
+        it.copy(netCashDisplayData = netCashDisplayData)
+    }
+
+    fun onWebMoneyDisplayDataChange(webMoneyDisplayData: WebMoneyDisplayData) = _uiState.update {
+        it.copy(webMoneyDisplayData = webMoneyDisplayData)
+    }
+
+    fun onPaymentRequested(paymentMethod: PaymentMethod) {
+        // Process App Payment
+    }
 }

@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import com.degica.komoju.android.sdk.R
 import com.degica.komoju.android.sdk.types.Currency
 import com.degica.komoju.android.sdk.types.Language
+import com.degica.komoju.android.sdk.ui.screens.payment.CreditCardDisplayData
 import com.degica.komoju.android.sdk.ui.theme.Gray200
 import com.degica.komoju.android.sdk.ui.theme.Gray500
 import com.degica.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
@@ -54,16 +55,9 @@ import com.degica.komoju.mobile.sdk.entities.PaymentMethod
 @Composable
 internal fun CreditCardForm(
     creditCard: PaymentMethod.CreditCard,
-    fullNameOnCard: String,
-    onFullNameOnCardChange: (String) -> Unit,
-    creditCardNumber: String,
-    onCardNumberChange: (String) -> Unit,
-    creditCardExpiryDate: String,
-    onCardExpiryDateChange: (String) -> Unit,
-    creditCardCvv: String,
-    onCardCvvChange: (String) -> Unit,
-    saveCard: Boolean = false,
-    onSaveCardChange: (Boolean) -> Unit,
+    creditCardDisplayData: CreditCardDisplayData,
+    onCreditCardDisplayDataChange: (CreditCardDisplayData) -> Unit,
+    onPayButtonClicked: () -> Unit,
 ) {
     var cardScheme by remember { mutableStateOf(CardScheme.UNKNOWN) }
     var expiryCvvExpiryHeight by remember { mutableStateOf(0.dp) }
@@ -74,7 +68,14 @@ internal fun CreditCardForm(
         }
     }
     Column {
-        TextField(fullNameOnCard, "CARD_HOLDER_NAME", "FULL_NAME_ON_CARD", onFullNameOnCardChange)
+        TextField(
+            creditCardDisplayData.fullNameOnCard,
+            "CARD_HOLDER_NAME",
+            "FULL_NAME_ON_CARD",
+            onValueChange = {
+                onCreditCardDisplayDataChange(creditCardDisplayData.copy(fullNameOnCard = it))
+            },
+        )
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
@@ -88,8 +89,13 @@ internal fun CreditCardForm(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 8.dp)
-                .border(1.dp, Gray200, shape = RoundedCornerShape(8.dp)).onGloballyPositioned {
-                    expiryCvvExpiryHeight = with(localDensity) { it.size.height.div(2).toDp() }
+                .border(1.dp, Gray200, shape = RoundedCornerShape(8.dp))
+                .onGloballyPositioned {
+                    expiryCvvExpiryHeight = with(localDensity) {
+                        it.size.height
+                            .div(2)
+                            .toDp()
+                    }
                 },
         ) {
             Column {
@@ -101,15 +107,15 @@ internal fun CreditCardForm(
                     Box(modifier = Modifier.weight(1f)) {
                         BasicTextField(
                             modifier = Modifier.fillMaxWidth(),
-                            value = creditCardNumber,
+                            value = creditCardDisplayData.creditCardNumber,
                             onValueChange = {
-                                if (it.length <= 16) onCardNumberChange(it)
+                                onCreditCardDisplayDataChange(creditCardDisplayData.copy(creditCardNumber = it))
                             },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             textStyle = TextStyle(fontSize = 16.sp, color = Color.Black),
                             singleLine = true,
                             visualTransformation = { number ->
-                                cardScheme = identifyCardScheme(creditCardNumber)
+                                cardScheme = identifyCardScheme(creditCardDisplayData.creditCardNumber)
                                 when (cardScheme) {
                                     CardScheme.AMEX -> formatAmex(number)
                                     CardScheme.DINERS_CLUB -> formatDinnersClub(number)
@@ -117,7 +123,7 @@ internal fun CreditCardForm(
                                 }
                             },
                         )
-                        if (creditCardNumber.isEmpty()) {
+                        if (creditCardDisplayData.creditCardNumber.isEmpty()) {
                             Text(
                                 text = "1234 1234 1234 1234",
                                 style = TextStyle(fontSize = 16.sp, color = Gray500),
@@ -131,12 +137,16 @@ internal fun CreditCardForm(
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Box(modifier = Modifier.weight(1f).padding(16.dp)) {
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(16.dp),
+                    ) {
                         BasicTextField(
                             modifier = Modifier.fillMaxWidth(),
-                            value = creditCardExpiryDate,
+                            value = creditCardDisplayData.creditCardExpiryDate,
                             onValueChange = {
-                                if (it.length <= 4) onCardExpiryDateChange(it)
+                                onCreditCardDisplayDataChange(creditCardDisplayData.copy(creditCardExpiryDate = it))
                             },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             textStyle = TextStyle(fontSize = 16.sp, color = Color.Black),
@@ -145,7 +155,7 @@ internal fun CreditCardForm(
                                 makeExpirationFilter(number)
                             },
                         )
-                        if (creditCardExpiryDate.isEmpty()) {
+                        if (creditCardDisplayData.creditCardExpiryDate.isEmpty()) {
                             Text(
                                 text = LocalI18nTextsProvider.current["EXPIRY_DATE"],
                                 style = TextStyle(fontSize = 16.sp, color = Gray500),
@@ -157,15 +167,15 @@ internal fun CreditCardForm(
                     Row(modifier = Modifier.weight(1f)) {
                         Box {
                             BasicTextField(
-                                value = creditCardCvv,
+                                value = creditCardDisplayData.creditCardCvv,
                                 onValueChange = {
-                                    if (it.length <= 7) onCardCvvChange(it)
+                                    onCreditCardDisplayDataChange(creditCardDisplayData.copy(creditCardCvv = it))
                                 },
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                                 textStyle = TextStyle(fontSize = 16.sp, color = Color.Black),
                                 singleLine = true,
                             )
-                            if (creditCardCvv.isEmpty()) {
+                            if (creditCardDisplayData.creditCardCvv.isEmpty()) {
                                 Text(
                                     text = LocalI18nTextsProvider.current["CVV"],
                                     style = TextStyle(fontSize = 16.sp, color = Gray500),
@@ -179,10 +189,18 @@ internal fun CreditCardForm(
             }
         }
 
-        PaymentButton(modifier = Modifier.padding(16.dp).fillMaxWidth(), text = "${LocalI18nTextsProvider.current["PAY"]} $displayPayableAmount") { }
+        PaymentButton(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            text = "${LocalI18nTextsProvider.current["PAY"]} $displayPayableAmount",
+            onClick = onPayButtonClicked,
+        )
 
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
-            Checkbox(saveCard, onSaveCardChange, colors = CheckboxDefaults.colors(checkedColor = Color.Black, uncheckedColor = Color.Black))
+            Checkbox(creditCardDisplayData.saveCard, onCheckedChange = {
+                onCreditCardDisplayDataChange(creditCardDisplayData.copy(saveCard = it))
+            }, colors = CheckboxDefaults.colors(checkedColor = Color.Black, uncheckedColor = Color.Black))
             Text(LocalI18nTextsProvider.current["SAVE_CARD"])
         }
     }
@@ -202,32 +220,15 @@ private fun CreditCardFormPreview() {
         brands = listOf(),
         displayName = "Credit Card",
     )
-    val fullNameOnCard = remember { mutableStateOf("") }
-    val creditCardNumber = remember { mutableStateOf("") }
-    val creditCardExpiryDate = remember { mutableStateOf("") }
-    val creditCardCvv = remember { mutableStateOf("") }
-    var saveCard by remember { mutableStateOf(false) }
+    var creditCardDisplayData by remember { mutableStateOf(CreditCardDisplayData()) }
     KomojuMobileSdkTheme(Language.ENGLISH) {
         CreditCardForm(
-            creditCard, fullNameOnCard.value,
-            onFullNameOnCardChange = {
-                fullNameOnCard.value = it
+            creditCard,
+            creditCardDisplayData = creditCardDisplayData,
+            onCreditCardDisplayDataChange = {
+                creditCardDisplayData = it
             },
-            creditCardNumber.value,
-            onCardNumberChange = {
-                creditCardNumber.value = it
-            },
-            creditCardExpiryDate = creditCardExpiryDate.value,
-            onCardExpiryDateChange = {
-                creditCardExpiryDate.value = it
-            },
-            creditCardCvv.value,
-            onCardCvvChange = {
-                creditCardCvv.value = it
-            },
-            saveCard = saveCard,
-            onSaveCardChange = {
-                saveCard = it
+            onPayButtonClicked = {
             },
         )
     }

@@ -12,12 +12,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.degica.komoju.android.sdk.types.Currency
+import com.degica.komoju.android.sdk.ui.screens.payment.BitCashDisplayData
 import com.degica.komoju.android.sdk.ui.theme.LocalI18nTextsProvider
 import com.degica.komoju.android.sdk.utils.AmountUtils
 import com.degica.komoju.mobile.sdk.entities.PaymentMethod
 
 @Composable
-internal fun BitCashForm(bitCash: PaymentMethod.BitCash, bitCashId: String, onBitCashIdChange: (String) -> Unit) {
+internal fun BitCashForm(
+    bitCash: PaymentMethod.BitCash,
+    bitCashDisplayData: BitCashDisplayData,
+    onBitCashDisplayDataChange: (BitCashDisplayData) -> Unit,
+    onPayButtonClicked: () -> Unit,
+) {
     val displayPayableAmount by remember(bitCash.amount) {
         derivedStateOf {
             AmountUtils.formatToDecimal(Currency.parse(bitCash.currency), bitCash.amount)
@@ -25,10 +31,12 @@ internal fun BitCashForm(bitCash: PaymentMethod.BitCash, bitCashId: String, onBi
     }
     Column {
         TextField(
-            value = bitCashId,
+            value = bitCashDisplayData.bitCashId,
             titleKey = "BIT_CASH_INPUT_LABEL",
             placeholderKey = "BIT_CASH_INPUT_PLACEHOLDER",
-            onValueChange = onBitCashIdChange,
+            onValueChange = {
+                onBitCashDisplayDataChange(bitCashDisplayData.copy(bitCashId = it))
+            },
         )
         Spacer(modifier = Modifier.height(16.dp))
         PaymentButton(
@@ -36,6 +44,7 @@ internal fun BitCashForm(bitCash: PaymentMethod.BitCash, bitCashId: String, onBi
                 .padding(16.dp)
                 .fillMaxWidth(),
             text = "${LocalI18nTextsProvider.current["PAY"]} $displayPayableAmount",
-        ) { }
+            onClick = onPayButtonClicked,
+        )
     }
 }

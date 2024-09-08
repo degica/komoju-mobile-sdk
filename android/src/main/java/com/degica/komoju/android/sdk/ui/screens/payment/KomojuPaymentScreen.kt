@@ -92,8 +92,24 @@ fun KomojuPaymentScreen(sdkConfiguration: KomojuSDK.Configuration, onCompleted: 
                                 selectedPaymentMethod = uiState.selectedPaymentMethod,
                                 onSelected = viewModel::onNewPaymentMethodSelected,
                             )
-
-                            PaymentMethodForm(uiState.selectedPaymentMethod!!)
+                            uiState.selectedPaymentMethod?.let { paymentMethod ->
+                                PaymentMethodForm(
+                                    paymentMethod = paymentMethod,
+                                    commonDisplayData = uiState.commonDisplayData,
+                                    onCommonDisplayDataChange = viewModel::onCommonDisplayDataChange,
+                                    creditCardDisplayData = uiState.creditCardDisplayData,
+                                    onCreditCardDisplayDataChange = viewModel::onCreditCardDisplayDataChange,
+                                    konbiniDisplayData = uiState.konbiniDisplayData,
+                                    onKonbiniDisplayDataChange = viewModel::onKonbiniDisplayDataChange,
+                                    bitCashDisplayData = uiState.bitCashDisplayData,
+                                    onBitCashDisplayDataChange = viewModel::onBitCashDisplayDataChange,
+                                    netCashDisplayData = uiState.netCashDisplayData,
+                                    onNetCashDisplayDataChange = viewModel::onNetCashDisplayDataChange,
+                                    webMoneyDisplayData = uiState.webMoneyDisplayData,
+                                    onWebMoneyDisplayDataChange = viewModel::onWebMoneyDisplayDataChange,
+                                    onPaymentRequested = viewModel::onPaymentRequested,
+                                )
+                            }
                         }
                         Spacer(Modifier.weight(1f))
                         Image(
