@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.compose.compiler)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -51,12 +52,14 @@ android {
 dependencies {
     implementation(project(":shared"))
     implementation(libs.core.ktx)
+    implementation(libs.androidx.fragment.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.activity.compose)
+    implementation(libs.navigation.compose)
     implementation(platform(libs.compose.bom))
     implementation(libs.ui)
     implementation(libs.ui.graphics)

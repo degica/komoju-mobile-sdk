@@ -29,9 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,9 +41,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.degica.komoju.android.R
+import com.degica.komoju.android.sdk.KomojuSDK
+import com.degica.komoju.android.sdk.canProcessPayment
 import com.degica.komoju.android.sdk.types.Currency
 import com.degica.komoju.android.sdk.types.Language
-import com.degica.komoju.android.sdk.ui.screens.payment.KomojuPaymentScreen
 import com.degica.komoju.android.ui.theme.KomojuDarkGreen
 import com.degica.komoju.android.ui.theme.KomojuLightGreen
 
@@ -55,12 +54,14 @@ fun ExampleScreen() {
     val viewModel = viewModel<ExampleScreenViewModel>()
     val uiState by viewModel.uiState.collectAsState()
     val komojuSDKConfiguration by viewModel.komojuSDKConfiguration.collectAsState()
-    val shouldProcessPayment by remember {
-        derivedStateOf {
-            komojuSDKConfiguration.canProcessPayment()
+    val context = LocalContext.current
+    LaunchedEffect(komojuSDKConfiguration) {
+        if (komojuSDKConfiguration?.canProcessPayment() == true) {
+            KomojuSDK.show(context, komojuSDKConfiguration!!) {
+                viewModel.onKomojuPaymentCompleted()
+            }
         }
     }
-    val context = LocalContext.current
     LaunchedEffect(uiState.error) {
         uiState.error?.let {
             Toast.makeText(context, it, Toast.LENGTH_LONG).show()
@@ -159,12 +160,6 @@ fun ExampleScreen() {
                     contentAlignment = Alignment.Center,
                 ) {
                     CircularProgressIndicator(color = KomojuLightGreen)
-                }
-            }
-
-            if (shouldProcessPayment) {
-                KomojuPaymentScreen(komojuSDKConfiguration) {
-                    viewModel.onKomojuPaymentCompleted()
                 }
             }
         }

@@ -6,6 +6,8 @@ android-minSdk = "24"
 android-compileSdk = "34"
 kotlinVersion = "1.9.22"
 coreKtx = "1.13.1"
+fragmentKtx = "1.8.3"
+composeNavigation = "2.8.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -24,6 +26,7 @@ uiTooling = "1.7.0"
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 nexus-publish = { module = "io.github.gradle-nexus.publish-plugin:io.github.gradle-nexus.publish-plugin.gradle.plugin", version.ref = "nexus-publish" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-fragment-ktx = {group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx"}
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -31,6 +34,7 @@ appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "a
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNavigation"}
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
