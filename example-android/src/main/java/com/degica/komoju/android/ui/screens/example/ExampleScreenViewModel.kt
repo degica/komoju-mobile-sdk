@@ -10,10 +10,6 @@ import com.degica.komoju.android.ui.remote.RemoteApiService
 import com.degica.komoju.android.ui.remote.dtos.CreateSessionRequest
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -24,20 +20,10 @@ class ExampleScreenViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(ExampleScreenState())
     val uiState = _uiState.asStateFlow()
 
-    private val _komojuSDKConfiguration = MutableStateFlow(KomojuSDK.Configuration.default())
+    private val _komojuSDKConfiguration = MutableStateFlow<KomojuSDK.Configuration?>(null)
     val komojuSDKConfiguration = _komojuSDKConfiguration.asStateFlow()
 
     private val uiStateValue get() = _uiState.value
-
-    init {
-        uiState.map {
-            it.selectedLanguage to it.selectedCurrency
-        }.distinctUntilChanged().onEach { (language, currency) ->
-            _komojuSDKConfiguration.update {
-                it.copy(language = language, currency = currency)
-            }
-        }.launchIn(viewModelScope)
-    }
 
     fun onLanguageChanged(language: Language) = _uiState.update {
         it.copy(selectedLanguage = language)
@@ -56,9 +42,12 @@ class ExampleScreenViewModel : ViewModel() {
         viewModelScope.launch {
             fetchPublishableKey()?.let { publishableKey ->
                 createSession()?.let { sessionId ->
-                    _komojuSDKConfiguration.update {
-                        it.copy(publishableKey = publishableKey, sessionId = sessionId)
-                    }
+                    KomojuSDK.Configuration.Builder(publishableKey, sessionId)
+                        .setLanguage(uiStateValue.selectedLanguage)
+                        .setCurrency(uiStateValue.selectedCurrency)
+                        .build().let { komojuConfig ->
+                            _komojuSDKConfiguration.update { komojuConfig }
+                        }
                     _uiState.update { it.copy(isLoading = false) }
                 }
             }
@@ -102,7 +91,7 @@ class ExampleScreenViewModel : ViewModel() {
 
     fun onKomojuPaymentCompleted() {
         _komojuSDKConfiguration.update {
-            it.copy(sessionId = null)
+            null
         }
     }
 }

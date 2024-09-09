@@ -23,7 +23,7 @@ internal class KomojuPaymentViewModel : ViewModel() {
             viewModelScope.launch {
                 komojuApi?.sessions?.show(config.sessionId!!)?.onSuccess { session ->
                     _uiState.update {
-                        it.copy(session = session, selectedPaymentMethod = session.paymentMethods.firstOrNull())
+                        it.copy(isLoading = false, session = session, selectedPaymentMethod = session.paymentMethods.firstOrNull())
                     }
                 }
             }
