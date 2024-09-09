@@ -4,9 +4,9 @@ import android.content.Context
 import android.os.Parcelable
 import com.degica.komoju.android.sdk.types.Currency
 import com.degica.komoju.android.sdk.types.Language
-import kotlinx.parcelize.Parcelize
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
+import kotlinx.parcelize.Parcelize
 
 class KomojuSDK(private val configuration: Configuration) {
     @Parcelize

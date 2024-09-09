@@ -1,7 +1,6 @@
 package com.degica.komoju.android.sdk
 
 import android.annotation.SuppressLint
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -37,9 +36,12 @@ internal class KomojuPaymentActivity : ComponentActivity() {
 
     private val configuration: KomojuSDK.Configuration by lazy {
         IntentCompat.getParcelableExtra(
-            /* in = */ intent,
-            /* name = */ KomojuSDK.CONFIGURATION_KEY,
-            /* clazz = */ KomojuSDK.Configuration::class.java,
+            /* in = */
+            intent,
+            /* name = */
+            KomojuSDK.CONFIGURATION_KEY,
+            /* clazz = */
+            KomojuSDK.Configuration::class.java,
         ) ?: error("komoju sdk configuration is null")
     }
 
@@ -55,7 +57,8 @@ internal class KomojuPaymentActivity : ComponentActivity() {
             val coroutineScope = rememberCoroutineScope()
             Surface(modifier = Modifier.fillMaxSize(), color = Color.Black.copy(alpha = animatedAlpha)) {
                 AnimatedVisibility(
-                    isClosed.not(), enter = slideInVertically(animationSpec = tween(ANIMATION_DURATION)) { it },
+                    isClosed.not(),
+                    enter = slideInVertically(animationSpec = tween(ANIMATION_DURATION)) { it },
                     exit = slideOutVertically(
                         animationSpec = tween(ANIMATION_DURATION),
                     ) { it },
