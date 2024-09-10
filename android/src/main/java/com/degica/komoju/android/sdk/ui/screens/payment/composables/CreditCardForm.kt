@@ -31,7 +31,10 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,6 +46,7 @@ import com.degica.komoju.android.sdk.ui.theme.Gray200
 import com.degica.komoju.android.sdk.ui.theme.Gray500
 import com.degica.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
 import com.degica.komoju.android.sdk.ui.theme.LocalI18nTextsProvider
+import com.degica.komoju.android.sdk.ui.theme.Red600
 import com.degica.komoju.android.sdk.utils.AmountUtils
 import com.degica.komoju.android.sdk.utils.CardScheme
 import com.degica.komoju.android.sdk.utils.CreditCardUtils.formatAmex
@@ -67,16 +71,20 @@ internal fun CreditCardForm(
             AmountUtils.formatToDecimal(Currency.parse(creditCard.currency), creditCard.amount)
         }
     }
+    val dividerColor = if (creditCardDisplayData.creditCardError == null) Gray200 else Red600
     Column {
+        Spacer(modifier = Modifier.height(8.dp))
         TextField(
             creditCardDisplayData.fullNameOnCard,
-            "CARD_HOLDER_NAME",
-            "FULL_NAME_ON_CARD",
+            titleKey = "CARD_HOLDER_NAME",
+            placeholderKey = "FULL_NAME_ON_CARD",
+            capitalization = KeyboardCapitalization.Characters,
+            error = creditCardDisplayData.fullNameOnCardError,
             onValueChange = {
-                onCreditCardDisplayDataChange(creditCardDisplayData.copy(fullNameOnCard = it))
+                onCreditCardDisplayDataChange(creditCardDisplayData.copy(fullNameOnCard = it.toUpperCase(Locale.current)))
             },
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
         Text(
             modifier = Modifier
@@ -89,7 +97,7 @@ internal fun CreditCardForm(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 8.dp)
-                .border(1.dp, Gray200, shape = RoundedCornerShape(8.dp))
+                .border(1.dp, dividerColor, shape = RoundedCornerShape(8.dp))
                 .onGloballyPositioned {
                     expiryCvvExpiryHeight = with(localDensity) {
                         it.size.height
@@ -133,7 +141,7 @@ internal fun CreditCardForm(
                     CreditCardSchemeIcons(cardScheme)
                 }
 
-                HorizontalDivider(thickness = 1.dp, color = Gray200)
+                HorizontalDivider(thickness = 1.dp, color = dividerColor)
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
@@ -162,7 +170,7 @@ internal fun CreditCardForm(
                             )
                         }
                     }
-                    VerticalDivider(thickness = 1.dp, color = Gray200, modifier = Modifier.height(expiryCvvExpiryHeight))
+                    VerticalDivider(thickness = 1.dp, color = dividerColor, modifier = Modifier.height(expiryCvvExpiryHeight))
                     Spacer(Modifier.width(16.dp))
                     Row(modifier = Modifier.weight(1f)) {
                         Box {
@@ -189,9 +197,18 @@ internal fun CreditCardForm(
             }
         }
 
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            text = creditCardDisplayData.creditCardError.orEmpty(),
+            style = TextStyle(fontSize = 16.sp, color = Red600),
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
         PaymentButton(
             modifier = Modifier
-                .padding(16.dp)
+                .padding(horizontal = 16.dp)
                 .fillMaxWidth(),
             text = "${LocalI18nTextsProvider.current["PAY"]} $displayPayableAmount",
             onClick = onPayButtonClicked,

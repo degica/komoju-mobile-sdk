@@ -3,6 +3,10 @@ package com.degica.komoju.android.sdk.ui.screens.payment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.degica.komoju.android.sdk.KomojuSDK
+import com.degica.komoju.android.sdk.utils.CreditCardUtils.isValidCVV
+import com.degica.komoju.android.sdk.utils.CreditCardUtils.isValidCardHolderNameChar
+import com.degica.komoju.android.sdk.utils.CreditCardUtils.isValidCardNumber
+import com.degica.komoju.android.sdk.utils.CreditCardUtils.isValidExpiryDate
 import com.degica.komoju.mobile.sdk.entities.PaymentMethod
 import com.degica.komoju.mobile.sdk.remote.apis.KomojuRemoteApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -43,7 +47,14 @@ internal class KomojuPaymentViewModel : ViewModel() {
             creditCardDisplayData.creditCardExpiryDate.length <= 4 &&
             creditCardDisplayData.creditCardCvv.length <= 7
         ) {
-            _uiState.update { it.copy(creditCardDisplayData = creditCardDisplayData) }
+            _uiState.update {
+                it.copy(
+                    creditCardDisplayData = creditCardDisplayData.copy(
+                        creditCardError = null,
+                        fullNameOnCardError = null,
+                    ),
+                )
+            }
         }
     }
 
@@ -64,6 +75,38 @@ internal class KomojuPaymentViewModel : ViewModel() {
     }
 
     fun onPaymentRequested(paymentMethod: PaymentMethod) {
-        // Process App Payment
+        if (paymentMethod.validate()) {
+            // Process Payment
+        }
+    }
+
+    private fun PaymentMethod.validate() = when (this) {
+        is PaymentMethod.CreditCard -> uiState.value.creditCardDisplayData.validate()
+        else -> false
+    }
+
+    private fun CreditCardDisplayData.validate(): Boolean {
+        val fullNameOnCardError = when {
+            fullNameOnCard.isBlank() -> "The entered cardholder name cannot be empty"
+            fullNameOnCard.all { char -> char.isValidCardHolderNameChar() } -> null
+            else -> "The entered cardholder name is not valid"
+        }
+        val creditCardError = run {
+            when {
+                creditCardNumber.isValidCardNumber().not() -> "The entered card number is not valid"
+                creditCardExpiryDate.isValidExpiryDate().not() -> "The entered expiry date is not valid"
+                creditCardCvv.isValidCVV().not() -> "The entered CVV is not valid"
+                else -> null
+            }
+        }
+        _uiState.update {
+            it.copy(
+                creditCardDisplayData = it.creditCardDisplayData.copy(
+                    fullNameOnCardError = fullNameOnCardError,
+                    creditCardError = creditCardError,
+                ),
+            )
+        }
+        return fullNameOnCardError == null && creditCardError == null
     }
 }
