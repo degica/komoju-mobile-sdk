@@ -7,6 +7,7 @@ import com.degica.komoju.android.sdk.utils.CreditCardUtils.isValidCVV
 import com.degica.komoju.android.sdk.utils.CreditCardUtils.isValidCardHolderNameChar
 import com.degica.komoju.android.sdk.utils.CreditCardUtils.isValidCardNumber
 import com.degica.komoju.android.sdk.utils.CreditCardUtils.isValidExpiryDate
+import com.degica.komoju.android.sdk.utils.isValidEmail
 import com.degica.komoju.mobile.sdk.entities.PaymentMethod
 import com.degica.komoju.mobile.sdk.remote.apis.KomojuRemoteApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -82,6 +83,7 @@ internal class KomojuPaymentViewModel : ViewModel() {
 
     private fun PaymentMethod.validate() = when (this) {
         is PaymentMethod.CreditCard -> uiState.value.creditCardDisplayData.validate()
+        is PaymentMethod.Konbini -> uiState.value.konbiniDisplayData.validate(uiState.value.commonDisplayData)
         else -> false
     }
 
@@ -108,5 +110,21 @@ internal class KomojuPaymentViewModel : ViewModel() {
             )
         }
         return fullNameOnCardError == null && creditCardError == null
+    }
+
+    private fun KonbiniDisplayData.validate(commonDisplayData: CommonDisplayData): Boolean {
+        val nameError = if (receiptName.trim().isEmpty()) "The entered name cannot be empty" else null
+        val emailError = if (commonDisplayData.email.isValidEmail.not()) "The entered email is not valid" else null
+        val konbiniBrandNullError = if (selectedKonbiniBrand == null) "Please select a konbini brand" else null
+        _uiState.update {
+            it.copy(
+                konbiniDisplayData = it.konbiniDisplayData.copy(
+                    receiptNameError = nameError,
+                    receiptEmailError = emailError,
+                    konbiniBrandNullError = konbiniBrandNullError,
+                ),
+            )
+        }
+        return nameError == null && emailError == null && konbiniBrandNullError == null
     }
 }

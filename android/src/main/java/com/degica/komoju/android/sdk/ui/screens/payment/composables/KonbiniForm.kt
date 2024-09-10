@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -12,15 +13,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.degica.komoju.android.sdk.types.Currency
 import com.degica.komoju.android.sdk.types.Language
 import com.degica.komoju.android.sdk.ui.screens.payment.CommonDisplayData
 import com.degica.komoju.android.sdk.ui.screens.payment.KonbiniDisplayData
 import com.degica.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
 import com.degica.komoju.android.sdk.ui.theme.LocalI18nTextsProvider
+import com.degica.komoju.android.sdk.ui.theme.Red600
 import com.degica.komoju.android.sdk.utils.AmountUtils
 import com.degica.komoju.mobile.sdk.entities.PaymentMethod
 import com.degica.komoju.mobile.sdk.entities.PaymentMethod.Konbini.KonbiniBrand
@@ -44,6 +48,7 @@ internal fun KonbiniForm(
             konbiniDisplayData.receiptName,
             titleKey = "NAME_SHOWN_ON_RECEIPT",
             placeholderKey = "FULL_NAME_ON_RECEIPT",
+            error = konbiniDisplayData.receiptNameError,
             onValueChange = {
                 onKonbiniDisplayDataChange(konbiniDisplayData.copy(receiptName = it))
             },
@@ -52,6 +57,7 @@ internal fun KonbiniForm(
             commonDisplayData.email,
             titleKey = "EMAIL",
             placeholderKey = "EXAMPLE_EMAIL",
+            error = konbiniDisplayData.receiptEmailError,
             onValueChange = {
                 onCommonDisplayDataChange(commonDisplayData.copy(email = it))
             },
@@ -64,6 +70,13 @@ internal fun KonbiniForm(
             onSelected = {
                 onKonbiniDisplayDataChange(konbiniDisplayData.copy(selectedKonbiniBrand = it))
             },
+        )
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            text = konbiniDisplayData.konbiniBrandNullError.orEmpty(),
+            style = TextStyle(fontSize = 16.sp, color = Red600),
         )
         PaymentButton(
             modifier = Modifier

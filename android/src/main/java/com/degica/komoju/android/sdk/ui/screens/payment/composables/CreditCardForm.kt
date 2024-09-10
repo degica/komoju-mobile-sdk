@@ -84,7 +84,6 @@ internal fun CreditCardForm(
                 onCreditCardDisplayDataChange(creditCardDisplayData.copy(fullNameOnCard = it.toUpperCase(Locale.current)))
             },
         )
-        Spacer(modifier = Modifier.height(8.dp))
 
         Text(
             modifier = Modifier
