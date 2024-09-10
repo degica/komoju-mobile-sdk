@@ -28,13 +28,21 @@ internal data class CommonDisplayData(
 
 internal data class CreditCardDisplayData(
     val fullNameOnCard: String = String.empty,
+    val fullNameOnCardError: String? = null,
     val creditCardNumber: String = String.empty,
     val creditCardExpiryDate: String = String.empty,
     val creditCardCvv: String = String.empty,
+    val creditCardError: String? = null,
     val saveCard: Boolean = false,
 )
 
-internal data class KonbiniDisplayData(val receiptName: String = String.empty, val selectedKonbiniBrand: PaymentMethod.Konbini.KonbiniBrand? = null)
+internal data class KonbiniDisplayData(
+    val receiptName: String = String.empty,
+    val receiptNameError: String? = null,
+    val receiptEmailError: String? = null,
+    val selectedKonbiniBrand: PaymentMethod.Konbini.KonbiniBrand? = null,
+    val konbiniBrandNullError: String? = null,
+)
 
 internal data class BitCashDisplayData(val bitCashId: String = String.empty)
 

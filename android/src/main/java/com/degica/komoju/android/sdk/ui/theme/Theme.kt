@@ -15,6 +15,7 @@ internal val KomojuDarkGreen = Color(0xFF172E44)
 internal val Gray200 = Color(0xFFD7DCE0)
 internal val Gray500 = Color(0xFF6D7D88)
 internal val Blue600 = Color(0xFF297FE7)
+internal val Red600 = Color(0xFFF04438)
 
 internal val LocalI18nTextsProvider = compositionLocalOf<I18nTexts> {
     error("Use KomojuMobileSdkTheme to provide I18nTexts")

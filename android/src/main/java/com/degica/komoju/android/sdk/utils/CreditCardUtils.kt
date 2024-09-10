@@ -3,6 +3,13 @@ package com.degica.komoju.android.sdk.utils
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
+import kotlinx.datetime.Clock
+import kotlinx.datetime.DatePeriod
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.minus
+import kotlinx.datetime.plus
+import kotlinx.datetime.todayIn
 
 internal object CreditCardUtils {
     fun identifyCardScheme(cardNumber: String): CardScheme {
@@ -135,6 +142,46 @@ internal object CreditCardUtils {
         }
 
         return TransformedText(AnnotatedString(out), offsetMapping)
+    }
+    fun Char.isValidCardHolderNameChar(): Boolean = isLetter() || this == ' ' || this == '.' || this == '-'
+
+    fun String.isValidCardNumber(): Boolean {
+        val sanitizedCardNumber = filter { it.isDigit() }
+        if (sanitizedCardNumber.length !in 13..19) {
+            return false
+        }
+        var sum = 0
+        var alternate = false
+        for (i in sanitizedCardNumber.length - 1 downTo 0) {
+            var digit = Character.getNumericValue(sanitizedCardNumber[i])
+            if (alternate) {
+                digit *= 2
+                if (digit > 9) {
+                    digit -= 9
+                }
+            }
+            sum += digit
+            alternate = !alternate
+        }
+
+        // The card number is valid if the sum is divisible by 10
+        return sum % 10 == 0
+    }
+
+    fun String.isValidCVV() = isNotBlank() && length in 3..7
+
+    fun String.isValidExpiryDate(): Boolean {
+        return try {
+            val (expirationMonth, expirationYear) = take(2).toInt() to takeLast(2).toInt()
+            val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
+            val fullYear = today.year.toString().take(2) + expirationYear
+            val cardExpiryDate = LocalDate(fullYear.toInt(), expirationMonth, 1)
+                .plus(DatePeriod(months = 1))
+                .minus(DatePeriod(days = 1)) // Last day of the month
+            return cardExpiryDate >= today
+        } catch (e: Exception) {
+            false
+        }
     }
 }
 
