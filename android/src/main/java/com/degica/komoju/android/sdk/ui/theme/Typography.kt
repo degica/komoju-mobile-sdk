@@ -13,12 +13,11 @@ private fun interFontFamily() = FontFamily(
     Font(R.font.komoju_font_inter_regular, weight = FontWeight.Normal),
     Font(R.font.komoju_font_inter_medium, weight = FontWeight.Medium),
     Font(R.font.komoju_font_inter_semibold, weight = FontWeight.SemiBold),
-    Font(R.font.komoju_font_inter_bold, weight = FontWeight.Bold)
+    Font(R.font.komoju_font_inter_bold, weight = FontWeight.Bold),
 )
 
 @Composable
 fun interTypography() = Typography().run {
-
     val fontFamily = interFontFamily()
     copy(
         displayLarge = displayLarge.copy(fontFamily = fontFamily),
@@ -30,11 +29,11 @@ fun interTypography() = Typography().run {
         titleLarge = titleLarge.copy(fontFamily = fontFamily),
         titleMedium = titleMedium.copy(fontFamily = fontFamily),
         titleSmall = titleSmall.copy(fontFamily = fontFamily),
-        bodyLarge = bodyLarge.copy(fontFamily =  fontFamily),
+        bodyLarge = bodyLarge.copy(fontFamily = fontFamily),
         bodyMedium = bodyMedium.copy(fontFamily = fontFamily),
         bodySmall = bodySmall.copy(fontFamily = fontFamily),
         labelLarge = labelLarge.copy(fontFamily = fontFamily),
         labelMedium = labelMedium.copy(fontFamily = fontFamily),
-        labelSmall = labelSmall.copy(fontFamily = fontFamily)
+        labelSmall = labelSmall.copy(fontFamily = fontFamily),
     )
 }
