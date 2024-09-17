@@ -36,6 +36,7 @@ internal fun KomojuMobileSdkTheme(language: Language, content: @Composable () ->
             MaterialTheme(
                 colorScheme = LightColorScheme,
                 content = content,
+                typography = interTypography(),
             )
         }
     }
