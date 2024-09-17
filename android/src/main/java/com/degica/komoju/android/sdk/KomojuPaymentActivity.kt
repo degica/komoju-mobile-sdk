@@ -42,7 +42,7 @@ internal class KomojuPaymentViewModel : ViewModel() {
     private val _isVisible = MutableStateFlow(false)
     val isVisible = _isVisible.asStateFlow()
 
-    fun toggleVisiblity(value: Boolean){
+    fun toggleVisiblity(value: Boolean) {
         _isVisible.value = value
     }
 }

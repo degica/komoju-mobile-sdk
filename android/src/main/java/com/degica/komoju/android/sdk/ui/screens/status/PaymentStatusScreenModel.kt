@@ -12,10 +12,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-internal class PaymentStatusScreenModel(
-    private val config: KomojuSDK.Configuration,
-    private val payment: Payment? = null,
-) : StateScreenModel<PaymentStatusUiState>(PaymentStatusUiState(payment)) {
+internal class PaymentStatusScreenModel(private val config: KomojuSDK.Configuration, private val payment: Payment? = null) :
+    StateScreenModel<PaymentStatusUiState>(PaymentStatusUiState(payment)) {
     private val komojuApi = KomojuRemoteApi(config.publishableKey, config.language.languageCode)
     private val _router = MutableStateFlow<Router?>(null)
     val router = _router.asStateFlow()
@@ -54,6 +52,5 @@ internal class PaymentStatusScreenModel(
                 }
             }
         }
-
     }
 }

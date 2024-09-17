@@ -4,9 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class PaymentResponseDto(
-    @SerialName("payment") val payment: Payment? = null,
-) {
+internal data class PaymentResponseDto(@SerialName("payment") val payment: Payment? = null) {
     @Serializable
     data class Payment(
         @SerialName("amount") val amount: Int? = null,

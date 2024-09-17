@@ -46,7 +46,6 @@ import com.degica.komoju.android.sdk.ui.theme.Gray50
 import com.degica.komoju.android.sdk.ui.theme.Gray700
 import com.degica.komoju.android.sdk.utils.AmountUtils
 import com.degica.komoju.mobile.sdk.entities.Payment
-import com.degica.komoju.mobile.sdk.entities.PaymentMethod
 import com.degica.komoju.mobile.sdk.entities.PaymentStatus
 
 internal data class PaymentStatusScreen(val route: KomojuPaymentRoute.Status) : Screen {
@@ -157,10 +156,8 @@ private fun KonbiniPaymentStatusPreview() {
     PaymentStatus(
         konbini,
         {
-
         },
     ) {
-
     }
 }
 
@@ -211,5 +208,4 @@ private val Payment.secondaryButtonText
         status == PaymentStatus.FAILED -> "Have a question? Contact us"
         this is Payment.Konbini && status == PaymentStatus.AUTHORIZED -> "I will do it later"
         else -> null
-
     }

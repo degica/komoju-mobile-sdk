@@ -1,7 +1,5 @@
 package com.degica.komoju.mobile.sdk.entities
 
-import com.degica.komoju.mobile.sdk.entities.PaymentMethod.Konbini.KonbiniBrand
-
 sealed interface Payment {
     val amount: Double
     val currency: String

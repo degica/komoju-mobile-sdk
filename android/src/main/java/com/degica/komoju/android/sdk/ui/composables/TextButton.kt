@@ -14,7 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-internal fun TextButton(modifier : Modifier = Modifier, text: String, onClick: () -> Unit) {
+internal fun TextButton(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
     Button(
         modifier = modifier,
         onClick = onClick,
