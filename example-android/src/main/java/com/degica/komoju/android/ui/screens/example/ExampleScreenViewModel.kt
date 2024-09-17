@@ -1,5 +1,6 @@
 package com.degica.komoju.android.ui.screens.example
 
+import android.util.Log
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -42,6 +43,7 @@ class ExampleScreenViewModel : ViewModel() {
         viewModelScope.launch {
             fetchPublishableKey()?.let { publishableKey ->
                 createSession()?.let { sessionId ->
+                    Log.d("Aman", "publishableKey: $publishableKey, sessionId: $sessionId")
                     KomojuSDK.Configuration.Builder(publishableKey, sessionId)
                         .setLanguage(uiStateValue.selectedLanguage)
                         .setCurrency(uiStateValue.selectedCurrency)

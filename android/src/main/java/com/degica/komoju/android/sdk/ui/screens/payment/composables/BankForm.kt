@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.degica.komoju.android.sdk.types.Currency
 import com.degica.komoju.android.sdk.types.Language
+import com.degica.komoju.android.sdk.ui.composables.PrimaryButton
 import com.degica.komoju.android.sdk.ui.screens.payment.CommonDisplayData
 import com.degica.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
 import com.degica.komoju.android.sdk.ui.theme.LocalI18nTextsProvider
@@ -87,7 +88,7 @@ internal fun BankForm(
             keyboardType = KeyboardType.Number,
         )
         Spacer(modifier = Modifier.height(16.dp))
-        PaymentButton(
+        PrimaryButton(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),

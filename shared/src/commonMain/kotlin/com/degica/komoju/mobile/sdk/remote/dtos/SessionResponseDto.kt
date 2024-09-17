@@ -1,5 +1,6 @@
 package com.degica.komoju.mobile.sdk.remote.dtos
 
+import com.degica.komoju.mobile.sdk.remote.dtos.PaymentResponseDto.Payment
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonElement
@@ -22,6 +23,7 @@ internal data class SessionResponse(
     @SerialName("return_url") val returnUrl: String? = null,
     @SerialName("session_url") val sessionUrl: String? = null,
     @SerialName("status") val status: String? = null,
+    @SerialName("payment") val payment: Payment? = null,
 ) {
     @Serializable
     class Metadata

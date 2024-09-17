@@ -27,8 +27,8 @@ interface RemoteApiService {
         fun create(): RemoteApiService = Retrofit.Builder()
             .client(
                 OkHttpClient.Builder()
-                    .connectTimeout(100, TimeUnit.SECONDS)
-                    .readTimeout(100, TimeUnit.SECONDS)
+                    .connectTimeout(100, TimeUnit.SECONDS) // Set the connection timeout to 100 seconds because the glitch server is slow
+                    .readTimeout(100, TimeUnit.SECONDS) // Set the read timeout to 100 seconds because the glitch server is slow
                     .build(),
             )
             .addConverterFactory(GsonConverterFactory.create())

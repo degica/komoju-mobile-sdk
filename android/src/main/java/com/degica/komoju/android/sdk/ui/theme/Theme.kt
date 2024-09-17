@@ -12,8 +12,10 @@ import com.degica.komoju.mobile.sdk.i18n.I18nTexts
 
 internal val KomojuLightGreen = Color(0xFF3CC239)
 internal val KomojuDarkGreen = Color(0xFF172E44)
+internal val Gray50 = Color(0xFFF6F7F9)
 internal val Gray200 = Color(0xFFD7DCE0)
 internal val Gray500 = Color(0xFF6D7D88)
+internal val Gray700 = Color(0xFF45535E)
 internal val Blue600 = Color(0xFF297FE7)
 internal val Red600 = Color(0xFFF04438)
 

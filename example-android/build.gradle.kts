@@ -16,10 +16,6 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
-        buildConfigField("String", "TEST_SERVER_URL", "\"https://rn-komoju-app.glitch.me/\"")
     }
 
     buildTypes {
@@ -29,6 +25,17 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
+        }
+    }
+    flavorDimensions += "environment"
+    productFlavors {
+        create("dev") {
+            dimension = "environment"
+            buildConfigField("String", "TEST_SERVER_URL", "\"https://rn-komoju-app.glitch.me/\"")
+        }
+        create("live") {
+            dimension = "environment"
+            buildConfigField("String", "TEST_SERVER_URL", "\"https://live-komoju-app.glitch.me/\"")
         }
     }
     compileOptions {

@@ -10,10 +10,10 @@ import kotlinx.serialization.json.Json
 
 private const val BASE_URL = "https://komoju.com/api/"
 
-internal fun createNetworkClient(publishableKey: String) = HttpClient {
+internal fun createNetworkClient(publishableKey: String?) = HttpClient {
     defaultRequest {
         url(BASE_URL)
-        headers.append("authorization", "Basic ${publishableKey.encodeBase64()}")
+        headers.append("authorization", "Basic ${publishableKey?.encodeBase64()}")
         headers.appendIfNameAbsent("Accept", "application/json")
         headers.appendIfNameAbsent("Content-Type", "application/json")
     }

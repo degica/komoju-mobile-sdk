@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.sp
 import com.degica.komoju.android.sdk.R
 import com.degica.komoju.android.sdk.types.Currency
 import com.degica.komoju.android.sdk.types.Language
+import com.degica.komoju.android.sdk.ui.composables.PrimaryButton
 import com.degica.komoju.android.sdk.ui.screens.payment.CreditCardDisplayData
 import com.degica.komoju.android.sdk.ui.theme.Gray200
 import com.degica.komoju.android.sdk.ui.theme.Gray500
@@ -205,7 +206,7 @@ internal fun CreditCardForm(
         )
 
         Spacer(modifier = Modifier.height(8.dp))
-        PaymentButton(
+        PrimaryButton(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .fillMaxWidth(),
