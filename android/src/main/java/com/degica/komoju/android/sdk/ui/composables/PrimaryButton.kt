@@ -1,4 +1,4 @@
-package com.degica.komoju.android.sdk.ui.screens.payment.composables
+package com.degica.komoju.android.sdk.ui.composables
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,7 +18,7 @@ import com.degica.komoju.android.sdk.ui.theme.Blue600
 import com.degica.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
 
 @Composable
-internal fun PaymentButton(text: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
+internal fun PrimaryButton(text: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
     Button(
         modifier = modifier,
         onClick = onClick,
@@ -33,7 +33,7 @@ internal fun PaymentButton(text: String, modifier: Modifier = Modifier, onClick:
 @Preview(showBackground = true, showSystemUi = true)
 private fun PaymentButtonPreview() {
     KomojuMobileSdkTheme(language = Language.ENGLISH) {
-        PaymentButton(
+        PrimaryButton(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),

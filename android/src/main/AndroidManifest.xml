@@ -5,6 +5,7 @@
     <application>
         <activity
             android:name=".KomojuPaymentActivity"
+            android:launchMode="singleInstance"
             android:theme="@style/Komoju.Transparent.Activity" />
     </application>
 </manifest>

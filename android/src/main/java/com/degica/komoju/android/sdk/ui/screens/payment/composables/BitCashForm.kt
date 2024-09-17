@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.degica.komoju.android.sdk.types.Currency
+import com.degica.komoju.android.sdk.ui.composables.PrimaryButton
 import com.degica.komoju.android.sdk.ui.screens.payment.BitCashDisplayData
 import com.degica.komoju.android.sdk.ui.theme.LocalI18nTextsProvider
 import com.degica.komoju.android.sdk.utils.AmountUtils
@@ -39,7 +40,7 @@ internal fun BitCashForm(
             },
         )
         Spacer(modifier = Modifier.height(16.dp))
-        PaymentButton(
+        PrimaryButton(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),

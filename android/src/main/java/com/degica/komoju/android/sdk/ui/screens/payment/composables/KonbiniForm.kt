@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.degica.komoju.android.sdk.types.Currency
 import com.degica.komoju.android.sdk.types.Language
+import com.degica.komoju.android.sdk.ui.composables.PrimaryButton
 import com.degica.komoju.android.sdk.ui.screens.payment.CommonDisplayData
 import com.degica.komoju.android.sdk.ui.screens.payment.KonbiniDisplayData
 import com.degica.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
@@ -78,7 +79,7 @@ internal fun KonbiniForm(
             text = konbiniDisplayData.konbiniBrandNullError.orEmpty(),
             style = TextStyle(fontSize = 16.sp, color = Red600),
         )
-        PaymentButton(
+        PrimaryButton(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),

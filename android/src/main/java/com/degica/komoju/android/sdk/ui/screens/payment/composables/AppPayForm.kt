@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.degica.komoju.android.sdk.R
 import com.degica.komoju.android.sdk.types.Language
+import com.degica.komoju.android.sdk.ui.composables.PrimaryButton
 import com.degica.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
 import com.degica.komoju.android.sdk.ui.theme.LocalI18nTextsProvider
 import com.degica.komoju.mobile.sdk.entities.PaymentMethod
@@ -88,7 +89,7 @@ internal fun AppPayForm(paymentMethod: PaymentMethod, onPayButtonClicked: () -> 
                 Text(text = LocalI18nTextsProvider.current["LIGHT_BOX_CONTENT"])
             }
             Spacer(modifier = Modifier.height(32.dp))
-            PaymentButton(LocalI18nTextsProvider.current[paymentButtonKey], modifier = Modifier.fillMaxWidth(), onPayButtonClicked)
+            PrimaryButton(LocalI18nTextsProvider.current[paymentButtonKey], modifier = Modifier.fillMaxWidth(), onPayButtonClicked)
         }
     }
 }
