@@ -1,5 +1,6 @@
 package com.degica.komoju.android.sdk.ui.theme
 
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.lightColorScheme
@@ -36,6 +37,7 @@ internal fun KomojuMobileSdkTheme(language: Language, content: @Composable () ->
             MaterialTheme(
                 colorScheme = LightColorScheme,
                 content = content,
+                typography = interTypography(),
             )
         }
     }
