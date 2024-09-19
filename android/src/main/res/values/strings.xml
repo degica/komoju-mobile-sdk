@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="komoju_consumer_app_scheme">this-should-not-be-the-case</string>
+</resources>

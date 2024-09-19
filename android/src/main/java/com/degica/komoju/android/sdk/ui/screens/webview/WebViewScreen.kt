@@ -41,106 +41,117 @@ import com.kevinnzou.web.rememberWebViewState
 internal data class WebViewScreen(val route: KomojuPaymentRoute.WebView) : Screen {
     @Composable
     override fun Content() {
-        val state = rememberWebViewState(route.url)
-        var showBackPressDialog by remember { mutableStateOf(false) }
-        val onBackPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
-        if (route.canComeBack.not() && showBackPressDialog.not()) {
-            BackHandler {
-                showBackPressDialog = true
+        WebViewScreenContent(route)
+    }
+}
+
+@Composable
+private fun WebViewScreenContent(route: KomojuPaymentRoute.WebView) {
+    val state = rememberWebViewState(route.url)
+    var showBackPressDialog by remember { mutableStateOf(false) }
+    val onBackPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+    if (route.canComeBack.not() && showBackPressDialog.not()) {
+        BackHandler {
+            showBackPressDialog = true
+        }
+    }
+    Column(modifier = Modifier) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(54.dp),
+        ) {
+            if (route.canComeBack) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                    contentDescription = "Back",
+                    modifier = Modifier
+                        .clickable(
+                            indication = ripple(bounded = true, radius = 24.dp),
+                            interactionSource = remember { MutableInteractionSource() },
+                            onClick = {
+                                onBackPressedDispatcher?.onBackPressed()
+                            },
+                        )
+                        .padding(16.dp),
+                )
+            }
+            Text(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 16.dp)
+                    .align(Alignment.CenterVertically),
+                text = state.pageTitle.orEmpty(),
+                fontSize = 20.sp,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+            if (route.canComeBack.not()) {
+                Image(
+                    imageVector = Icons.Rounded.Close,
+                    contentDescription = "Close Payment Sheet",
+                    modifier = Modifier
+                        .clickable(
+                            indication = ripple(bounded = true, radius = 24.dp),
+                            interactionSource = remember { MutableInteractionSource() },
+                            onClick = {
+                                showBackPressDialog = true
+                            },
+                        )
+                        .padding(16.dp),
+                )
             }
         }
-        Column(modifier = Modifier) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(54.dp),
-            ) {
-                if (route.canComeBack) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                        contentDescription = "Back",
-                        modifier = Modifier
-                            .clickable(
-                                indication = ripple(bounded = true, radius = 24.dp),
-                                interactionSource = remember { MutableInteractionSource() },
-                                onClick = {
-                                    onBackPressedDispatcher?.onBackPressed()
-                                },
-                            )
-                            .padding(16.dp),
-                    )
-                }
-                Text(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(horizontal = 16.dp)
-                        .align(Alignment.CenterVertically),
-                    text = state.pageTitle.orEmpty(),
-                    fontSize = 20.sp,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-                if (route.canComeBack.not()) {
-                    Image(
-                        imageVector = Icons.Rounded.Close,
-                        contentDescription = "Close Payment Sheet",
-                        modifier = Modifier
-                            .clickable(
-                                indication = ripple(bounded = true, radius = 24.dp),
-                                interactionSource = remember { MutableInteractionSource() },
-                                onClick = {
-                                    showBackPressDialog = true
-                                },
-                            )
-                            .padding(16.dp),
-                    )
-                }
-            }
-            val loadingState = state.loadingState
-            if (loadingState is LoadingState.Loading) {
-                LinearProgressIndicator(
-                    progress = { loadingState.progress },
-                    modifier = Modifier.fillMaxWidth(),
-                )
-            }
-            WebView(
-                modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface),
-                state = state,
-                captureBackPresses = false,
+        val loadingState = state.loadingState
+        if (loadingState is LoadingState.Loading) {
+            LinearProgressIndicator(
+                progress = { loadingState.progress },
+                modifier = Modifier.fillMaxWidth(),
             )
-            if (showBackPressDialog) {
-                AlertDialog(
-                    onDismissRequest = {
-                        showBackPressDialog = false
-                    },
-                    confirmButton = {
-                        Text(
-                            text = "Yes",
-                            modifier = Modifier
-                                .clickable {
-                                    onBackPressedDispatcher?.onBackPressed()
-                                }
-                                .padding(16.dp),
-                        )
-                    },
-                    dismissButton = {
-                        Text(
-                            text = "No",
-                            modifier = Modifier
-                                .clickable {
-                                    showBackPressDialog = false
-                                }
-                                .padding(16.dp),
-                        )
-                    },
-                    text = {
-                        Text(text = "Are you sure you want to cancel the payment?", modifier = Modifier.padding(8.dp))
-                    },
-                    title = {
-                        Text(text = "Cancel Payment?")
-                    },
-                )
-            }
+        }
+        WebView(
+            modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface),
+            state = state,
+            onCreated = {
+                it.settings.supportMultipleWindows()
+                it.settings.domStorageEnabled = true
+            },
+            captureBackPresses = false,
+            chromeClient = remember { WebChromeClient() },
+            client = remember { WebViewClient() },
+        )
+        if (showBackPressDialog) {
+            AlertDialog(
+                onDismissRequest = {
+                    showBackPressDialog = false
+                },
+                confirmButton = {
+                    Text(
+                        text = "Yes",
+                        modifier = Modifier
+                            .clickable {
+                                onBackPressedDispatcher?.onBackPressed()
+                            }
+                            .padding(16.dp),
+                    )
+                },
+                dismissButton = {
+                    Text(
+                        text = "No",
+                        modifier = Modifier
+                            .clickable {
+                                showBackPressDialog = false
+                            }
+                            .padding(16.dp),
+                    )
+                },
+                text = {
+                    Text(text = "Are you sure you want to cancel the payment?", modifier = Modifier.padding(8.dp))
+                },
+                title = {
+                    Text(text = "Cancel Payment?")
+                },
+            )
         }
     }
 }

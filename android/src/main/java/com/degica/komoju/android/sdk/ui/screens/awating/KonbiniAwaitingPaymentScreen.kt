@@ -1,4 +1,4 @@
-package com.degica.komoju.android.sdk.ui.screens.status
+package com.degica.komoju.android.sdk.ui.screens.awating
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -48,10 +48,10 @@ import com.degica.komoju.android.sdk.utils.AmountUtils
 import com.degica.komoju.mobile.sdk.entities.Payment
 import com.degica.komoju.mobile.sdk.entities.PaymentStatus
 
-internal data class PaymentStatusScreen(val route: KomojuPaymentRoute.Status) : Screen {
+internal data class KonbiniAwaitingPaymentScreen(val route: KomojuPaymentRoute.KonbiniAwaitingPayment) : Screen {
     @Composable
     override fun Content() {
-        val screenModel = rememberScreenModel { PaymentStatusScreenModel(route.configuration, route.payment) }
+        val screenModel = rememberScreenModel { KonbiniAwaitingPaymentScreenModel(route.configuration, route.payment) }
         val uiState by screenModel.state.collectAsState()
         val router by screenModel.router.collectAsState()
         RouterEffect(router, screenModel::onRouteConsumed)

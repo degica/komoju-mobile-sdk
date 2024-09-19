@@ -20,6 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.degica.komoju.android.sdk.R
 import com.degica.komoju.android.sdk.types.Language
 import com.degica.komoju.android.sdk.ui.theme.Gray200
@@ -47,16 +48,16 @@ internal fun KonbiniBrandsRow(konbiniBrands: List<KonbiniBrand>, selectedKonbini
 private fun KonbiniBrand(konbiniBrand: KonbiniBrand, isSelected: Boolean, onSelected: () -> Unit) {
     Column(
         modifier = Modifier
-            .defaultMinSize(minWidth = 136.dp)
+            .defaultMinSize(minWidth = 120.dp)
             .padding(4.dp)
             .clip(RoundedCornerShape(8.dp))
             .border(1.dp, if (isSelected) KomojuDarkGreen else Gray200, RoundedCornerShape(8.dp))
             .clickable(onClick = onSelected)
-            .padding(16.dp),
+            .padding(8.dp),
     ) {
         Image(painter = painterResource(konbiniBrand.displayIcon), contentDescription = "${konbiniBrand.key} icon", modifier = Modifier.size(32.dp))
         Spacer(modifier = Modifier.height(4.dp))
-        Text(LocalI18nTextsProvider.current[konbiniBrand.key])
+        Text(LocalI18nTextsProvider.current[konbiniBrand.key], fontSize = 14.sp)
     }
 }
 

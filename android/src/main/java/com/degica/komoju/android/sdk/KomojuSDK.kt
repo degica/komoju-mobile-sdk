@@ -46,10 +46,17 @@ class KomojuSDK(private val configuration: Configuration) {
 
     companion object {
         internal const val CONFIGURATION_KEY: String = "KomojuSDK.Configuration"
-        fun show(context: Context, configuration: Configuration, onCompleted: () -> Unit) {
+        fun show(context: Context, configuration: Configuration) {
+            context.preChecks()
             val intent = android.content.Intent(context, KomojuPaymentActivity::class.java)
             intent.putExtra(CONFIGURATION_KEY, configuration)
             context.startActivity(intent)
+        }
+
+        private fun Context.preChecks() {
+            if (resources.getString(R.string.komoju_consumer_app_scheme) == "this-should-not-be-the-case") {
+                error("Please set komoju_consumer_app_scheme in strings.xml with your app scheme")
+            }
         }
     }
 }

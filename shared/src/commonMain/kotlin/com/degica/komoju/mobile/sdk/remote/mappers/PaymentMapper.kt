@@ -22,6 +22,12 @@ internal object PaymentMapper {
             receiptNumber = payment.paymentDetails.receipt,
             confirmationCode = payment.paymentDetails.confirmationCode,
         )
+        "paypay" -> Payment.PayPay(
+            amount = payment.amount?.toDouble() ?: 0.0,
+            currency = payment.currency.orEmpty(),
+            redirectURL = payment.paymentDetails.redirectUrl.orEmpty(),
+            status = PaymentStatus.fromString(payment.status.orEmpty()),
+        )
 
         else -> error("Invalid payment type")
     }
