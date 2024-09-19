@@ -16,7 +16,11 @@ internal data class PaymentRequestDto(@SerialName("payment_details") val payment
                     email = paymentRequest.email,
                 ),
             )
-            is PaymentRequest.PayPay -> TODO()
+            is PaymentRequest.PayPay -> PaymentRequestDto(
+                paymentDetails = PaymentDetails(
+                    type = "paypay",
+                ),
+            )
         }
     }
 

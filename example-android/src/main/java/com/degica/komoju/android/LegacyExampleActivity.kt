@@ -31,7 +31,6 @@ class LegacyExampleActivity : AppCompatActivity() {
     }
 
     private fun showPaymentScreen(configuration: KomojuSDK.Configuration) {
-        KomojuSDK.show(this, configuration) {
-        }
+        KomojuSDK.show(this, configuration)
     }
 }

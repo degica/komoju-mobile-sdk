@@ -43,12 +43,12 @@ internal fun PaymentMethodsRow(paymentMethods: List<PaymentMethod>, selectedPaym
 private fun PaymentMethodComposable(paymentMethod: PaymentMethod, isSelected: Boolean, onSelected: () -> Unit) {
     Column(
         modifier = Modifier
-            .defaultMinSize(minWidth = 148.dp, minHeight = 112.dp)
-            .padding(8.dp)
+            .defaultMinSize(minWidth = 120.dp)
+            .padding(4.dp)
             .clip(RoundedCornerShape(8.dp))
             .border(1.dp, if (isSelected) KomojuDarkGreen else Gray200, RoundedCornerShape(8.dp))
             .clickable(onClick = onSelected)
-            .padding(16.dp),
+            .padding(12.dp),
     ) {
         Image(painter = painterResource(paymentMethod.displayIcon), contentDescription = "${paymentMethod.displayName} icon", modifier = Modifier.height(32.dp))
         Spacer(modifier = Modifier.height(4.dp))

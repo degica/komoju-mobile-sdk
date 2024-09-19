@@ -57,9 +57,7 @@ fun ExampleScreen() {
     val context = LocalContext.current
     LaunchedEffect(komojuSDKConfiguration) {
         if (komojuSDKConfiguration?.canProcessPayment() == true) {
-            KomojuSDK.show(context, komojuSDKConfiguration!!) {
-                viewModel.onKomojuPaymentCompleted()
-            }
+            KomojuSDK.show(context, komojuSDKConfiguration!!)
         }
     }
     LaunchedEffect(uiState.error) {

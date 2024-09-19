@@ -1,4 +1,4 @@
-package com.degica.komoju.android.sdk.ui.screens.status
+package com.degica.komoju.android.sdk.ui.screens.awating
 
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
@@ -12,8 +12,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-internal class PaymentStatusScreenModel(private val config: KomojuSDK.Configuration, private val payment: Payment? = null) :
-    StateScreenModel<PaymentStatusUiState>(PaymentStatusUiState(payment)) {
+internal class KonbiniAwaitingPaymentScreenModel(private val config: KomojuSDK.Configuration, private val payment: Payment? = null) :
+    StateScreenModel<KonbiniAwaitingPaymentUiState>(KonbiniAwaitingPaymentUiState(payment)) {
     private val komojuApi = KomojuRemoteApi(config.publishableKey, config.language.languageCode)
     private val _router = MutableStateFlow<Router?>(null)
     val router = _router.asStateFlow()
