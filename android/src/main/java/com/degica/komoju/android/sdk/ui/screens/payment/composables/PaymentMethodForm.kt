@@ -49,7 +49,6 @@ internal fun PaymentMethodForm(
 
         is PaymentMethod.AliPay,
         is PaymentMethod.AuPay,
-        is PaymentMethod.LinePay,
         is PaymentMethod.MerPay,
         is PaymentMethod.PayPay,
         is PaymentMethod.RakutenPay,

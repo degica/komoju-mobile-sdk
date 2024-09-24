@@ -11,7 +11,6 @@ private val englishTexts = """
 {
 "credit_card": "Credit Card",
 "paypay": "PayPay",
-"linepay": "LINE Pay",
 "merpay": "Merpay",
 "rakutenpay": "Rakuten Pay",
 "paidy": "Paidy",
@@ -107,7 +106,6 @@ private val japaneseTexts = """
 {
 "credit_card": "カード",
 "paypay": "PayPay",
-"linepay": "LINE Pay",
 "merpay": "メルペイ",
 "rakutenpay": "楽天ペイ",
 "paidy": "ペイディ",

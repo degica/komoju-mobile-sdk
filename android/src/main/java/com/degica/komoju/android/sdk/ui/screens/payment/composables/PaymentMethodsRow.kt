@@ -64,7 +64,6 @@ private val PaymentMethod.displayIcon
         is PaymentMethod.BitCash -> R.drawable.komoju_ic_bitcash
         is PaymentMethod.CreditCard -> R.drawable.komoju_ic_credit_card
         is PaymentMethod.Konbini -> R.drawable.komoju_ic_konbini
-        is PaymentMethod.LinePay -> R.drawable.komoju_ic_linepay
         is PaymentMethod.MerPay -> R.drawable.komoju_ic_merpay
         is PaymentMethod.NetCash -> R.drawable.komoju_ic_credit_card
         is PaymentMethod.Paidy -> R.drawable.komoju_ic_paidy

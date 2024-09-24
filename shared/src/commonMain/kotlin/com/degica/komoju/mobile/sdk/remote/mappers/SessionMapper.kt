@@ -57,16 +57,6 @@ internal object SessionMapper {
                     displayName = i18nTexts[paymentMethodType],
                 )
 
-                "linepay" -> PaymentMethod.LinePay(
-                    hashedGateway = paymentMethod.hashedGateway.orEmpty(),
-                    exchangeRate = paymentMethod.exchangeRate ?: 1.0,
-                    currency = paymentMethod.currency.orEmpty(),
-                    amount = paymentMethod.amount ?: 0.0,
-                    additionalFields = paymentMethod.additionalFields?.filterNotNull().orEmpty(),
-                    isOffsite = paymentMethod.offsite ?: false,
-                    displayName = i18nTexts[paymentMethodType],
-                )
-
                 "merpay" -> PaymentMethod.MerPay(
                     hashedGateway = paymentMethod.hashedGateway.orEmpty(),
                     exchangeRate = paymentMethod.exchangeRate ?: 1.0,

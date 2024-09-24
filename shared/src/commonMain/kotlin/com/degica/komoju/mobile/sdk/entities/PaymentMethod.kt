@@ -28,16 +28,6 @@ sealed interface PaymentMethod {
         val isOffsite: Boolean,
     ) : PaymentMethod
 
-    data class LinePay(
-        override val displayName: String,
-        override val hashedGateway: String,
-        override val exchangeRate: Double,
-        override val currency: String,
-        override val amount: Double,
-        override val additionalFields: List<String>,
-        val isOffsite: Boolean,
-    ) : PaymentMethod
-
     data class MerPay(
         override val displayName: String,
         override val hashedGateway: String,
