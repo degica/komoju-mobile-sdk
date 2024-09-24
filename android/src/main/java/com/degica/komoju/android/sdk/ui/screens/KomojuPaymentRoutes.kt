@@ -10,6 +10,9 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.degica.komoju.android.sdk.KomojuSDK
 import com.degica.komoju.android.sdk.ui.screens.awating.KonbiniAwaitingPaymentScreen
+import com.degica.komoju.android.sdk.ui.screens.failed.PaymentFailedScreen
+import com.degica.komoju.android.sdk.ui.screens.failed.Reason
+import com.degica.komoju.android.sdk.ui.screens.success.PaymentSuccessScreen
 import com.degica.komoju.android.sdk.ui.screens.webview.WebViewScreen
 import com.degica.komoju.mobile.sdk.entities.Payment
 
@@ -25,11 +28,15 @@ internal sealed class Router {
 internal sealed interface KomojuPaymentRoute {
     data class KonbiniAwaitingPayment(val configuration: KomojuSDK.Configuration, val payment: Payment) : KomojuPaymentRoute
     data class WebView(val url: String, val canComeBack: Boolean = false) : KomojuPaymentRoute
+    data object PaymentSuccess : KomojuPaymentRoute
+    data class PaymentFailed(val reason: Reason) : KomojuPaymentRoute
 
     val screen
         get() = when (this) {
             is WebView -> WebViewScreen(this)
             is KonbiniAwaitingPayment -> KonbiniAwaitingPaymentScreen(this)
+            is PaymentFailed -> PaymentFailedScreen(reason)
+            is PaymentSuccess -> PaymentSuccessScreen()
         }
 }
 

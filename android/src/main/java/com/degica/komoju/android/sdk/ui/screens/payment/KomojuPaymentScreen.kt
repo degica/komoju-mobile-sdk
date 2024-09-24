@@ -14,13 +14,13 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import com.degica.komoju.android.sdk.KomojuSDK
@@ -39,8 +39,8 @@ internal data class KomojuPaymentScreen(private val sdkConfiguration: KomojuSDK.
     @Composable
     override fun Content() {
         val screenViewModel = rememberScreenModel { KomojuPaymentScreenModel(sdkConfiguration) }
-        val uiState by screenViewModel.state.collectAsState()
-        val router by screenViewModel.router.collectAsState()
+        val uiState by screenViewModel.state.collectAsStateWithLifecycle()
+        val router by screenViewModel.router.collectAsStateWithLifecycle()
         LaunchedEffect(sdkConfiguration.sessionId) {
             screenViewModel.init()
         }

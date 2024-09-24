@@ -28,7 +28,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,6 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.degica.komoju.android.R
 import com.degica.komoju.android.sdk.KomojuSDK
@@ -52,8 +52,8 @@ import com.degica.komoju.android.ui.theme.KomojuLightGreen
 @Preview
 fun ExampleScreen() {
     val viewModel = viewModel<ExampleScreenViewModel>()
-    val uiState by viewModel.uiState.collectAsState()
-    val komojuSDKConfiguration by viewModel.komojuSDKConfiguration.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val komojuSDKConfiguration by viewModel.komojuSDKConfiguration.collectAsStateWithLifecycle()
     val context = LocalContext.current
     LaunchedEffect(komojuSDKConfiguration) {
         if (komojuSDKConfiguration?.canProcessPayment() == true) {
