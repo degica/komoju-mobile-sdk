@@ -18,7 +18,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -33,6 +32,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import com.degica.komoju.android.sdk.R
@@ -52,8 +52,8 @@ internal data class KonbiniAwaitingPaymentScreen(val route: KomojuPaymentRoute.K
     @Composable
     override fun Content() {
         val screenModel = rememberScreenModel { KonbiniAwaitingPaymentScreenModel(route.configuration, route.payment) }
-        val uiState by screenModel.state.collectAsState()
-        val router by screenModel.router.collectAsState()
+        val uiState by screenModel.state.collectAsStateWithLifecycle()
+        val router by screenModel.router.collectAsStateWithLifecycle()
         RouterEffect(router, screenModel::onRouteConsumed)
         uiState.payment?.let {
             PaymentStatus(it, onPrimaryButtonClicked = screenModel::onPrimaryButtonClicked, onSecondaryButtonClicked = screenModel::onSecondaryButtonClicked)

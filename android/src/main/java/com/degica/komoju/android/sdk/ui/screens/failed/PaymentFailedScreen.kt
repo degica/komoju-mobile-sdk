@@ -1,4 +1,4 @@
-package com.degica.komoju.android.sdk.ui.screens.success
+package com.degica.komoju.android.sdk.ui.screens.failed
 
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.Image
@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -28,15 +29,20 @@ import com.degica.komoju.android.sdk.ui.composables.PrimaryButton
 import com.degica.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
 import com.degica.komoju.android.sdk.ui.theme.LocalI18nTextsProvider
 
-internal class PaymentSuccessScreen : Screen {
+internal class PaymentFailedScreen(val reason: Reason = Reason.USER_CANCEL) : Screen {
     @Composable
     override fun Content() {
-        PaymentSuccessScreenContent()
+        PaymentFailedScreenContent(reason)
     }
 }
 
+enum class Reason {
+    USER_CANCEL,
+    OTHER,
+}
+
 @Composable
-private fun PaymentSuccessScreenContent() {
+private fun PaymentFailedScreenContent(reason: Reason) {
     val onBackPressDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     val i18nTexts = LocalI18nTextsProvider.current
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -51,11 +57,17 @@ private fun PaymentSuccessScreenContent() {
                     },
             )
         }
-        Image(painterResource(R.drawable.komoju_ic_payment_status_completed), "status_icon")
+        Image(painterResource(R.drawable.komoju_ic_payment_status_failed), "status_icon")
         Spacer(Modifier.height(16.dp))
-        Text(i18nTexts["PAYMENT_SUCCESS"], fontSize = 24.sp, fontWeight = FontWeight.Bold)
-        Spacer(Modifier.height(16.dp))
-        Text(i18nTexts["ORDER_THANK_YOU_NOTE"])
+        Text(i18nTexts["PAYMENT_FAILED"], fontSize = 24.sp, fontWeight = FontWeight.Bold)
+        Text(
+            text = when (reason) {
+                Reason.USER_CANCEL -> i18nTexts["PAYMENT_CANCELLED_MSG"]
+                Reason.OTHER -> i18nTexts["PAYMENT_RE_TRY_MSG_OTHERS"]
+            },
+            modifier = Modifier.padding(16.dp),
+            textAlign = TextAlign.Center,
+        )
         Spacer(Modifier.weight(1f))
         PrimaryButton(
             modifier = Modifier
@@ -72,6 +84,6 @@ private fun PaymentSuccessScreenContent() {
 @Preview
 private fun PaymentSuccessScreenContentPreview() {
     KomojuMobileSdkTheme(Language.ENGLISH) {
-        PaymentSuccessScreenContent()
+        PaymentFailedScreenContent(Reason.USER_CANCEL)
     }
 }

@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.IntentCompat
 import androidx.core.util.Consumer
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
@@ -60,8 +60,8 @@ internal class KomojuPaymentActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val isVisible by viewModel.isVisible.collectAsState()
-            val router by viewModel.router.collectAsState()
+            val isVisible by viewModel.isVisible.collectAsStateWithLifecycle()
+            val router by viewModel.router.collectAsStateWithLifecycle()
             val animatedAlpha by animateFloatAsState(
                 targetValue = if (isVisible) .3f else .0f,
                 label = "scrim_alpha_animation",
@@ -101,7 +101,7 @@ internal class KomojuPaymentActivity : ComponentActivity() {
                 }
             }
             LaunchedEffect(Unit) {
-                viewModel.toggleVisiblity(true)
+                viewModel.toggleVisibility(true)
             }
         }
     }
@@ -120,7 +120,7 @@ internal class KomojuPaymentActivity : ComponentActivity() {
 
     override fun finish() {
         lifecycleScope.launch {
-            viewModel.toggleVisiblity(false)
+            viewModel.toggleVisibility(false)
             delay(ANIMATION_DURATION.toLong()) // Let the animation finish
             super.finish()
         }
