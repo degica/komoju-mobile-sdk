@@ -8,7 +8,7 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 import kotlinx.parcelize.Parcelize
 
-class KomojuSDK(private val configuration: Configuration) {
+object KomojuSDK {
     @Parcelize
     data class Configuration(
         internal val language: Language,
@@ -16,6 +16,7 @@ class KomojuSDK(private val configuration: Configuration) {
         internal val publishableKey: String?,
         internal val isDebugMode: Boolean,
         internal val sessionId: String?,
+        internal val redirectURL: String = "",
     ) : Parcelable {
         class Builder(private var publishableKey: String, private var sessionId: String) {
             private var language: Language = Language.ENGLISH
@@ -44,19 +45,22 @@ class KomojuSDK(private val configuration: Configuration) {
         }
     }
 
-    companion object {
-        internal const val CONFIGURATION_KEY: String = "KomojuSDK.Configuration"
-        fun show(context: Context, configuration: Configuration) {
-            context.preChecks()
-            val intent = android.content.Intent(context, KomojuPaymentActivity::class.java)
-            intent.putExtra(CONFIGURATION_KEY, configuration)
-            context.startActivity(intent)
-        }
+    internal const val CONFIGURATION_KEY: String = "KomojuSDK.Configuration"
+    fun show(context: Context, configuration: Configuration) {
+        context.preChecks()
+        val intent = android.content.Intent(context, KomojuPaymentActivity::class.java)
+        intent.putExtra(
+            CONFIGURATION_KEY,
+            configuration.copy(
+                redirectURL = "${context.resources.getString(R.string.komoju_consumer_app_scheme)}://",
+            ),
+        )
+        context.startActivity(intent)
+    }
 
-        private fun Context.preChecks() {
-            if (resources.getString(R.string.komoju_consumer_app_scheme) == "this-should-not-be-the-case") {
-                error("Please set komoju_consumer_app_scheme in strings.xml with your app scheme")
-            }
+    private fun Context.preChecks() {
+        if (resources.getString(R.string.komoju_consumer_app_scheme) == "this-should-not-be-the-case") {
+            error("Please set komoju_consumer_app_scheme in strings.xml with your app scheme")
         }
     }
 }

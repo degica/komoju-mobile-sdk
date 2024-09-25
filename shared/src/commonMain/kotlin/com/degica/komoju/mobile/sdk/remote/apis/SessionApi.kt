@@ -4,6 +4,7 @@ import com.degica.komoju.mobile.sdk.entities.Payment
 import com.degica.komoju.mobile.sdk.entities.PaymentRequest
 import com.degica.komoju.mobile.sdk.entities.Session
 import com.degica.komoju.mobile.sdk.i18n.I18nTexts
+import com.degica.komoju.mobile.sdk.remote.dtos.PayByTokenRequestDto
 import com.degica.komoju.mobile.sdk.remote.dtos.PaymentErrorResponseDto
 import com.degica.komoju.mobile.sdk.remote.dtos.PaymentRequestDto
 import com.degica.komoju.mobile.sdk.remote.dtos.PaymentResponseDto
@@ -23,7 +24,8 @@ import io.ktor.http.contentType
 interface SessionApi {
     suspend fun show(id: String): Result<Session>
     suspend fun pay(id: String, paymentRequest: PaymentRequest): Result<Payment>
-    suspend fun refreshPayment(id: String): Result<Payment>
+    suspend fun pay(sessionID: String, token: String, amount: String, currency: String): Result<Payment>
+    suspend fun verifyPaymentBySessionID(id: String): Result<Payment>
 }
 
 internal class SessionApiImpl(private val language: I18nTexts, private val networkClient: HttpClient) : SessionApi {
@@ -51,9 +53,27 @@ internal class SessionApiImpl(private val language: I18nTexts, private val netwo
         }
     }
 
-    override suspend fun refreshPayment(id: String): Result<Payment> = runCatching {
+    override suspend fun verifyPaymentBySessionID(id: String): Result<Payment> = runCatching {
         networkClient.get("v1/sessions/$id").body<SessionResponse>()
     }.mapCatching { response ->
         PaymentMapper.map(response)
+    }
+
+    override suspend fun pay(sessionID: String, token: String, amount: String, currency: String): Result<Payment> = runCatching {
+        networkClient.post("v1/sessions/$sessionID/pay") {
+            contentType(ContentType.Application.Json)
+            setBody(PayByTokenRequestDto.from(amount, currency, token))
+        }.run {
+            when (status) {
+                HttpStatusCode.OK -> body<PaymentResponseDto>()
+                else -> body<PaymentErrorResponseDto>()
+            }
+        }
+    }.mapCatching { response ->
+        when (response) {
+            is PaymentResponseDto -> PaymentMapper.map(response)
+            is PaymentErrorResponseDto -> PaymentErrorMapper.map(amount, currency, response)
+            else -> error("Invalid response")
+        }
     }
 }

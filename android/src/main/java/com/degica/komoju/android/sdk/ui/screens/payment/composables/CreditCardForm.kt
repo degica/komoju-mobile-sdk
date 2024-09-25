@@ -214,11 +214,17 @@ internal fun CreditCardForm(
             onClick = onPayButtonClicked,
         )
 
-        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
-            Checkbox(creditCardDisplayData.saveCard, onCheckedChange = {
-                onCreditCardDisplayDataChange(creditCardDisplayData.copy(saveCard = it))
-            }, colors = CheckboxDefaults.colors(checkedColor = Color.Black, uncheckedColor = Color.Black))
-            Text(LocalI18nTextsProvider.current["SAVE_CARD"])
+        if (creditCardDisplayData.canSaveCard) {
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
+                Checkbox(
+                    creditCardDisplayData.saveCard,
+                    onCheckedChange = {
+                        onCreditCardDisplayDataChange(creditCardDisplayData.copy(saveCard = it))
+                    },
+                    colors = CheckboxDefaults.colors(checkedColor = Color.Black, uncheckedColor = Color.Black),
+                )
+                Text(LocalI18nTextsProvider.current["SAVE_CARD"])
+            }
         }
     }
 }
@@ -232,7 +238,7 @@ private fun CreditCardFormPreview() {
         hashedGateway = "",
         exchangeRate = 0.0,
         currency = "",
-        amount = 0.0,
+        amount = "0",
         additionalFields = listOf(),
         brands = listOf(),
         displayName = "Credit Card",

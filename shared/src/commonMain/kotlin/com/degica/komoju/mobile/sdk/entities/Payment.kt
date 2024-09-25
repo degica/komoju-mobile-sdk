@@ -1,13 +1,13 @@
 package com.degica.komoju.mobile.sdk.entities
 
 sealed interface Payment {
-    val amount: Double
+    val amount: String
     val currency: String
     val status: PaymentStatus
 
     data class Konbini(
         override val status: PaymentStatus,
-        override val amount: Double,
+        override val amount: String,
         override val currency: String,
         val redirectURL: String,
         val konbiniStoreKey: String,
@@ -17,9 +17,11 @@ sealed interface Payment {
         val confirmationCode: String?,
     ) : Payment
 
-    data class PayPay(override val status: PaymentStatus, override val amount: Double, override val currency: String, val redirectURL: String) : Payment
+    data class PayPay(override val status: PaymentStatus, override val amount: String, override val currency: String, val redirectURL: String) : Payment
 
-    data class Error(val code: String, val message: String, override val amount: Double, override val currency: String) : Payment {
+    data class CreditCard(override val status: PaymentStatus, override val amount: String, override val currency: String) : Payment
+
+    data class Error(val code: String, val message: String, override val amount: String, override val currency: String) : Payment {
         override val status: PaymentStatus = PaymentStatus.EXPIRED
     }
 }

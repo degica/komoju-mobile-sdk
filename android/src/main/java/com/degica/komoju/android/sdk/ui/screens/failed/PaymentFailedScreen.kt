@@ -26,23 +26,25 @@ import cafe.adriel.voyager.core.screen.Screen
 import com.degica.komoju.android.sdk.R
 import com.degica.komoju.android.sdk.types.Language
 import com.degica.komoju.android.sdk.ui.composables.PrimaryButton
+import com.degica.komoju.android.sdk.ui.screens.KomojuPaymentRoute
 import com.degica.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
 import com.degica.komoju.android.sdk.ui.theme.LocalI18nTextsProvider
 
-internal class PaymentFailedScreen(val reason: Reason = Reason.USER_CANCEL) : Screen {
+internal class PaymentFailedScreen(private val route: KomojuPaymentRoute.PaymentFailed) : Screen {
     @Composable
     override fun Content() {
-        PaymentFailedScreenContent(reason)
+        PaymentFailedScreenContent(route)
     }
 }
 
 enum class Reason {
     USER_CANCEL,
+    CREDIT_CARD_ERROR,
     OTHER,
 }
 
 @Composable
-private fun PaymentFailedScreenContent(reason: Reason) {
+private fun PaymentFailedScreenContent(route: KomojuPaymentRoute.PaymentFailed) {
     val onBackPressDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     val i18nTexts = LocalI18nTextsProvider.current
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -61,9 +63,10 @@ private fun PaymentFailedScreenContent(reason: Reason) {
         Spacer(Modifier.height(16.dp))
         Text(i18nTexts["PAYMENT_FAILED"], fontSize = 24.sp, fontWeight = FontWeight.Bold)
         Text(
-            text = when (reason) {
+            text = when (route.reason) {
                 Reason.USER_CANCEL -> i18nTexts["PAYMENT_CANCELLED_MSG"]
                 Reason.OTHER -> i18nTexts["PAYMENT_RE_TRY_MSG_OTHERS"]
+                Reason.CREDIT_CARD_ERROR -> i18nTexts["PAYMENT_RE_TRY_MSG"]
             },
             modifier = Modifier.padding(16.dp),
             textAlign = TextAlign.Center,
@@ -84,6 +87,6 @@ private fun PaymentFailedScreenContent(reason: Reason) {
 @Preview
 private fun PaymentSuccessScreenContentPreview() {
     KomojuMobileSdkTheme(Language.ENGLISH) {
-        PaymentFailedScreenContent(Reason.USER_CANCEL)
+        PaymentFailedScreenContent(KomojuPaymentRoute.PaymentFailed(Reason.USER_CANCEL))
     }
 }

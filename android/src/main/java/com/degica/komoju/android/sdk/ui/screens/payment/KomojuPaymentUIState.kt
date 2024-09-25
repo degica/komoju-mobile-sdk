@@ -33,6 +33,7 @@ internal data class CreditCardDisplayData(
     val creditCardExpiryDate: String = String.empty,
     val creditCardCvv: String = String.empty,
     val creditCardError: String? = null,
+    val canSaveCard: Boolean = false,
     val saveCard: Boolean = false,
 )
 

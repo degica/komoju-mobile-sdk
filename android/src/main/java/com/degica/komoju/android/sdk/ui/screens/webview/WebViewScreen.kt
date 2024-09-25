@@ -113,8 +113,7 @@ private fun WebViewScreenContent(route: KomojuPaymentRoute.WebView) {
             modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface),
             state = state,
             onCreated = {
-                it.settings.supportMultipleWindows()
-                it.settings.domStorageEnabled = true
+                it.settings.javaScriptEnabled = route.isJavaScriptEnabled
             },
             captureBackPresses = false,
             chromeClient = remember { WebChromeClient() },

@@ -15,8 +15,9 @@
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT"/>
 
-                <data android:scheme="komapp" />
+                <data android:scheme="@string/komoju_consumer_app_scheme" />
             </intent-filter>
         </activity>
     </application>

@@ -65,9 +65,9 @@ private val KonbiniBrand.displayIcon
     get() = when (this) {
         is KonbiniBrand.DailyYamazaki -> R.drawable.komoju_ic_daily_yamazaki
         is KonbiniBrand.FamilyMart -> R.drawable.komoju_ic_family_mart
-        is KonbiniBrand.Lawson -> R.drawable.komoju_ic_konbini
+        is KonbiniBrand.Lawson -> R.drawable.komoju_ic_lawson
         is KonbiniBrand.MiniStop -> R.drawable.komoju_ic_ministop
-        is KonbiniBrand.SeicoMart -> R.drawable.komoju_ic_konbini
+        is KonbiniBrand.SeicoMart -> R.drawable.komoju_ic_seico_mart
         is KonbiniBrand.SevenEleven -> R.drawable.komoju_ic_seven_eleven
     }
 

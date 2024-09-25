@@ -1,8 +1,9 @@
 package com.degica.komoju.android.ui.screens.example
 
+import android.app.Application
 import android.util.Log
 import androidx.core.text.isDigitsOnly
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.degica.komoju.android.sdk.KomojuSDK
 import com.degica.komoju.android.sdk.types.Currency
@@ -14,7 +15,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class ExampleScreenViewModel : ViewModel() {
+class ExampleScreenViewModel(app: Application) : AndroidViewModel(app) {
 
     private val remoteApiService = RemoteApiService.create()
 
