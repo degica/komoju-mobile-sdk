@@ -34,7 +34,7 @@ internal data class SessionResponse(
     @Serializable
     data class PaymentMethod(
         @SerialName("additional_fields") val additionalFields: List<String?>? = null,
-        @SerialName("amount") val amount: Double? = null,
+        @SerialName("amount") val amount: String? = null,
         @SerialName("brands") val brands: JsonElement? = null,
         @SerialName("currency") val currency: String? = null,
         @SerialName("customer_fee") val customerFee: Int? = null,

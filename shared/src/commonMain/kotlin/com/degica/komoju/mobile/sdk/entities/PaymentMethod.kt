@@ -5,7 +5,7 @@ sealed interface PaymentMethod {
     val hashedGateway: String
     val exchangeRate: Double
     val currency: String
-    val amount: Double
+    val amount: String
     val additionalFields: List<String>
 
     data class CreditCard(
@@ -13,7 +13,7 @@ sealed interface PaymentMethod {
         override val hashedGateway: String,
         override val exchangeRate: Double,
         override val currency: String,
-        override val amount: Double,
+        override val amount: String,
         override val additionalFields: List<String>,
         val brands: List<String>,
     ) : PaymentMethod
@@ -23,7 +23,7 @@ sealed interface PaymentMethod {
         override val hashedGateway: String,
         override val exchangeRate: Double,
         override val currency: String,
-        override val amount: Double,
+        override val amount: String,
         override val additionalFields: List<String>,
         val isOffsite: Boolean,
     ) : PaymentMethod
@@ -33,7 +33,7 @@ sealed interface PaymentMethod {
         override val hashedGateway: String,
         override val exchangeRate: Double,
         override val currency: String,
-        override val amount: Double,
+        override val amount: String,
         override val additionalFields: List<String>,
         val isOffsite: Boolean,
     ) : PaymentMethod
@@ -43,7 +43,7 @@ sealed interface PaymentMethod {
         override val hashedGateway: String,
         override val exchangeRate: Double,
         override val currency: String,
-        override val amount: Double,
+        override val amount: String,
         override val additionalFields: List<String>,
         val isOffsite: Boolean,
     ) : PaymentMethod
@@ -53,7 +53,7 @@ sealed interface PaymentMethod {
         override val hashedGateway: String,
         override val exchangeRate: Double,
         override val currency: String,
-        override val amount: Double,
+        override val amount: String,
         override val additionalFields: List<String>,
         val isOffsite: Boolean,
     ) : PaymentMethod
@@ -63,7 +63,7 @@ sealed interface PaymentMethod {
         override val hashedGateway: String,
         override val exchangeRate: Double,
         override val currency: String,
-        override val amount: Double,
+        override val amount: String,
         override val additionalFields: List<String>,
         val customerFee: Int,
     ) : PaymentMethod
@@ -73,7 +73,7 @@ sealed interface PaymentMethod {
         override val hashedGateway: String,
         override val exchangeRate: Double,
         override val currency: String,
-        override val amount: Double,
+        override val amount: String,
         override val additionalFields: List<String>,
         val customerFee: Int,
     ) : PaymentMethod
@@ -83,7 +83,7 @@ sealed interface PaymentMethod {
         override val hashedGateway: String,
         override val exchangeRate: Double,
         override val currency: String,
-        override val amount: Double,
+        override val amount: String,
         override val additionalFields: List<String>,
     ) : PaymentMethod
 
@@ -92,7 +92,7 @@ sealed interface PaymentMethod {
         override val hashedGateway: String,
         override val exchangeRate: Double,
         override val currency: String,
-        override val amount: Double,
+        override val amount: String,
         override val additionalFields: List<String>,
     ) : PaymentMethod
 
@@ -101,7 +101,7 @@ sealed interface PaymentMethod {
         override val hashedGateway: String,
         override val exchangeRate: Double,
         override val currency: String,
-        override val amount: Double,
+        override val amount: String,
         override val additionalFields: List<String>,
     ) : PaymentMethod
 
@@ -110,7 +110,7 @@ sealed interface PaymentMethod {
         override val hashedGateway: String,
         override val exchangeRate: Double,
         override val currency: String,
-        override val amount: Double,
+        override val amount: String,
         override val additionalFields: List<String>,
         val isOffsite: Boolean,
     ) : PaymentMethod
@@ -120,7 +120,7 @@ sealed interface PaymentMethod {
         override val hashedGateway: String,
         override val exchangeRate: Double,
         override val currency: String,
-        override val amount: Double,
+        override val amount: String,
         override val additionalFields: List<String>,
         val isOffsite: Boolean,
         val secondIcon: String,
@@ -131,7 +131,7 @@ sealed interface PaymentMethod {
         override val hashedGateway: String,
         override val exchangeRate: Double,
         override val currency: String,
-        override val amount: Double,
+        override val amount: String,
         override val additionalFields: List<String>,
         val customerFee: Int,
         val brands: List<KonbiniBrand>,
@@ -158,7 +158,7 @@ sealed interface PaymentMethod {
         override val hashedGateway: String,
         override val exchangeRate: Double,
         override val currency: String,
-        override val amount: Double,
+        override val amount: String,
         override val additionalFields: List<String>,
     ) : PaymentMethod
 }

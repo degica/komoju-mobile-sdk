@@ -42,7 +42,7 @@ internal class KonbiniAwaitingPaymentScreenModel(private val config: KomojuSDK.C
             mutableState.update {
                 it.copy(isLoading = true)
             }
-            komojuApi.sessions.refreshPayment(sessionId).onSuccess { payment ->
+            komojuApi.sessions.verifyPaymentBySessionID(sessionId).onSuccess { payment ->
                 mutableState.update {
                     it.copy(payment = payment, isLoading = false)
                 }

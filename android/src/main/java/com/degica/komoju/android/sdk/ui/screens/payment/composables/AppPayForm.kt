@@ -101,7 +101,7 @@ private fun AppPayFormPreview() {
                 hashedGateway = "paypay",
                 exchangeRate = 1.0,
                 currency = "JPY",
-                amount = 100.0,
+                amount = "100",
                 additionalFields = listOf(),
                 isOffsite = false,
             ),

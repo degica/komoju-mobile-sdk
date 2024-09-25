@@ -5,6 +5,7 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import com.degica.komoju.android.sdk.KomojuSDK
 import com.degica.komoju.android.sdk.ui.screens.KomojuPaymentRoute
 import com.degica.komoju.android.sdk.ui.screens.Router
+import com.degica.komoju.android.sdk.ui.screens.failed.Reason
 import com.degica.komoju.android.sdk.utils.CreditCardUtils.isValidCVV
 import com.degica.komoju.android.sdk.utils.CreditCardUtils.isValidCardHolderNameChar
 import com.degica.komoju.android.sdk.utils.CreditCardUtils.isValidCardNumber
@@ -13,6 +14,12 @@ import com.degica.komoju.android.sdk.utils.isValidEmail
 import com.degica.komoju.mobile.sdk.entities.Payment
 import com.degica.komoju.mobile.sdk.entities.PaymentMethod
 import com.degica.komoju.mobile.sdk.entities.PaymentRequest
+import com.degica.komoju.mobile.sdk.entities.SecureTokenRequest
+import com.degica.komoju.mobile.sdk.entities.SecureTokenResponse.Status.ERRORED
+import com.degica.komoju.mobile.sdk.entities.SecureTokenResponse.Status.NEEDS_VERIFY
+import com.degica.komoju.mobile.sdk.entities.SecureTokenResponse.Status.OK
+import com.degica.komoju.mobile.sdk.entities.SecureTokenResponse.Status.SKIPPED
+import com.degica.komoju.mobile.sdk.entities.SecureTokenResponse.Status.UNKNOWN
 import com.degica.komoju.mobile.sdk.remote.apis.KomojuRemoteApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -85,14 +92,40 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
     fun onPaymentRequested(paymentMethod: PaymentMethod) {
         if (paymentMethod.validate()) {
             mutableState.update { it.copy(isLoading = true) }
-            val request = paymentMethod.toPaymentRequest()
-            screenModelScope.launch {
-                komojuApi.sessions.pay(config.sessionId.orEmpty(), request).onSuccess { payment ->
-                    mutableState.update { it.copy(isLoading = true) }
-                    payment.handle()
-                }.onFailure {
-                    mutableState.update { it.copy(isLoading = false) }
+            if (paymentMethod is PaymentMethod.CreditCard) {
+                paymentMethod.createSecureTokens()
+            } else {
+                val request = paymentMethod.toPaymentRequest()
+                screenModelScope.launch {
+                    komojuApi.sessions.pay(config.sessionId.orEmpty(), request).onSuccess { payment ->
+                        mutableState.update { it.copy(isLoading = true) }
+                        payment.handle()
+                    }.onFailure {
+                        mutableState.update { it.copy(isLoading = false) }
+                    }
                 }
+            }
+        }
+    }
+
+    private fun PaymentMethod.CreditCard.createSecureTokens() {
+        val request = toSecureTokenRequest()
+        screenModelScope.launch {
+            komojuApi.tokens.generateSecureToken(request).onSuccess {
+                when (it.status) {
+                    OK, SKIPPED ->
+                        _router.value =
+                            Router.ReplaceAll(
+                                KomojuPaymentRoute.ProcessPayment(
+                                    config,
+                                    processType = KomojuPaymentRoute.ProcessPayment.ProcessType.PayByToken(it.id, request.amount, request.currency),
+                                ),
+                            )
+                    NEEDS_VERIFY -> _router.value = Router.ReplaceAll(KomojuPaymentRoute.WebView(url = it.authURL, isJavaScriptEnabled = true))
+                    ERRORED, UNKNOWN -> _router.value = Router.ReplaceAll(KomojuPaymentRoute.PaymentFailed(Reason.CREDIT_CARD_ERROR))
+                }
+            }.onFailure {
+                _router.value = Router.ReplaceAll(KomojuPaymentRoute.PaymentFailed(Reason.CREDIT_CARD_ERROR))
             }
         }
     }
@@ -153,12 +186,23 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
         return nameError == null && emailError == null && konbiniBrandNullError == null
     }
 
+    private fun PaymentMethod.CreditCard.toSecureTokenRequest() = SecureTokenRequest(
+        amount = amount.toInt().toString(),
+        currency = currency,
+        returnUrl = config.redirectURL + "creditCard?amount=$amount&currency=$currency",
+        cardNumber = state.value.creditCardDisplayData.creditCardNumber,
+        cardHolderName = state.value.creditCardDisplayData.fullNameOnCard,
+        expiryMonth = state.value.creditCardDisplayData.creditCardExpiryDate.take(2),
+        expiryYear = state.value.creditCardDisplayData.creditCardExpiryDate.takeLast(2),
+        cvv = state.value.creditCardDisplayData.creditCardCvv,
+    )
+
     private fun PaymentMethod.toPaymentRequest(): PaymentRequest = when (this) {
         is PaymentMethod.AliPay -> TODO()
         is PaymentMethod.AuPay -> TODO()
         is PaymentMethod.BankTransfer -> TODO()
         is PaymentMethod.BitCash -> TODO()
-        is PaymentMethod.CreditCard -> TODO()
+        is PaymentMethod.CreditCard -> error("Credit Card needs to generate tokens first!")
         is PaymentMethod.Konbini -> PaymentRequest.Konbini(
             paymentMethod = this,
             konbiniBrand = state.value.konbiniDisplayData.selectedKonbiniBrand!!,

@@ -11,4 +11,11 @@ internal object PaymentErrorMapper {
         amount = request.paymentMethod.amount,
         currency = request.paymentMethod.currency,
     )
+
+    fun map(amount: String, currency: String, response: PaymentErrorResponseDto): Payment = Payment.Error(
+        response.error?.code.orEmpty(),
+        response.error?.message.orEmpty(),
+        amount = amount,
+        currency = currency,
+    )
 }

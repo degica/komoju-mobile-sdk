@@ -18,6 +18,7 @@ internal class WebViewClient : AccompanistWebViewClient() {
     override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean = view.checkAndOpen(request.url.toString())
 
     private fun WebView.checkAndOpen(url: String): Boolean {
+        Log.d("Aman", "checking url: $url")
         try {
             val uri = url.toUri()
             if (uri.scheme == resources.getString(R.string.komoju_consumer_app_scheme)) {
@@ -28,14 +29,14 @@ internal class WebViewClient : AccompanistWebViewClient() {
                     },
                     ActivityOptionsCompat.makeBasic().toBundle(),
                 )
+                return true
             } else {
                 error("Unsupported scheme for deeplink, load in webView Instead.")
             }
         } catch (_: Exception) {
             Log.d("Aman", "loading url: $url")
             loadUrl(url)
+            return false
         }
-
-        return true
     }
 }

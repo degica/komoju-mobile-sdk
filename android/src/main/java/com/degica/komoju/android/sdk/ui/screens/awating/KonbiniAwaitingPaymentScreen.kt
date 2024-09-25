@@ -148,7 +148,7 @@ private fun KonbiniPaymentStatusPreview() {
         konbiniStoreKey = "lawson",
         email = "",
         instructionURL = "",
-        amount = 110.00,
+        amount = "110",
         currency = "JPY",
         receiptNumber = "123456789",
         confirmationCode = "123456",

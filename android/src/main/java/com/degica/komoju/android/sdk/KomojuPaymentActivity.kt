@@ -44,18 +44,20 @@ import kotlinx.coroutines.launch
 private const val ANIMATION_DURATION = 500
 
 internal class KomojuPaymentActivity : ComponentActivity() {
-    private val viewModel by viewModels<KomojuPaymentViewModel>()
-
-    private val configuration: KomojuSDK.Configuration by lazy {
-        IntentCompat.getParcelableExtra(
-            /* in = */
-            intent,
-            /* name = */
-            KomojuSDK.CONFIGURATION_KEY,
-            /* clazz = */
-            KomojuSDK.Configuration::class.java,
-        ) ?: error("komoju sdk configuration is null")
-    }
+    private val viewModel by viewModels<KomojuPaymentViewModel>(
+        factoryProducer = {
+            KomojuPaymentViewModelFactory(
+                configuration = IntentCompat.getParcelableExtra(
+                    /* in = */
+                    intent,
+                    /* name = */
+                    KomojuSDK.CONFIGURATION_KEY,
+                    /* clazz = */
+                    KomojuSDK.Configuration::class.java,
+                ) ?: error("komoju sdk configuration is null"),
+            )
+        },
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,14 +84,14 @@ internal class KomojuPaymentActivity : ComponentActivity() {
                             .navigationBarsPadding(),
                         contentAlignment = Alignment.BottomCenter,
                     ) {
-                        KomojuMobileSdkTheme(configuration.language) {
+                        KomojuMobileSdkTheme(viewModel.configuration.language) {
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .fillMaxHeight(.9f),
                             ) {
                                 Navigator(
-                                    KomojuPaymentScreen(configuration),
+                                    KomojuPaymentScreen(viewModel.configuration),
                                 ) { navigator ->
                                     SlideTransition(navigator)
                                     RouterEffect(router, viewModel::onRouteConsumed)

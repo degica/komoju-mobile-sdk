@@ -96,7 +96,7 @@ private fun KonbiniFormPreview() {
         hashedGateway = "",
         exchangeRate = 0.0,
         currency = "",
-        amount = 0.0,
+        amount = "0",
         additionalFields = listOf(),
         brands = listOf(
             KonbiniBrand.SevenEleven(

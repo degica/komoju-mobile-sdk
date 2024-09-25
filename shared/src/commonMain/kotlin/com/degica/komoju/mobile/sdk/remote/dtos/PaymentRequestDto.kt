@@ -8,7 +8,6 @@ import kotlinx.serialization.Serializable
 internal data class PaymentRequestDto(@SerialName("payment_details") val paymentDetails: PaymentDetails? = null) {
     companion object {
         fun from(paymentRequest: PaymentRequest): PaymentRequestDto = when (paymentRequest) {
-            is PaymentRequest.CreditCard -> TODO()
             is PaymentRequest.Konbini -> PaymentRequestDto(
                 paymentDetails = PaymentDetails(
                     store = paymentRequest.konbiniBrand.key,

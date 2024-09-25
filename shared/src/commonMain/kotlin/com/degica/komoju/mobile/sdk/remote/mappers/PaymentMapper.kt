@@ -12,7 +12,7 @@ internal object PaymentMapper {
 
     private fun map(payment: PaymentResponseDto.Payment?): Payment = when (payment?.paymentDetails?.type) {
         "konbini" -> Payment.Konbini(
-            amount = payment.amount?.toDouble() ?: 0.0,
+            amount = payment.amount.orEmpty(),
             currency = payment.currency.orEmpty(),
             redirectURL = payment.paymentDetails.redirectUrl.orEmpty(),
             status = PaymentStatus.fromString(payment.status.orEmpty()),
@@ -22,10 +22,17 @@ internal object PaymentMapper {
             receiptNumber = payment.paymentDetails.receipt,
             confirmationCode = payment.paymentDetails.confirmationCode,
         )
+
         "paypay" -> Payment.PayPay(
-            amount = payment.amount?.toDouble() ?: 0.0,
+            amount = payment.amount.orEmpty(),
             currency = payment.currency.orEmpty(),
             redirectURL = payment.paymentDetails.redirectUrl.orEmpty(),
+            status = PaymentStatus.fromString(payment.status.orEmpty()),
+        )
+
+        "credit_card" -> Payment.CreditCard(
+            amount = payment.amount.orEmpty(),
+            currency = payment.currency.orEmpty(),
             status = PaymentStatus.fromString(payment.status.orEmpty()),
         )
 
