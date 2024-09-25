@@ -70,7 +70,7 @@ private val PaymentMethod.displayIcon
         is PaymentMethod.PayEasy -> R.drawable.komoju_ic_pay_easy
         is PaymentMethod.PayPay -> R.drawable.komoju_ic_paypay
         is PaymentMethod.RakutenPay -> R.drawable.komoju_ic_rakuten_pay
-        is PaymentMethod.WebMoney -> R.drawable.komoju_ic_credit_card
+        is PaymentMethod.WebMoney -> R.drawable.komoju_ic_web_money
         is PaymentMethod.Other -> R.drawable.komoju_ic_credit_card
     }
 
