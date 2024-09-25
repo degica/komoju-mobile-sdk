@@ -165,7 +165,6 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
             email = state.value.commonDisplayData.email,
         )
 
-        is PaymentMethod.LinePay -> TODO()
         is PaymentMethod.MerPay -> TODO()
         is PaymentMethod.NetCash -> TODO()
         is PaymentMethod.Other -> TODO()

@@ -36,7 +36,6 @@ internal fun AppPayForm(paymentMethod: PaymentMethod, onPayButtonClicked: () -> 
         when (paymentMethod) {
             is PaymentMethod.AliPay -> "PAYMENT_VIA_ALI_PAY"
             is PaymentMethod.AuPay -> "PAYMENT_VIA_AU_PAY"
-            is PaymentMethod.LinePay -> "PAYMENT_VIA_LINE_PAY"
             is PaymentMethod.MerPay -> "PAYMENT_VIA_MER_PAY"
             is PaymentMethod.PayPay -> "PAYMENT_VIA_PAY_PAY"
             is PaymentMethod.RakutenPay -> "PAYMENT_VIA_RAKUTEN"
@@ -48,7 +47,6 @@ internal fun AppPayForm(paymentMethod: PaymentMethod, onPayButtonClicked: () -> 
         when (paymentMethod) {
             is PaymentMethod.AliPay -> "ALI_PAY_REDIRECT_MESSAGE"
             is PaymentMethod.AuPay -> "AU_PAY_REDIRECT_MESSAGE"
-            is PaymentMethod.LinePay -> "LINE_PAY_REDIRECT_MESSAGE"
             is PaymentMethod.MerPay -> "MER_PAY_REDIRECT_MESSAGE"
             is PaymentMethod.PayPay -> "PAY_PAY_REDIRECT_MESSAGE"
             is PaymentMethod.RakutenPay -> "RAKUTEN_REDIRECT_MESSAGE"
@@ -60,7 +58,6 @@ internal fun AppPayForm(paymentMethod: PaymentMethod, onPayButtonClicked: () -> 
         when (paymentMethod) {
             is PaymentMethod.AliPay -> "CONTINUE_TO_ALI_PAY"
             is PaymentMethod.AuPay -> "CONTINUE_TO_AU_PAY"
-            is PaymentMethod.LinePay -> "CONTINUE_TO_LINE_PAY"
             is PaymentMethod.MerPay -> "CONTINUE_TO_MER_PAY"
             is PaymentMethod.PayPay -> "CONTINUE_TO_PAY_PAY"
             is PaymentMethod.RakutenPay -> "CONTINUE_TO_RAKUTEN"
@@ -99,9 +96,9 @@ internal fun AppPayForm(paymentMethod: PaymentMethod, onPayButtonClicked: () -> 
 private fun AppPayFormPreview() {
     KomojuMobileSdkTheme(Language.ENGLISH) {
         AppPayForm(
-            PaymentMethod.LinePay(
-                displayName = "LINE Pay",
-                hashedGateway = "LINE",
+            PaymentMethod.PayPay(
+                displayName = "PayPay",
+                hashedGateway = "paypay",
                 exchangeRate = 1.0,
                 currency = "JPY",
                 amount = 100.0,
