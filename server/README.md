@@ -1,5 +1,3 @@
-Here's the rephrased markdown without changing the text between backticks:
-
 ## Description / 説明
 
 This is a lightweight server application designed to function as a backend for the demo app.
