@@ -51,7 +51,7 @@ internal class KomojuPaymentActivity : ComponentActivity() {
                     /* in = */
                     intent,
                     /* name = */
-                    KomojuSDK.CONFIGURATION_KEY,
+                    KomojuStartPaymentForResultContract.CONFIGURATION_KEY,
                     /* clazz = */
                     KomojuSDK.Configuration::class.java,
                 ) ?: error("komoju sdk configuration is null"),
