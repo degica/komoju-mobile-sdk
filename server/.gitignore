@@ -71,3 +71,7 @@ node_modules/
 # Don't push firebase related things
 .firebaserc
 firebase.json
+/functions/node_modules/
+/functions/*.local
+/functions/package.json
+/functions/package-lock.json
