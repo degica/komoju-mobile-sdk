@@ -27,12 +27,14 @@ private val LightColorScheme = lightColorScheme(
     primary = KomojuLightGreen,
     secondary = KomojuDarkGreen,
     tertiary = KomojuLightGreen,
+    background = Color.White,
+    surfaceContainer = Color.White,
 )
 
 @Composable
 internal fun KomojuMobileSdkTheme(language: Language, content: @Composable () -> Unit) {
     CompositionLocalProvider(LocalI18nTextsProvider provides I18nTexts(language.languageCode)) {
-        Surface {
+        Surface(color = Color.White) {
             MaterialTheme(
                 colorScheme = LightColorScheme,
                 content = content,

@@ -11,4 +11,11 @@ enum class Language(val languageCode: String) {
         ENGLISH -> Locale.ENGLISH
         JAPANESE -> Locale.JAPANESE
     }
+    companion object {
+        val default
+            get() = when (Locale.getDefault().language) {
+                Locale.JAPANESE.language -> JAPANESE
+                else -> ENGLISH
+            }
+    }
 }

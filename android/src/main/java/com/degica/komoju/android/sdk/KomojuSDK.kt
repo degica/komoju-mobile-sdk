@@ -1,7 +1,9 @@
 package com.degica.komoju.android.sdk
 
 import android.content.Context
+import android.content.Intent
 import android.os.Parcelable
+import androidx.activity.result.contract.ActivityResultContract
 import com.degica.komoju.android.sdk.types.Currency
 import com.degica.komoju.android.sdk.types.Language
 import kotlin.contracts.ExperimentalContracts
@@ -45,17 +47,35 @@ object KomojuSDK {
         }
     }
 
-    internal const val CONFIGURATION_KEY: String = "KomojuSDK.Configuration"
-    fun show(context: Context, configuration: Configuration) {
+    data class PaymentResult(val isSuccessFul: Boolean)
+
+    val KomojuPaymentResultContract: ActivityResultContract<Configuration, PaymentResult> get() = KomojuStartPaymentForResultContract()
+}
+
+@OptIn(ExperimentalContracts::class)
+fun KomojuSDK.Configuration?.canProcessPayment(): Boolean {
+    contract {
+        returns(true) implies (this@canProcessPayment != null)
+    }
+    return this?.publishableKey != null && this.sessionId != null
+}
+
+internal class KomojuStartPaymentForResultContract : ActivityResultContract<KomojuSDK.Configuration, KomojuSDK.PaymentResult>() {
+
+    companion object {
+        const val CONFIGURATION_KEY: String = "KomojuSDK.Configuration"
+    }
+
+    override fun createIntent(context: Context, input: KomojuSDK.Configuration): Intent {
         context.preChecks()
-        val intent = android.content.Intent(context, KomojuPaymentActivity::class.java)
+        val intent = Intent(context, KomojuPaymentActivity::class.java)
         intent.putExtra(
             CONFIGURATION_KEY,
-            configuration.copy(
+            input.copy(
                 redirectURL = "${context.resources.getString(R.string.komoju_consumer_app_scheme)}://",
             ),
         )
-        context.startActivity(intent)
+        return intent
     }
 
     private fun Context.preChecks() {
@@ -63,12 +83,6 @@ object KomojuSDK {
             error("Please set komoju_consumer_app_scheme in strings.xml with your app scheme")
         }
     }
-}
 
-@OptIn(ExperimentalContracts::class)
-fun KomojuSDK.Configuration?.canProcessPayment(): Boolean {
-    contract {
-        returns(false) implies (this@canProcessPayment != null)
-    }
-    return this?.publishableKey != null && this.sessionId != null
+    override fun parseResult(resultCode: Int, intent: Intent?): KomojuSDK.PaymentResult = KomojuSDK.PaymentResult(isSuccessFul = false)
 }

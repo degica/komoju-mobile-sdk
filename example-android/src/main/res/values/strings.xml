@@ -1,3 +1,20 @@
 <resources>
-    <string name="app_name">example-android</string>
+    <string name="app_name">SoundBud!</string>
+    <string name="sound">Sound</string>
+    <string name="bud">Bud</string>
+    <string name="description">Premium Sound Shopping App</string>
+    <string name="headphone_name">Premium Wireless Headphone</string>
+    <string name="earphone_name">Premium Wireless Earphone</string>
+    <string name="headphone_description">The technology with two noise sensors and two microphones on each ear cup detects ambient noise and sends the data to the HD noise minimization processor QN1. Using a new algorithm, the QN1 then processes and minimizes noise for different acoustic environments in real time. Together with a new Bluetooth Audio SoC (System on Chip), the system can adapt and deliver sound based on real-time feedback, ensuring optimal performance across a variety of conditions. This results in enhanced noise cancellation capabilities, making the device effective in environments like airplanes, busy streets, or open offices, while maintaining high-quality audio output. The combination of the QN1 processor and Bluetooth Audio SoC ensures not only active noise cancellation but also stable, high-resolution audio streaming. This provides listeners with a seamless experience, whether they are enjoying music, taking calls, or simply trying to block out distractions.</string>
+    <string name="earphone_description">These wireless earphones are designed to deliver high-quality sound and a comfortable, secure fit. Featuring advanced noise isolation technology, they block out external noise, allowing for an immersive listening experience. The ergonomic design ensures the earphones stay in place, even during intense activities, making them ideal for workouts or daily commutes. Equipped with long battery life, you can enjoy continuous playtime throughout the day. The earphones also feature touch controls for easy access to music, calls, and voice assistants, making them a versatile companion for all your audio needs.</string>
+    <string name="mic_name">Premium wireless Microphone</string>
+    <string name="mic_description">This premium microphone is designed for professionals who demand crystal-clear audio quality for recording, streaming, and podcasting. Equipped with a large diaphragm condenser, it captures rich, detailed sound with exceptional accuracy. The microphone features multiple pickup patterns, including cardioid, bidirectional, and omnidirectional, making it versatile for various recording environments. Its durable, sleek design not only looks great but ensures long-lasting performance. With low self-noise and high sensitivity, this microphone is ideal for voice work, music production, or any setting where superior sound quality is essential. USB or XLR connectivity options make it compatible with a wide range of devices.</string>
+    <string name="model">Model</string>
+    <string name="gold">Gold</string>
+    <string name="black">Black</string>
+    <string name="purple">Purple</string>
+    <string name="white">White</string>
+    <string name="off_white">Off-White</string>
+    <string name="blue">Blue</string>
+    <string name="pink">Pink</string>
 </resources>
