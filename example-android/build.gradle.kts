@@ -1,7 +1,13 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.compose.compiler)
+}
+
+val localProperties = Properties().apply {
+    rootProject.file("local.properties").reader().use(::load)
 }
 
 android {
@@ -16,6 +22,7 @@ android {
         versionName = "1.0"
         resValue("string", "komoju_consumer_app_scheme", "komapp")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "SERVER_URL", "\"${localProperties["SERVER_URL"]}\"")
     }
 
     buildTypes {
@@ -27,30 +34,16 @@ android {
             )
         }
     }
-    flavorDimensions += "environment"
-    productFlavors {
-        create("dev") {
-            dimension = "environment"
-            buildConfigField("String", "TEST_SERVER_URL", "\"https://rn-komoju-app.glitch.me/\"")
-        }
-        create("live") {
-            dimension = "environment"
-            buildConfigField("String", "TEST_SERVER_URL", "\"https://live-komoju-app.glitch.me/\"")
-        }
-    }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
         buildConfig = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
     }
     packaging {
         resources {

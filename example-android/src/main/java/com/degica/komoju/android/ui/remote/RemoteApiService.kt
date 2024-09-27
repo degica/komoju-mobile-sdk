@@ -16,7 +16,7 @@ import retrofit2.http.POST
 
 interface RemoteApiService {
     @Headers("Content-Type: application/json", "Accept: application/json")
-    @GET("serve-keys")
+    @GET("serve-key")
     suspend fun getPublishableKey(): Response<PublishableKeyResponse>
 
     @Headers("Content-Type: application/json", "Accept: application/json")
@@ -32,7 +32,7 @@ interface RemoteApiService {
                     .build(),
             )
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(BuildConfig.TEST_SERVER_URL)
+            .baseUrl(BuildConfig.SERVER_URL)
             .build()
             .create(RemoteApiService::class.java)
     }
