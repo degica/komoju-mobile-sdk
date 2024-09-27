@@ -22,7 +22,6 @@ android {
         versionName = "1.0"
         resValue("string", "komoju_consumer_app_scheme", "komapp")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "SERVER_URL", "\"${localProperties["SERVER_URL"]}\"")
     }
 
     buildTypes {
@@ -32,6 +31,17 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
+        }
+    }
+    flavorDimensions += "environment"
+    productFlavors {
+        create("dev") {
+            dimension = "environment"
+            buildConfigField("String", "SERVER_URL", "\"${localProperties["TEST_SERVER_URL"]}\"")
+        }
+        create("live") {
+            dimension = "environment"
+            buildConfigField("String", "SERVER_URL", "\"${localProperties["LIVE_SERVER_URL"]}\"")
         }
     }
     compileOptions {
@@ -44,6 +54,9 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
     }
     packaging {
         resources {
