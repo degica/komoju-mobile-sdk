@@ -3,7 +3,7 @@ plugins {
 }
 
 allprojects {
-    group = "org.jetbrains.kotlinx.multiplatform-library-template"
+    group = "com.komoju.mobile.sdk.shared"
     version = "0.0.1"
 }
 

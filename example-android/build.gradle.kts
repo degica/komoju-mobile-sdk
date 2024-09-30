@@ -13,11 +13,10 @@ val localProperties = Properties().apply {
 }
 
 android {
-    namespace = "com.degica.komoju.android"
+    namespace = "com.komoju.android"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.degica.komoju.android"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

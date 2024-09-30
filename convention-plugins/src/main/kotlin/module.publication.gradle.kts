@@ -27,15 +27,17 @@ publishing {
             licenses {
                 license {
                     name.set("MIT")
-                    url.set("https://github.com/degica/komoju-mobile-sdk/blob/main/LICENSE")
+                    url.set("https://opensource.org/licenses/MIT")
                 }
             }
             developers {
                 developer {
                     id.set("AmniX")
                     name.set("Aman Tonk")
+                    email.set("atonk@gmail.com")
                     organization.set("Degica")
-                    organizationUrl.set("https://degica.com")
+                    timezone.set("Asia/Tokyo")
+                    organizationUrl.set("https://komoju.com")
                 }
             }
             scm {

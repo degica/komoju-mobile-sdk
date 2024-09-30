@@ -23,6 +23,8 @@ uiTooling = "1.7.2"
 composeWebView = "0.33.6"
 konlinXJson = "1.7.2"
 voyager = "1.1.0-beta02"
+mavenPublish = "0.28.0"
+nmcp = "0.0.7"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -69,3 +71,5 @@ kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinVers
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "mavenPublish" }
+gradleup-nmcp = { id = "com.gradleup.nmcp", version.ref = "nmcp" }

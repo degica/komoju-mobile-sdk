@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.degica.komoju.android.sdk"
+    namespace = "com.komoju.android.sdk"
     compileSdk =
         libs.versions.android.compileSdk
             .get()
@@ -51,7 +51,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":shared"))
+    api(project(":shared"))
     implementation(libs.core.ktx)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.appcompat)
