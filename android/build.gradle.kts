@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.degica.komoju.android.sdk"
+    namespace = "com.komoju.android.sdk"
     compileSdk =
         libs.versions.android.compileSdk
             .get()
