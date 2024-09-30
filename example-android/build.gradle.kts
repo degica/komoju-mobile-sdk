@@ -1,7 +1,15 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.compose.compiler)
+}
+
+val localProperties = Properties().apply {
+    if (rootProject.file("local.properties").exists()) {
+        rootProject.file("local.properties").reader().use(::load)
+    }
 }
 
 android {
@@ -31,19 +39,19 @@ android {
     productFlavors {
         create("dev") {
             dimension = "environment"
-            buildConfigField("String", "TEST_SERVER_URL", "\"https://rn-komoju-app.glitch.me/\"")
+            buildConfigField("String", "SERVER_URL", "\"${localProperties["TEST_SERVER_URL"]}\"")
         }
         create("live") {
             dimension = "environment"
-            buildConfigField("String", "TEST_SERVER_URL", "\"https://live-komoju-app.glitch.me/\"")
+            buildConfigField("String", "SERVER_URL", "\"${localProperties["LIVE_SERVER_URL"]}\"")
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
