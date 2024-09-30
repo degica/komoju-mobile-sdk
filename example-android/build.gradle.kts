@@ -7,8 +7,9 @@ plugins {
 }
 
 val localProperties = Properties().apply {
-    if (rootProject.file("local.properties").exists())
+    if (rootProject.file("local.properties").exists()) {
         rootProject.file("local.properties").reader().use(::load)
+    }
 }
 
 android {
