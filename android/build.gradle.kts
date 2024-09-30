@@ -51,7 +51,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":shared"))
+    api(project(":shared"))
     implementation(libs.core.ktx)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.appcompat)

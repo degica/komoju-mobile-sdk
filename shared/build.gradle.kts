@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlin.plugin.serialization)
+    id("module.publication")
 }
 
 kotlin {
@@ -42,7 +43,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.komoju.mobile.sdk.shared"
+    namespace = "com.degica.komoju.mobile.sdk"
     compileSdk =
         libs.versions.android.compileSdk
             .get()
