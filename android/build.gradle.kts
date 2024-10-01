@@ -5,10 +5,8 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.plugin.serialization)
-    id("kotlin-parcelize")
-    id("org.jetbrains.dokka") version "1.8.10"
-    id("com.vanniktech.maven.publish") version "0.29.0"
-    id("com.gradleup.nmcp") version "0.0.7"
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.maven.publish)
 }
 
 android {

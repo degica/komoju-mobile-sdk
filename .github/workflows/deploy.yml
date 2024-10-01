@@ -13,18 +13,15 @@ permissions:
   contents: read
 
 jobs:
-#  build:
-#    uses: ./.github/workflows/gradle.yml
   deploy:
-#    needs: build
     strategy:
       matrix:
         include:
 #          - target: publishIosArm64PublicationToSonatypeRepository
 #            os: macos-latest
-          - target: publishAndroidReleasePublicationToSonatypeRepository
+          - target: :shared:publishAllPublicationsToMavenCentralRepository
             os: ubuntu-latest
-          - target: publishKotlinMultiplatformPublicationToSonatypeRepository
+          - target: :android:publishAllPublicationsToMavenCentralRepository
             os: ubuntu-latest
     runs-on: ${{ matrix.os }}
     steps:
@@ -46,14 +43,14 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: Gradle publish
-      uses: gradle/gradle-build-action@ce999babab2de1c4b649dc15f0ee67e6246c994f
+    - name: Deploy
+      uses: gradle/gradle-build-action@v3
       with:
         arguments: |
           ${{ matrix.target }}
-          closeSonatypeStagingRepository
-          -Psigning.gnupg.passphrase='${{secrets.OSSRH_GPG_SECRET_KEY_PASSWORD}}'
-          -Psigning.gnupg.keyName='${{secrets.OSSRH_GPG_SECRET_KEY_ID}}'
-          -PsonatypeUsername='${{secrets.OSSRH_USERNAME}}'
-          -PsonatypePassword='${{secrets.OSSRH_PASSWORD}}'
+          --no-configuration-cache 
+          -Psigning.password='${{secrets.OSSRH_GPG_SECRET_KEY_PASSWORD}}'
+          -Psigning.keyId='${{secrets.OSSRH_GPG_SECRET_KEY_ID}}'
+          -PmavenCentralUsername='${{secrets.OSSRH_USERNAME}}'
+          -PmavenCentralPassword='${{secrets.OSSRH_PASSWORD}}'
 
