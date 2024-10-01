@@ -3,8 +3,8 @@ plugins {
 }
 
 allprojects {
-    group = "com.komoju.mobile.sdk.shared"
-    version = "0.0.1"
+    group = "com.komoju.mobile.sdk"
+    version = "0.0.1b"
 }
 
 nexusPublishing {
