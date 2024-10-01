@@ -48,8 +48,10 @@ jobs:
       with:
         arguments: |
           ${{ matrix.target }}
-          --no-configuration-cache 
+          --no-configuration-cache
+          --no-daemon
           -Psigning.password='${{secrets.OSSRH_GPG_SECRET_KEY_PASSWORD}}'
+          -Psigning.secretKeyRingFile=/home/runner/.gnupg/secring.gpg
           -Psigning.keyId='${{secrets.OSSRH_GPG_SECRET_KEY_ID}}'
           -PmavenCentralUsername='${{secrets.OSSRH_USERNAME}}'
           -PmavenCentralPassword='${{secrets.OSSRH_PASSWORD}}'
