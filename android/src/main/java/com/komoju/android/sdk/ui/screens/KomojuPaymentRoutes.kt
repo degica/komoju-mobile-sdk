@@ -15,6 +15,7 @@ import com.komoju.android.sdk.ui.screens.failed.Reason
 import com.komoju.android.sdk.ui.screens.success.PaymentSuccessScreen
 import com.komoju.android.sdk.ui.screens.verify.ProcessPaymentScreen
 import com.komoju.android.sdk.ui.screens.webview.WebViewScreen
+import com.komoju.mobile.sdk.entities.Payment
 
 internal sealed class Router {
     data object Pop : Router()
@@ -27,7 +28,7 @@ internal sealed class Router {
 }
 
 internal sealed interface KomojuPaymentRoute {
-    data class KonbiniAwaitingPayment(val configuration: KomojuSDK.Configuration, val payment: com.komoju.mobile.sdk.entities.Payment) : KomojuPaymentRoute
+    data class KonbiniAwaitingPayment(val configuration: KomojuSDK.Configuration, val payment: Payment) : KomojuPaymentRoute
 
     data class WebView(val url: String, val canComeBack: Boolean = false, val isJavaScriptEnabled: Boolean = false) : KomojuPaymentRoute
 
