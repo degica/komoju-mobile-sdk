@@ -14,16 +14,10 @@ plugins {
 
 android {
     namespace = "com.komoju.android.sdk"
-    compileSdk =
-        libs.versions.android.compileSdk
-            .get()
-            .toInt()
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk =
-            libs.versions.android.minSdk
-                .get()
-                .toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -135,11 +129,7 @@ tasks.withType<DokkaTask>().configureEach {
     }
     pluginsMapConfiguration.set(
         mapOf(
-            "org.jetbrains.dokka.base.DokkaBase" to """
-    {
-      "footerMessage": "(c) 2024 Degica"
-    }
-            """.trimIndent(),
+            "org.jetbrains.dokka.base.DokkaBase" to "{ \"footerMessage\": \"(c) 2024 Degica\" }".trim(),
         ),
     )
 }
