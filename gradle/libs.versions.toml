@@ -25,6 +25,7 @@ voyager = "1.1.0-beta02"
 mavenPublish = "0.29.0"
 nmcp = "0.0.7"
 kotlinPlugin = "1.8.10"
+dokka = "1.9.20"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -74,3 +75,4 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize",  version.ref = "kotlinPlugin"  }
 maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "mavenPublish" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+jetbrains-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka"}

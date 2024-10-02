@@ -110,7 +110,7 @@ internal class KomojuStartPaymentForResultContract : ActivityResultContract<Komo
      */
     override fun createIntent(context: Context, input: KomojuSDK.Configuration): Intent {
         context.preChecks() // Ensure app scheme is correctly set in resources.
-        val intent = Intent(context, com.komoju.android.sdk.KomojuPaymentActivity::class.java)
+        val intent = Intent(context, KomojuPaymentActivity::class.java)
         intent.putExtra(
             CONFIGURATION_KEY,
             input.copy(
