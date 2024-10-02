@@ -1,0 +1,49 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:com.komoju.android.sdk.types////PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.types/index.html
+$dokka.location:com.komoju.android.sdk.types/Currency.Companion///PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.types/-currency/-companion/index.html
+$dokka.location:com.komoju.android.sdk.types/Currency.Companion/parse/#kotlin.String/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.types/-currency/-companion/parse.html
+$dokka.location:com.komoju.android.sdk.types/Currency.JPY///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-komoju -android -s-d-k -documentation/com.komoju.android.sdk.types/-currency/-j-p-y/index.html
+$dokka.location:com.komoju.android.sdk.types/Currency.USD///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-komoju -android -s-d-k -documentation/com.komoju.android.sdk.types/-currency/-u-s-d/index.html
+$dokka.location:com.komoju.android.sdk.types/Currency///PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.types/-currency/index.html
+$dokka.location:com.komoju.android.sdk.types/Currency/currencyCode/#/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.types/-currency/currency-code.html
+$dokka.location:com.komoju.android.sdk.types/Currency/entries/#/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.types/-currency/entries.html
+$dokka.location:com.komoju.android.sdk.types/Currency/toLocale/#/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.types/-currency/to-locale.html
+$dokka.location:com.komoju.android.sdk.types/Currency/valueOf/#kotlin.String/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.types/-currency/value-of.html
+$dokka.location:com.komoju.android.sdk.types/Currency/values/#/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.types/-currency/values.html
+$dokka.location:com.komoju.android.sdk.types/Language.Companion///PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.types/-language/-companion/index.html
+$dokka.location:com.komoju.android.sdk.types/Language.Companion/default/#/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.types/-language/-companion/default.html
+$dokka.location:com.komoju.android.sdk.types/Language.ENGLISH///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-komoju -android -s-d-k -documentation/com.komoju.android.sdk.types/-language/-e-n-g-l-i-s-h/index.html
+$dokka.location:com.komoju.android.sdk.types/Language.JAPANESE///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-komoju -android -s-d-k -documentation/com.komoju.android.sdk.types/-language/-j-a-p-a-n-e-s-e/index.html
+$dokka.location:com.komoju.android.sdk.types/Language///PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.types/-language/index.html
+$dokka.location:com.komoju.android.sdk.types/Language/entries/#/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.types/-language/entries.html
+$dokka.location:com.komoju.android.sdk.types/Language/languageCode/#/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.types/-language/language-code.html
+$dokka.location:com.komoju.android.sdk.types/Language/valueOf/#kotlin.String/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.types/-language/value-of.html
+$dokka.location:com.komoju.android.sdk.types/Language/values/#/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.types/-language/values.html
+$dokka.location:com.komoju.android.sdk.ui.screens.failed////PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.ui.screens.failed/index.html
+$dokka.location:com.komoju.android.sdk.ui.screens.failed/Reason.CREDIT_CARD_ERROR///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-komoju -android -s-d-k -documentation/com.komoju.android.sdk.ui.screens.failed/-reason/-c-r-e-d-i-t_-c-a-r-d_-e-r-r-o-r/index.html
+$dokka.location:com.komoju.android.sdk.ui.screens.failed/Reason.OTHER///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-komoju -android -s-d-k -documentation/com.komoju.android.sdk.ui.screens.failed/-reason/-o-t-h-e-r/index.html
+$dokka.location:com.komoju.android.sdk.ui.screens.failed/Reason.USER_CANCEL///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-komoju -android -s-d-k -documentation/com.komoju.android.sdk.ui.screens.failed/-reason/-u-s-e-r_-c-a-n-c-e-l/index.html
+$dokka.location:com.komoju.android.sdk.ui.screens.failed/Reason///PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.ui.screens.failed/-reason/index.html
+$dokka.location:com.komoju.android.sdk.ui.screens.failed/Reason/entries/#/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.ui.screens.failed/-reason/entries.html
+$dokka.location:com.komoju.android.sdk.ui.screens.failed/Reason/valueOf/#kotlin.String/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.ui.screens.failed/-reason/value-of.html
+$dokka.location:com.komoju.android.sdk.ui.screens.failed/Reason/values/#/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.ui.screens.failed/-reason/values.html
+$dokka.location:com.komoju.android.sdk////PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk/index.html
+$dokka.location:com.komoju.android.sdk//canProcessPayment/com.komoju.android.sdk.KomojuSDK.Configuration?#/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk/can-process-payment.html
+$dokka.location:com.komoju.android.sdk/KomojuSDK.Configuration.Builder///PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk/-komoju-s-d-k/-configuration/-builder/index.html
+$dokka.location:com.komoju.android.sdk/KomojuSDK.Configuration.Builder/Builder/#kotlin.String#kotlin.String/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk/-komoju-s-d-k/-configuration/-builder/-builder.html
+$dokka.location:com.komoju.android.sdk/KomojuSDK.Configuration.Builder/build/#/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk/-komoju-s-d-k/-configuration/-builder/build.html
+$dokka.location:com.komoju.android.sdk/KomojuSDK.Configuration.Builder/setCurrency/#com.komoju.android.sdk.types.Currency/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk/-komoju-s-d-k/-configuration/-builder/set-currency.html
+$dokka.location:com.komoju.android.sdk/KomojuSDK.Configuration.Builder/setDebugMode/#kotlin.Boolean/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk/-komoju-s-d-k/-configuration/-builder/set-debug-mode.html
+$dokka.location:com.komoju.android.sdk/KomojuSDK.Configuration.Builder/setLanguage/#com.komoju.android.sdk.types.Language/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk/-komoju-s-d-k/-configuration/-builder/set-language.html
+$dokka.location:com.komoju.android.sdk/KomojuSDK.Configuration///PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk/-komoju-s-d-k/-configuration/index.html
+$dokka.location:com.komoju.android.sdk/KomojuSDK.Configuration/Configuration/#com.komoju.android.sdk.types.Language#com.komoju.android.sdk.types.Currency#kotlin.String?#kotlin.Boolean#kotlin.String?#kotlin.String/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk/-komoju-s-d-k/-configuration/-configuration.html
+$dokka.location:com.komoju.android.sdk/KomojuSDK.PaymentResult///PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk/-komoju-s-d-k/-payment-result/index.html
+$dokka.location:com.komoju.android.sdk/KomojuSDK.PaymentResult/PaymentResult/#kotlin.Boolean/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk/-komoju-s-d-k/-payment-result/-payment-result.html
+$dokka.location:com.komoju.android.sdk/KomojuSDK.PaymentResult/isSuccessFul/#/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk/-komoju-s-d-k/-payment-result/is-success-ful.html
+$dokka.location:com.komoju.android.sdk/KomojuSDK///PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk/-komoju-s-d-k/index.html
+$dokka.location:com.komoju.android.sdk/KomojuSDK/KomojuPaymentResultContract/#/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk/-komoju-s-d-k/-komoju-payment-result-contract.html
+com.komoju.android.sdk
+com.komoju.android.sdk.types
+com.komoju.android.sdk.ui.screens.failed
+
