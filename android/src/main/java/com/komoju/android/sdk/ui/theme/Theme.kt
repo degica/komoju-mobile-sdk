@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.graphics.Color
-import com.komoju.android.sdk.types.Language
+import com.komoju.android.sdk.KomojuSDK
 import com.komoju.mobile.sdk.i18n.I18nTexts
 
 internal val KomojuLightGreen = Color(0xFF3CC239)
@@ -16,11 +16,14 @@ internal val Gray50 = Color(0xFFF6F7F9)
 internal val Gray200 = Color(0xFFD7DCE0)
 internal val Gray500 = Color(0xFF6D7D88)
 internal val Gray700 = Color(0xFF45535E)
-internal val Blue600 = Color(0xFF297FE7)
 internal val Red600 = Color(0xFFF04438)
 
-internal val LocalI18nTextsProvider = compositionLocalOf<I18nTexts> {
+internal val LocalI18nTexts = compositionLocalOf<I18nTexts> {
     error("Use KomojuMobileSdkTheme to provide I18nTexts")
+}
+
+internal val LocalConfigurableTheme = compositionLocalOf<ConfigurableTheme> {
+    error("Use KomojuMobileSdkTheme to provide ConfigurableTheme")
 }
 
 private val LightColorScheme = lightColorScheme(
@@ -32,14 +35,18 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-internal fun KomojuMobileSdkTheme(language: Language, content: @Composable () -> Unit) {
-    CompositionLocalProvider(LocalI18nTextsProvider provides I18nTexts(language.languageCode)) {
-        Surface(color = Color.White) {
-            MaterialTheme(
-                colorScheme = LightColorScheme,
-                content = content,
-                typography = interTypography(),
-            )
+internal fun KomojuMobileSdkTheme(configuration: KomojuSDK.Configuration = EmptyConfiguration, content: @Composable () -> Unit) {
+    CompositionLocalProvider(LocalConfigurableTheme provides configuration.configurableTheme) {
+        CompositionLocalProvider(LocalI18nTexts provides I18nTexts(configuration.language.languageCode)) {
+            Surface(color = Color.White) {
+                MaterialTheme(
+                    colorScheme = LightColorScheme,
+                    content = content,
+                    typography = interTypography(),
+                )
+            }
         }
     }
 }
+
+private val EmptyConfiguration = KomojuSDK.Configuration.Builder("", "").build()

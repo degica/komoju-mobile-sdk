@@ -23,10 +23,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import com.komoju.android.sdk.R
-import com.komoju.android.sdk.types.Language
 import com.komoju.android.sdk.ui.composables.PrimaryButton
 import com.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
-import com.komoju.android.sdk.ui.theme.LocalI18nTextsProvider
+import com.komoju.android.sdk.ui.theme.LocalI18nTexts
 
 internal class PaymentSuccessScreen : Screen {
     @Composable
@@ -38,7 +37,7 @@ internal class PaymentSuccessScreen : Screen {
 @Composable
 private fun PaymentSuccessScreenContent() {
     val onBackPressDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
-    val i18nTexts = LocalI18nTextsProvider.current
+    val i18nTexts = LocalI18nTexts.current
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
             Icon(
@@ -71,7 +70,7 @@ private fun PaymentSuccessScreenContent() {
 @Composable
 @Preview
 private fun PaymentSuccessScreenContentPreview() {
-    KomojuMobileSdkTheme(Language.ENGLISH) {
+    KomojuMobileSdkTheme {
         PaymentSuccessScreenContent()
     }
 }

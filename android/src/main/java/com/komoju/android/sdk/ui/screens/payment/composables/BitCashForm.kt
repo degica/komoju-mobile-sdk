@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.komoju.android.sdk.types.Currency
 import com.komoju.android.sdk.ui.composables.PrimaryButton
 import com.komoju.android.sdk.ui.screens.payment.BitCashDisplayData
-import com.komoju.android.sdk.ui.theme.LocalI18nTextsProvider
+import com.komoju.android.sdk.ui.theme.LocalI18nTexts
 import com.komoju.android.sdk.utils.AmountUtils
 import com.komoju.mobile.sdk.entities.PaymentMethod
 
@@ -44,7 +44,7 @@ internal fun BitCashForm(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
-            text = "${LocalI18nTextsProvider.current["PAY"]} $displayPayableAmount",
+            text = "${LocalI18nTexts.current["PAY"]} $displayPayableAmount",
             onClick = onPayButtonClicked,
         )
     }

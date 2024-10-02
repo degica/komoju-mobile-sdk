@@ -219,10 +219,6 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
         is PaymentMethod.WebMoney -> TODO()
     }
 
-    fun onCloseClicked() {
-        _router.value = Router.Pop
-    }
-
     fun onRouteHandled() {
         _router.value = null
     }

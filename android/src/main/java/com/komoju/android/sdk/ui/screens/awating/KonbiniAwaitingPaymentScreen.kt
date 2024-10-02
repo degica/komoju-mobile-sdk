@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,6 +38,7 @@ import com.komoju.android.sdk.R
 import com.komoju.android.sdk.types.Currency
 import com.komoju.android.sdk.ui.composables.PrimaryButton
 import com.komoju.android.sdk.ui.composables.TextButton
+import com.komoju.android.sdk.ui.composables.ThemedCircularProgressIndicator
 import com.komoju.android.sdk.ui.screens.KomojuPaymentRoute
 import com.komoju.android.sdk.ui.screens.RouterEffect
 import com.komoju.android.sdk.ui.theme.Gray200
@@ -66,7 +66,7 @@ internal data class KonbiniAwaitingPaymentScreen(val route: KomojuPaymentRoute.K
                     .clickable { },
                 contentAlignment = Alignment.Center,
             ) {
-                CircularProgressIndicator()
+                ThemedCircularProgressIndicator()
             }
         }
     }

@@ -19,6 +19,7 @@ import com.komoju.mobile.sdk.entities.Payment
 
 internal sealed class Router {
     data object Pop : Router()
+    data object PopAll : Router()
     data object PopToRoot : Router()
     data class Push(val route: KomojuPaymentRoute) : Router()
     data class Replace(val route: KomojuPaymentRoute) : Router()
@@ -60,6 +61,7 @@ internal fun RouterEffect(router: Router?, onHandled: () -> Unit) {
     LaunchedEffect(router) {
         when (router) {
             is Router.Pop -> navigator.pop()
+            is Router.PopAll -> navigator.popAll()
             is Router.PopToRoot -> navigator.popUntilRoot()
             is Router.Push -> navigator.push(router.route.screen)
             is Router.Replace -> navigator.replace(router.route.screen)

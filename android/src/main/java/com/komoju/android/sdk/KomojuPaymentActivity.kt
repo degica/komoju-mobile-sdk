@@ -84,7 +84,7 @@ internal class KomojuPaymentActivity : ComponentActivity() {
                             .navigationBarsPadding(),
                         contentAlignment = Alignment.BottomCenter,
                     ) {
-                        KomojuMobileSdkTheme(viewModel.configuration.language) {
+                        KomojuMobileSdkTheme(viewModel.configuration) {
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth()

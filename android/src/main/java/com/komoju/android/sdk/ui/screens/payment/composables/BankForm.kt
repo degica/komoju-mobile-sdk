@@ -16,11 +16,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.komoju.android.sdk.types.Currency
-import com.komoju.android.sdk.types.Language
 import com.komoju.android.sdk.ui.composables.PrimaryButton
 import com.komoju.android.sdk.ui.screens.payment.CommonDisplayData
 import com.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
-import com.komoju.android.sdk.ui.theme.LocalI18nTextsProvider
+import com.komoju.android.sdk.ui.theme.LocalI18nTexts
 import com.komoju.android.sdk.utils.AmountUtils
 import com.komoju.mobile.sdk.entities.PaymentMethod
 
@@ -92,7 +91,7 @@ internal fun BankForm(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
-            text = "${LocalI18nTextsProvider.current["PAY"]} $displayPayableAmount",
+            text = "${LocalI18nTexts.current["PAY"]} $displayPayableAmount",
             onClick = onPayButtonClicked,
         )
     }
@@ -110,7 +109,7 @@ private fun BankFormPreview() {
         additionalFields = emptyList(),
         customerFee = 10,
     )
-    KomojuMobileSdkTheme(Language.ENGLISH) {
+    KomojuMobileSdkTheme {
         var commonDisplayData by remember { mutableStateOf(CommonDisplayData()) }
         BankForm(
             bankTransfer,

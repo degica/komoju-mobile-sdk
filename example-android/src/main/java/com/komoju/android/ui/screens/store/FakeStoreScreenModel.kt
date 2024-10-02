@@ -61,9 +61,15 @@ class FakeStoreScreenModel : ScreenModel {
     fun onBuyClicked(item: Item) {
         screenModelScope.launch {
             createSession(item)?.let { sessionId ->
-                KomojuSDK.Configuration.Builder(requireNotNull(publishableKey), sessionId).setLanguage(language).setCurrency(currency).build().let { komojuConfig ->
-                    _komojuSDKConfiguration.value = komojuConfig
-                }
+                KomojuSDK.Configuration.Builder(
+                    requireNotNull(publishableKey),
+                    sessionId,
+                ).setLanguage(language)
+                    .setCurrency(currency)
+                    .setConfigurableTheme(komojuConfigurableTheme)
+                    .build().let { komojuConfig ->
+                        _komojuSDKConfiguration.value = komojuConfig
+                    }
             }
         }
     }
