@@ -24,11 +24,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import com.komoju.android.sdk.R
-import com.komoju.android.sdk.types.Language
 import com.komoju.android.sdk.ui.composables.PrimaryButton
 import com.komoju.android.sdk.ui.screens.KomojuPaymentRoute
 import com.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
-import com.komoju.android.sdk.ui.theme.LocalI18nTextsProvider
+import com.komoju.android.sdk.ui.theme.LocalI18nTexts
 
 internal class PaymentFailedScreen(private val route: KomojuPaymentRoute.PaymentFailed) : Screen {
     @Composable
@@ -46,7 +45,7 @@ enum class Reason {
 @Composable
 private fun PaymentFailedScreenContent(route: KomojuPaymentRoute.PaymentFailed) {
     val onBackPressDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
-    val i18nTexts = LocalI18nTextsProvider.current
+    val i18nTexts = LocalI18nTexts.current
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
             Icon(
@@ -86,7 +85,7 @@ private fun PaymentFailedScreenContent(route: KomojuPaymentRoute.PaymentFailed) 
 @Composable
 @Preview
 private fun PaymentSuccessScreenContentPreview() {
-    KomojuMobileSdkTheme(Language.ENGLISH) {
+    KomojuMobileSdkTheme {
         PaymentFailedScreenContent(KomojuPaymentRoute.PaymentFailed(Reason.USER_CANCEL))
     }
 }

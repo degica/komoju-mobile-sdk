@@ -13,17 +13,20 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.komoju.android.sdk.types.Language
-import com.komoju.android.sdk.ui.theme.Blue600
 import com.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
+import com.komoju.android.sdk.ui.theme.LocalConfigurableTheme
 
 @Composable
 internal fun PrimaryButton(text: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
+    val configurableTheme = LocalConfigurableTheme.current
     Button(
         modifier = modifier,
         onClick = onClick,
-        colors = ButtonDefaults.buttonColors(containerColor = Blue600, contentColor = Color.White),
-        shape = RoundedCornerShape(8.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color(configurableTheme.primaryButtonColor),
+            contentColor = Color(configurableTheme.primaryButtonContentColor),
+        ),
+        shape = RoundedCornerShape(configurableTheme.primaryButtonCornerRadiusInDP.dp),
     ) {
         Text(modifier = Modifier.padding(8.dp), text = text, style = TextStyle(fontWeight = FontWeight.Bold), maxLines = 1)
     }
@@ -32,7 +35,7 @@ internal fun PrimaryButton(text: String, modifier: Modifier = Modifier, onClick:
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
 private fun PaymentButtonPreview() {
-    KomojuMobileSdkTheme(language = Language.ENGLISH) {
+    KomojuMobileSdkTheme {
         PrimaryButton(
             modifier = Modifier
                 .padding(16.dp)

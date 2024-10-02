@@ -22,11 +22,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.komoju.android.sdk.R
-import com.komoju.android.sdk.types.Language
 import com.komoju.android.sdk.ui.theme.Gray200
 import com.komoju.android.sdk.ui.theme.KomojuDarkGreen
 import com.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
-import com.komoju.android.sdk.ui.theme.LocalI18nTextsProvider
+import com.komoju.android.sdk.ui.theme.LocalI18nTexts
 import com.komoju.mobile.sdk.entities.PaymentMethod.Konbini.KonbiniBrand
 
 @Composable
@@ -57,7 +56,7 @@ private fun KonbiniBrand(konbiniBrand: KonbiniBrand, isSelected: Boolean, onSele
     ) {
         Image(painter = painterResource(konbiniBrand.displayIcon), contentDescription = "${konbiniBrand.key} icon", modifier = Modifier.size(32.dp))
         Spacer(modifier = Modifier.height(4.dp))
-        Text(LocalI18nTextsProvider.current[konbiniBrand.key], fontSize = 14.sp)
+        Text(LocalI18nTexts.current[konbiniBrand.key], fontSize = 14.sp)
     }
 }
 
@@ -85,7 +84,7 @@ private fun KonbiniRowPreview() {
         KonbiniBrand.DailyYamazaki(key = "daily-yamazaki"),
         KonbiniBrand.SeicoMart(key = "seicomart"),
     )
-    KomojuMobileSdkTheme(Language.ENGLISH) {
+    KomojuMobileSdkTheme {
         KonbiniBrandsRow(konbiniList, konbiniList.first()) { }
     }
 }

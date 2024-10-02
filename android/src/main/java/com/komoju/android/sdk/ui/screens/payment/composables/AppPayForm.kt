@@ -24,10 +24,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.komoju.android.sdk.R
-import com.komoju.android.sdk.types.Language
 import com.komoju.android.sdk.ui.composables.PrimaryButton
 import com.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
-import com.komoju.android.sdk.ui.theme.LocalI18nTextsProvider
+import com.komoju.android.sdk.ui.theme.LocalI18nTexts
 import com.komoju.mobile.sdk.entities.PaymentMethod
 
 @Composable
@@ -67,9 +66,9 @@ internal fun AppPayForm(paymentMethod: PaymentMethod, onPayButtonClicked: () -> 
 
     if (titleKey != null && messageKey != null && paymentButtonKey != null) {
         Column(modifier = Modifier.padding(all = 16.dp)) {
-            Text(text = LocalI18nTextsProvider.current[titleKey], style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 24.sp))
+            Text(text = LocalI18nTexts.current[titleKey], style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 24.sp))
             Spacer(modifier = Modifier.height(12.dp))
-            Text(text = LocalI18nTextsProvider.current[messageKey])
+            Text(text = LocalI18nTexts.current[messageKey])
             Spacer(modifier = Modifier.height(24.dp))
             Row(
                 modifier = Modifier
@@ -83,10 +82,10 @@ internal fun AppPayForm(paymentMethod: PaymentMethod, onPayButtonClicked: () -> 
                     modifier = Modifier.size(32.dp),
                 )
                 Spacer(modifier = Modifier.width(16.dp))
-                Text(text = LocalI18nTextsProvider.current["LIGHT_BOX_CONTENT"])
+                Text(text = LocalI18nTexts.current["LIGHT_BOX_CONTENT"])
             }
             Spacer(modifier = Modifier.height(32.dp))
-            PrimaryButton(LocalI18nTextsProvider.current[paymentButtonKey], modifier = Modifier.fillMaxWidth(), onPayButtonClicked)
+            PrimaryButton(LocalI18nTexts.current[paymentButtonKey], modifier = Modifier.fillMaxWidth(), onPayButtonClicked)
         }
     }
 }
@@ -94,7 +93,7 @@ internal fun AppPayForm(paymentMethod: PaymentMethod, onPayButtonClicked: () -> 
 @Composable
 @Preview(showBackground = true)
 private fun AppPayFormPreview() {
-    KomojuMobileSdkTheme(Language.ENGLISH) {
+    KomojuMobileSdkTheme {
         AppPayForm(
             PaymentMethod.PayPay(
                 displayName = "PayPay",

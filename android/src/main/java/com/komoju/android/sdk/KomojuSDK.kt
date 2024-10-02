@@ -6,6 +6,7 @@ import android.os.Parcelable
 import androidx.activity.result.contract.ActivityResultContract
 import com.komoju.android.sdk.types.Currency
 import com.komoju.android.sdk.types.Language
+import com.komoju.android.sdk.ui.theme.ConfigurableTheme
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 import kotlinx.parcelize.Parcelize
@@ -28,6 +29,7 @@ object KomojuSDK {
         internal val isDebugMode: Boolean, // Debug mode flag for logging and testing.
         internal val sessionId: String?, // Unique session ID for payment transaction.
         internal val redirectURL: String = "", // URL to redirect after payment completion.
+        internal val configurableTheme: ConfigurableTheme, // Custom theme for UI elements.
     ) : Parcelable {
 
         /**
@@ -38,6 +40,7 @@ object KomojuSDK {
             private var language: Language = Language.ENGLISH // Default language is English.
             private var currency: Currency = Currency.JPY // Default currency is Japanese Yen.
             private var isDebugMode: Boolean = false // Debug mode is off by default.
+            private var configurableTheme: ConfigurableTheme = ConfigurableTheme.default // Custom theme for UI elements.
 
             /** Sets the language for the payment. */
             fun setLanguage(language: Language) = apply {
@@ -54,6 +57,10 @@ object KomojuSDK {
                 this.isDebugMode = isDebugMode
             }
 
+            fun setConfigurableTheme(configurableTheme: ConfigurableTheme) = apply {
+                this.configurableTheme = configurableTheme
+            }
+
             /**
              * Builds the [Configuration] instance with the provided settings.
              */
@@ -63,6 +70,7 @@ object KomojuSDK {
                 publishableKey = publishableKey,
                 sessionId = sessionId,
                 isDebugMode = isDebugMode,
+                configurableTheme = configurableTheme,
             )
         }
     }

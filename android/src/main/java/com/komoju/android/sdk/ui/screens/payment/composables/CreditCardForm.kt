@@ -40,13 +40,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.komoju.android.sdk.R
 import com.komoju.android.sdk.types.Currency
-import com.komoju.android.sdk.types.Language
 import com.komoju.android.sdk.ui.composables.PrimaryButton
 import com.komoju.android.sdk.ui.screens.payment.CreditCardDisplayData
 import com.komoju.android.sdk.ui.theme.Gray200
 import com.komoju.android.sdk.ui.theme.Gray500
 import com.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
-import com.komoju.android.sdk.ui.theme.LocalI18nTextsProvider
+import com.komoju.android.sdk.ui.theme.LocalI18nTexts
 import com.komoju.android.sdk.ui.theme.Red600
 import com.komoju.android.sdk.utils.AmountUtils
 import com.komoju.android.sdk.utils.CardScheme
@@ -90,7 +89,7 @@ internal fun CreditCardForm(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
-            text = LocalI18nTextsProvider.current["CARD_NUMBER"],
+            text = LocalI18nTexts.current["CARD_NUMBER"],
         )
 
         Box(
@@ -165,7 +164,7 @@ internal fun CreditCardForm(
                         )
                         if (creditCardDisplayData.creditCardExpiryDate.isEmpty()) {
                             Text(
-                                text = LocalI18nTextsProvider.current["EXPIRY_DATE"],
+                                text = LocalI18nTexts.current["EXPIRY_DATE"],
                                 style = TextStyle(fontSize = 16.sp, color = Gray500),
                             )
                         }
@@ -185,7 +184,7 @@ internal fun CreditCardForm(
                             )
                             if (creditCardDisplayData.creditCardCvv.isEmpty()) {
                                 Text(
-                                    text = LocalI18nTextsProvider.current["CVV"],
+                                    text = LocalI18nTexts.current["CVV"],
                                     style = TextStyle(fontSize = 16.sp, color = Gray500),
                                 )
                             }
@@ -210,7 +209,7 @@ internal fun CreditCardForm(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .fillMaxWidth(),
-            text = "${LocalI18nTextsProvider.current["PAY"]} $displayPayableAmount",
+            text = "${LocalI18nTexts.current["PAY"]} $displayPayableAmount",
             onClick = onPayButtonClicked,
         )
 
@@ -223,7 +222,7 @@ internal fun CreditCardForm(
                     },
                     colors = CheckboxDefaults.colors(checkedColor = Color.Black, uncheckedColor = Color.Black),
                 )
-                Text(LocalI18nTextsProvider.current["SAVE_CARD"])
+                Text(LocalI18nTexts.current["SAVE_CARD"])
             }
         }
     }
@@ -244,7 +243,7 @@ private fun CreditCardFormPreview() {
         displayName = "Credit Card",
     )
     var creditCardDisplayData by remember { mutableStateOf(CreditCardDisplayData()) }
-    KomojuMobileSdkTheme(Language.ENGLISH) {
+    KomojuMobileSdkTheme {
         CreditCardForm(
             creditCard,
             creditCardDisplayData = creditCardDisplayData,

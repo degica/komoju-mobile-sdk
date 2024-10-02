@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.komoju.android.sdk.ui.theme.Gray200
 import com.komoju.android.sdk.ui.theme.Gray500
-import com.komoju.android.sdk.ui.theme.LocalI18nTextsProvider
+import com.komoju.android.sdk.ui.theme.LocalI18nTexts
 import com.komoju.android.sdk.ui.theme.Red600
 
 @Composable
@@ -37,7 +37,7 @@ internal fun TextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
-            text = LocalI18nTextsProvider.current[titleKey],
+            text = LocalI18nTexts.current[titleKey],
         )
         Box(
             modifier = Modifier
@@ -56,7 +56,7 @@ internal fun TextField(
             )
             if (value.isEmpty()) {
                 Text(
-                    text = LocalI18nTextsProvider.current[placeholderKey],
+                    text = LocalI18nTexts.current[placeholderKey],
                     style = TextStyle(fontSize = 16.sp, color = Gray500),
                 )
             }
@@ -65,7 +65,7 @@ internal fun TextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
-            text = LocalI18nTextsProvider.current[error.orEmpty()],
+            text = LocalI18nTexts.current[error.orEmpty()],
             style = TextStyle(fontSize = 16.sp, color = Red600),
         )
     }

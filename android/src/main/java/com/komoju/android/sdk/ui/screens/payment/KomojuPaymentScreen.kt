@@ -1,6 +1,7 @@
 package com.komoju.android.sdk.ui.screens.payment
 
 import android.os.Parcelable
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -11,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -25,11 +25,12 @@ import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import com.komoju.android.sdk.KomojuSDK
 import com.komoju.android.sdk.R
+import com.komoju.android.sdk.ui.composables.ThemedCircularProgressIndicator
 import com.komoju.android.sdk.ui.screens.RouterEffect
 import com.komoju.android.sdk.ui.screens.payment.composables.PaymentMethodForm
 import com.komoju.android.sdk.ui.screens.payment.composables.PaymentMethodsRow
 import com.komoju.android.sdk.ui.screens.payment.composables.PaymentSheetHandle
-import com.komoju.android.sdk.ui.theme.LocalI18nTextsProvider
+import com.komoju.android.sdk.ui.theme.LocalI18nTexts
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -41,6 +42,7 @@ internal data class KomojuPaymentScreen(private val sdkConfiguration: KomojuSDK.
         val screenViewModel = rememberScreenModel { KomojuPaymentScreenModel(sdkConfiguration) }
         val uiState by screenViewModel.state.collectAsStateWithLifecycle()
         val router by screenViewModel.router.collectAsStateWithLifecycle()
+        val onBackPressDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
         LaunchedEffect(sdkConfiguration.sessionId) {
             screenViewModel.init()
         }
@@ -50,7 +52,9 @@ internal data class KomojuPaymentScreen(private val sdkConfiguration: KomojuSDK.
             if (uiState.session != null) {
                 Column {
                     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                        PaymentSheetHandle(LocalI18nTextsProvider.current["PAYMENT_OPTIONS"], onCloseClicked = screenViewModel::onCloseClicked)
+                        PaymentSheetHandle(LocalI18nTexts.current["PAYMENT_OPTIONS"], onCloseClicked = {
+                            onBackPressDispatcher?.onBackPressed()
+                        })
                         PaymentMethodsRow(
                             paymentMethods = uiState.session!!.paymentMethods,
                             selectedPaymentMethod = uiState.selectedPaymentMethod,
@@ -91,7 +95,7 @@ internal data class KomojuPaymentScreen(private val sdkConfiguration: KomojuSDK.
                         .clickable {},
                     contentAlignment = Alignment.Center,
                 ) {
-                    CircularProgressIndicator(modifier = Modifier)
+                    ThemedCircularProgressIndicator()
                 }
             }
         }

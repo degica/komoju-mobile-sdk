@@ -2,7 +2,6 @@ package com.komoju.android.sdk.ui.screens.verify
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -11,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
+import com.komoju.android.sdk.ui.composables.ThemedCircularProgressIndicator
 import com.komoju.android.sdk.ui.screens.KomojuPaymentRoute
 import com.komoju.android.sdk.ui.screens.RouterEffect
 
@@ -30,6 +30,6 @@ private fun Screen.VerifyPaymentScreenContent(route: KomojuPaymentRoute.ProcessP
     }
     RouterEffect(router, screenViewModel::onRouteHandled)
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        CircularProgressIndicator()
+        ThemedCircularProgressIndicator()
     }
 }

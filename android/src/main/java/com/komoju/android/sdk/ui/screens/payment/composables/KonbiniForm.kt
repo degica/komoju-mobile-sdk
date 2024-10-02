@@ -19,12 +19,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.komoju.android.sdk.types.Currency
-import com.komoju.android.sdk.types.Language
 import com.komoju.android.sdk.ui.composables.PrimaryButton
 import com.komoju.android.sdk.ui.screens.payment.CommonDisplayData
 import com.komoju.android.sdk.ui.screens.payment.KonbiniDisplayData
 import com.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
-import com.komoju.android.sdk.ui.theme.LocalI18nTextsProvider
+import com.komoju.android.sdk.ui.theme.LocalI18nTexts
 import com.komoju.android.sdk.ui.theme.Red600
 import com.komoju.android.sdk.utils.AmountUtils
 import com.komoju.mobile.sdk.entities.PaymentMethod
@@ -83,7 +82,7 @@ internal fun KonbiniForm(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
-            text = "${LocalI18nTextsProvider.current["PAY"]} $displayPayableAmount",
+            text = "${LocalI18nTexts.current["PAY"]} $displayPayableAmount",
             onClick = onPayButtonClicked,
         )
     }
@@ -116,7 +115,7 @@ private fun KonbiniFormPreview() {
     var commonDisplayData by remember { mutableStateOf(CommonDisplayData()) }
     var konbiniDisplayData by remember { mutableStateOf(KonbiniDisplayData()) }
 
-    KomojuMobileSdkTheme(language = Language.ENGLISH) {
+    KomojuMobileSdkTheme {
         KonbiniForm(
             konbini,
             konbiniDisplayData = konbiniDisplayData,
