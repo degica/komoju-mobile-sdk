@@ -1,8 +1,8 @@
 package com.komoju.android.sdk.ui.screens.payment
 
-import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import com.komoju.android.sdk.KomojuSDK
+import com.komoju.android.sdk.navigation.RouterStateScreenModel
 import com.komoju.android.sdk.ui.screens.KomojuPaymentRoute
 import com.komoju.android.sdk.ui.screens.Router
 import com.komoju.android.sdk.ui.screens.failed.Reason
@@ -21,16 +21,11 @@ import com.komoju.mobile.sdk.entities.SecureTokenResponse.Status.OK
 import com.komoju.mobile.sdk.entities.SecureTokenResponse.Status.SKIPPED
 import com.komoju.mobile.sdk.entities.SecureTokenResponse.Status.UNKNOWN
 import com.komoju.mobile.sdk.remote.apis.KomojuRemoteApi
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configuration) : StateScreenModel<KomojuPaymentUIState>(KomojuPaymentUIState()) {
+internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configuration) : RouterStateScreenModel<KomojuPaymentUIState>(KomojuPaymentUIState()) {
     private val komojuApi: KomojuRemoteApi = KomojuRemoteApi(config.publishableKey, config.language.languageCode)
-
-    private val _router = MutableStateFlow<Router?>(null)
-    val router = _router.asStateFlow()
 
     fun init() {
         val sessionId = config.sessionId
@@ -114,26 +109,26 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
             komojuApi.tokens.generateSecureToken(request).onSuccess {
                 when (it.status) {
                     OK, SKIPPED ->
-                        _router.value =
+                        mutableRouter.value =
                             Router.ReplaceAll(
                                 KomojuPaymentRoute.ProcessPayment(
                                     config,
                                     processType = KomojuPaymentRoute.ProcessPayment.ProcessType.PayByToken(it.id, request.amount, request.currency),
                                 ),
                             )
-                    NEEDS_VERIFY -> _router.value = Router.ReplaceAll(KomojuPaymentRoute.WebView(url = it.authURL, isJavaScriptEnabled = true))
-                    ERRORED, UNKNOWN -> _router.value = Router.ReplaceAll(KomojuPaymentRoute.PaymentFailed(Reason.CREDIT_CARD_ERROR))
+                    NEEDS_VERIFY -> mutableRouter.value = Router.ReplaceAll(KomojuPaymentRoute.WebView(url = it.authURL, isJavaScriptEnabled = true))
+                    ERRORED, UNKNOWN -> mutableRouter.value = Router.ReplaceAll(KomojuPaymentRoute.PaymentFailed(Reason.CREDIT_CARD_ERROR))
                 }
             }.onFailure {
-                _router.value = Router.ReplaceAll(KomojuPaymentRoute.PaymentFailed(Reason.CREDIT_CARD_ERROR))
+                mutableRouter.value = Router.ReplaceAll(KomojuPaymentRoute.PaymentFailed(Reason.CREDIT_CARD_ERROR))
             }
         }
     }
 
     private fun Payment.handle() {
         when (this) {
-            is Payment.Konbini -> _router.value = Router.Replace(KomojuPaymentRoute.KonbiniAwaitingPayment(config, payment = this))
-            is Payment.PayPay -> _router.value = Router.Handle(url = redirectURL)
+            is Payment.Konbini -> mutableRouter.value = Router.Replace(KomojuPaymentRoute.KonbiniAwaitingPayment(config, payment = this))
+            is Payment.PayPay -> mutableRouter.value = Router.Handle(url = redirectURL)
             else -> Unit
         }
     }
@@ -219,7 +214,7 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
         is PaymentMethod.WebMoney -> TODO()
     }
 
-    fun onRouteHandled() {
-        _router.value = null
+    fun onCloseClicked() {
+        mutableRouter.pop()
     }
 }

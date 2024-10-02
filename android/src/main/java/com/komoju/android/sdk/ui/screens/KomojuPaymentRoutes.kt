@@ -3,8 +3,11 @@ package com.komoju.android.sdk.ui.screens
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -55,12 +58,14 @@ internal sealed interface KomojuPaymentRoute {
 }
 
 @Composable
-internal fun RouterEffect(router: Router?, onHandled: () -> Unit) {
+internal fun RouterEffect(routerState: State<Router?>, onHandled: () -> Unit) {
     val navigator = LocalNavigator.currentOrThrow
     val context = LocalContext.current
+    val router = routerState.value
+    val backPressDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     LaunchedEffect(router) {
         when (router) {
-            is Router.Pop -> navigator.pop()
+            is Router.Pop -> if (navigator.pop().not()) backPressDispatcher?.onBackPressed()
             is Router.PopAll -> navigator.popAll()
             is Router.PopToRoot -> navigator.popUntilRoot()
             is Router.Push -> navigator.push(router.route.screen)

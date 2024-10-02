@@ -53,8 +53,7 @@ internal data class KonbiniAwaitingPaymentScreen(val route: KomojuPaymentRoute.K
     override fun Content() {
         val screenModel = rememberScreenModel { KonbiniAwaitingPaymentScreenModel(route.configuration, route.payment) }
         val uiState by screenModel.state.collectAsStateWithLifecycle()
-        val router by screenModel.router.collectAsStateWithLifecycle()
-        RouterEffect(router, screenModel::onRouteConsumed)
+        RouterEffect(screenModel.router.collectAsStateWithLifecycle(), screenModel::onRouteConsumed)
         uiState.payment?.let {
             PaymentStatus(it, onPrimaryButtonClicked = screenModel::onPrimaryButtonClicked, onSecondaryButtonClicked = screenModel::onSecondaryButtonClicked)
         }

@@ -28,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,6 +38,7 @@ import com.kevinnzou.web.LoadingState
 import com.kevinnzou.web.WebView
 import com.kevinnzou.web.rememberWebViewState
 import com.komoju.android.sdk.ui.screens.KomojuPaymentRoute
+import com.komoju.android.sdk.ui.theme.LocalConfigurableTheme
 
 internal data class WebViewScreen(val route: KomojuPaymentRoute.WebView) : Screen {
     @Composable
@@ -107,13 +109,21 @@ private fun WebViewScreenContent(route: KomojuPaymentRoute.WebView) {
             LinearProgressIndicator(
                 progress = { loadingState.progress },
                 modifier = Modifier.fillMaxWidth(),
+                color = Color(LocalConfigurableTheme.current.loaderColor),
             )
         }
         WebView(
-            modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface),
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.surface),
             state = state,
-            onCreated = {
-                it.settings.javaScriptEnabled = route.isJavaScriptEnabled
+            onCreated = { nativeWebView ->
+                nativeWebView.clipToOutline = true
+                nativeWebView.setBackgroundColor(android.graphics.Color.TRANSPARENT)
+                nativeWebView.settings.apply {
+                    domStorageEnabled = true
+                    javaScriptEnabled = route.isJavaScriptEnabled
+                }
             },
             captureBackPresses = false,
             chromeClient = remember { WebChromeClient() },

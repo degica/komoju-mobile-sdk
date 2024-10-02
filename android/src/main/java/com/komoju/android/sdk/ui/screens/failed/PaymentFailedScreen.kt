@@ -1,6 +1,5 @@
 package com.komoju.android.sdk.ui.screens.failed
 
-import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -19,14 +18,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import com.komoju.android.sdk.R
 import com.komoju.android.sdk.ui.composables.PrimaryButton
 import com.komoju.android.sdk.ui.screens.KomojuPaymentRoute
-import com.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
+import com.komoju.android.sdk.ui.screens.RouterEffect
 import com.komoju.android.sdk.ui.theme.LocalI18nTexts
 
 internal class PaymentFailedScreen(private val route: KomojuPaymentRoute.PaymentFailed) : Screen {
@@ -43,9 +43,10 @@ enum class Reason {
 }
 
 @Composable
-private fun PaymentFailedScreenContent(route: KomojuPaymentRoute.PaymentFailed) {
-    val onBackPressDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+private fun Screen.PaymentFailedScreenContent(route: KomojuPaymentRoute.PaymentFailed) {
     val i18nTexts = LocalI18nTexts.current
+    val screenModel = rememberScreenModel { PaymentFailedScreenModel() }
+    RouterEffect(screenModel.router.collectAsStateWithLifecycle(), screenModel::onRouteConsumed)
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
             Icon(
@@ -53,9 +54,7 @@ private fun PaymentFailedScreenContent(route: KomojuPaymentRoute.PaymentFailed) 
                 "Close Button",
                 modifier = Modifier
                     .padding(16.dp)
-                    .clickable {
-                        onBackPressDispatcher?.onBackPressed()
-                    },
+                    .clickable(onClick = screenModel::onCloseButtonClicked),
             )
         }
         Image(painterResource(R.drawable.komoju_ic_payment_status_failed), "status_icon")
@@ -77,15 +76,7 @@ private fun PaymentFailedScreenContent(route: KomojuPaymentRoute.PaymentFailed) 
                 .padding(16.dp),
             text = i18nTexts["BACK_TO_STORE"],
         ) {
-            onBackPressDispatcher?.onBackPressed()
+            screenModel.onBackToStoreButtonClicked()
         }
-    }
-}
-
-@Composable
-@Preview
-private fun PaymentSuccessScreenContentPreview() {
-    KomojuMobileSdkTheme {
-        PaymentFailedScreenContent(KomojuPaymentRoute.PaymentFailed(Reason.USER_CANCEL))
     }
 }
