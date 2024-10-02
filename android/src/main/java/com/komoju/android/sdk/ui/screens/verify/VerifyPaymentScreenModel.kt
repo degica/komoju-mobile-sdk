@@ -1,23 +1,18 @@
 package com.komoju.android.sdk.ui.screens.verify
 
-import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import com.komoju.android.sdk.KomojuSDK
+import com.komoju.android.sdk.navigation.RouterStateScreenModel
 import com.komoju.android.sdk.ui.screens.KomojuPaymentRoute
 import com.komoju.android.sdk.ui.screens.Router
 import com.komoju.android.sdk.ui.screens.failed.Reason
 import com.komoju.mobile.sdk.entities.PaymentStatus
 import com.komoju.mobile.sdk.remote.apis.KomojuRemoteApi
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-internal class VerifyPaymentScreenModel(private val config: KomojuSDK.Configuration) : ScreenModel {
+internal class VerifyPaymentScreenModel(private val config: KomojuSDK.Configuration) : RouterStateScreenModel<Unit>(Unit) {
 
     private val komojuApi: KomojuRemoteApi = KomojuRemoteApi(config.publishableKey, config.language.languageCode)
-
-    private val _router = MutableStateFlow<Router?>(null)
-    val router = _router.asStateFlow()
 
     fun process(type: KomojuPaymentRoute.ProcessPayment.ProcessType) {
         screenModelScope.launch {
@@ -31,20 +26,26 @@ internal class VerifyPaymentScreenModel(private val config: KomojuSDK.Configurat
 
     private suspend fun processBySession() {
         komojuApi.sessions.verifyPaymentBySessionID(config.sessionId.orEmpty()).onSuccess { paymentDetails ->
-            _router.value = when (paymentDetails.status) {
+            mutableRouter.value = when (paymentDetails.status) {
                 PaymentStatus.COMPLETED, PaymentStatus.CAPTURED -> Router.ReplaceAll(KomojuPaymentRoute.PaymentSuccess)
                 else -> Router.ReplaceAll(KomojuPaymentRoute.PaymentFailed(Reason.OTHER))
             }
         }.onFailure {
-            _router.value = Router.ReplaceAll(KomojuPaymentRoute.PaymentFailed(Reason.OTHER))
+            mutableRouter.value = Router.ReplaceAll(KomojuPaymentRoute.PaymentFailed(Reason.OTHER))
         }
     }
 
     private suspend fun payByToken(token: String, amount: String, currency: String) {
         komojuApi.sessions.pay(config.sessionId.orEmpty(), token, amount, currency).onSuccess { response ->
-            if (response.status == PaymentStatus.CAPTURED) processBySession() else _router.value = Router.ReplaceAll(KomojuPaymentRoute.PaymentFailed(Reason.CREDIT_CARD_ERROR))
+            if (response.status ==
+                PaymentStatus.CAPTURED
+            ) {
+                processBySession()
+            } else {
+                mutableRouter.value = Router.ReplaceAll(KomojuPaymentRoute.PaymentFailed(Reason.CREDIT_CARD_ERROR))
+            }
         }.onFailure {
-            _router.value = Router.ReplaceAll(KomojuPaymentRoute.PaymentFailed(Reason.CREDIT_CARD_ERROR))
+            mutableRouter.value = Router.ReplaceAll(KomojuPaymentRoute.PaymentFailed(Reason.CREDIT_CARD_ERROR))
         }
     }
 
@@ -53,15 +54,11 @@ internal class VerifyPaymentScreenModel(private val config: KomojuSDK.Configurat
             if (isVerifiedByToken) {
                 with(verifyTokenAndPay) { payByToken(token, amount, currency) }
             } else {
-                _router.value =
+                mutableRouter.value =
                     Router.ReplaceAll(KomojuPaymentRoute.PaymentFailed(Reason.CREDIT_CARD_ERROR))
             }
         }.onFailure {
-            _router.value = Router.ReplaceAll(KomojuPaymentRoute.PaymentFailed(Reason.CREDIT_CARD_ERROR))
+            mutableRouter.value = Router.ReplaceAll(KomojuPaymentRoute.PaymentFailed(Reason.CREDIT_CARD_ERROR))
         }
-    }
-
-    fun onRouteHandled() {
-        _router.value = null
     }
 }

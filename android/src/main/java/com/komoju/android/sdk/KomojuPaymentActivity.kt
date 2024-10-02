@@ -63,7 +63,6 @@ internal class KomojuPaymentActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val isVisible by viewModel.isVisible.collectAsStateWithLifecycle()
-            val router by viewModel.router.collectAsStateWithLifecycle()
             val animatedAlpha by animateFloatAsState(
                 targetValue = if (isVisible) .3f else .0f,
                 label = "scrim_alpha_animation",
@@ -94,7 +93,7 @@ internal class KomojuPaymentActivity : ComponentActivity() {
                                     KomojuPaymentScreen(viewModel.configuration),
                                 ) { navigator ->
                                     SlideTransition(navigator)
-                                    RouterEffect(router, viewModel::onRouteConsumed)
+                                    RouterEffect(viewModel.router.collectAsStateWithLifecycle(), viewModel::onRouteConsumed)
                                     NewIntentEffect(LocalContext.current, viewModel::onNewDeeplink)
                                 }
                             }

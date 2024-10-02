@@ -24,11 +24,10 @@ internal class ProcessPaymentScreen(private val route: KomojuPaymentRoute.Proces
 @Composable
 private fun Screen.VerifyPaymentScreenContent(route: KomojuPaymentRoute.ProcessPayment) {
     val screenViewModel = rememberScreenModel { VerifyPaymentScreenModel(route.configuration) }
-    val router by screenViewModel.router.collectAsStateWithLifecycle()
     LaunchedEffect(Unit) {
         screenViewModel.process(route.processType)
     }
-    RouterEffect(router, screenViewModel::onRouteHandled)
+    RouterEffect(screenViewModel.router.collectAsStateWithLifecycle(), screenViewModel::onRouteConsumed)
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         ThemedCircularProgressIndicator()
     }

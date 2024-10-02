@@ -1,7 +1,6 @@
 package com.komoju.android.sdk.ui.screens.payment
 
 import android.os.Parcelable
-import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -41,19 +40,16 @@ internal data class KomojuPaymentScreen(private val sdkConfiguration: KomojuSDK.
     override fun Content() {
         val screenViewModel = rememberScreenModel { KomojuPaymentScreenModel(sdkConfiguration) }
         val uiState by screenViewModel.state.collectAsStateWithLifecycle()
-        val router by screenViewModel.router.collectAsStateWithLifecycle()
-        val onBackPressDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
         LaunchedEffect(sdkConfiguration.sessionId) {
             screenViewModel.init()
         }
-        RouterEffect(router, screenViewModel::onRouteHandled)
-
+        RouterEffect(screenViewModel.router.collectAsStateWithLifecycle(), screenViewModel::onRouteConsumed)
         Box {
             if (uiState.session != null) {
                 Column {
                     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                         PaymentSheetHandle(LocalI18nTexts.current["PAYMENT_OPTIONS"], onCloseClicked = {
-                            onBackPressDispatcher?.onBackPressed()
+                            screenViewModel.onCloseClicked()
                         })
                         PaymentMethodsRow(
                             paymentMethods = uiState.session!!.paymentMethods,
