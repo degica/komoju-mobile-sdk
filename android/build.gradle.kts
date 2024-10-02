@@ -1,4 +1,6 @@
 import com.vanniktech.maven.publish.SonatypeHost
+import org.jetbrains.dokka.Platform
+import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
     alias(libs.plugins.androidLibrary)
@@ -7,20 +9,15 @@ plugins {
     alias(libs.plugins.kotlin.plugin.serialization)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.maven.publish)
+    alias(libs.plugins.jetbrains.dokka)
 }
 
 android {
     namespace = "com.komoju.android.sdk"
-    compileSdk =
-        libs.versions.android.compileSdk
-            .get()
-            .toInt()
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk =
-            libs.versions.android.minSdk
-                .get()
-                .toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -50,6 +47,7 @@ android {
     lint {
         warningsAsErrors = true
         abortOnError = true
+        disable.add("AndroidGradlePluginVersion")
     }
 }
 
@@ -115,4 +113,24 @@ tasks.matching { task ->
     task.name.contains("javaDocReleaseGeneration", ignoreCase = true)
 }.configureEach {
     enabled = false
+}
+
+tasks.withType<DokkaTask>().configureEach {
+    moduleName.set("Komoju Android SDK Documentation")
+    moduleVersion.set("v0.0.1")
+    outputDirectory.set(layout.projectDirectory.dir("docs/"))
+    dokkaSourceSets.configureEach {
+        displayName.set("Android")
+        skipEmptyPackages.set(true)
+        jdkVersion.set(17)
+        noStdlibLink.set(false)
+        noJdkLink.set(false)
+        noAndroidSdkLink.set(false)
+        platform.set(Platform.DEFAULT)
+    }
+    pluginsMapConfiguration.set(
+        mapOf(
+            "org.jetbrains.dokka.base.DokkaBase" to "{ \"footerMessage\": \"(c) 2024 Degica\" }".trim(),
+        ),
+    )
 }

@@ -67,14 +67,14 @@ internal class KomojuPaymentActivity : ComponentActivity() {
             val animatedAlpha by animateFloatAsState(
                 targetValue = if (isVisible) .3f else .0f,
                 label = "scrim_alpha_animation",
-                animationSpec = tween(durationMillis = com.komoju.android.sdk.ANIMATION_DURATION),
+                animationSpec = tween(durationMillis = ANIMATION_DURATION),
             )
             Surface(modifier = Modifier.fillMaxSize(), color = Color.Black.copy(alpha = animatedAlpha)) {
                 AnimatedVisibility(
                     isVisible,
-                    enter = slideInVertically(animationSpec = tween(com.komoju.android.sdk.ANIMATION_DURATION, easing = LinearEasing)) { it },
+                    enter = slideInVertically(animationSpec = tween(ANIMATION_DURATION, easing = LinearEasing)) { it },
                     exit = slideOutVertically(
-                        animationSpec = tween(com.komoju.android.sdk.ANIMATION_DURATION),
+                        animationSpec = tween(ANIMATION_DURATION),
                     ) { it },
                 ) {
                     Box(
@@ -123,7 +123,7 @@ internal class KomojuPaymentActivity : ComponentActivity() {
     override fun finish() {
         lifecycleScope.launch {
             viewModel.toggleVisibility(false)
-            delay(com.komoju.android.sdk.ANIMATION_DURATION.toLong()) // Let the animation finish
+            delay(ANIMATION_DURATION.toLong()) // Let the animation finish
             super.finish()
         }
         // TODO: Set Result
