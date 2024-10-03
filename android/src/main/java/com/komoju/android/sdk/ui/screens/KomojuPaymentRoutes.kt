@@ -12,6 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.komoju.android.sdk.KomojuSDK
+import com.komoju.android.sdk.navigation.paymentResultScreenModel
 import com.komoju.android.sdk.ui.screens.awating.KonbiniAwaitingPaymentScreen
 import com.komoju.android.sdk.ui.screens.failed.PaymentFailedScreen
 import com.komoju.android.sdk.ui.screens.failed.Reason
@@ -29,6 +30,7 @@ internal sealed class Router {
     data class ReplaceAll(val route: KomojuPaymentRoute) : Router()
     data class Handle(val url: String) : Router()
     data class Browser(val url: String) : Router()
+    data class SetPaymentResultAndPop(val result: KomojuSDK.PaymentResult) : Router()
 }
 
 internal sealed interface KomojuPaymentRoute {
@@ -63,6 +65,7 @@ internal fun RouterEffect(routerState: State<Router?>, onHandled: () -> Unit) {
     val context = LocalContext.current
     val router = routerState.value
     val backPressDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+    val resultScreenModel = navigator.paymentResultScreenModel()
     LaunchedEffect(router) {
         when (router) {
             is Router.Pop -> if (navigator.pop().not()) backPressDispatcher?.onBackPressed()
@@ -78,6 +81,10 @@ internal fun RouterEffect(routerState: State<Router?>, onHandled: () -> Unit) {
 
             is Router.Browser -> context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(router.url)))
             null -> Unit
+            is Router.SetPaymentResultAndPop -> {
+                resultScreenModel.setResult(router.result)
+                if (navigator.pop().not()) backPressDispatcher?.onBackPressed()
+            }
         }
         onHandled()
     }

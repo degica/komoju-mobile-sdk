@@ -2,6 +2,7 @@ package com.komoju.android.sdk
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Parcelable
 import androidx.activity.result.contract.ActivityResultContract
 import com.komoju.android.sdk.types.Currency
@@ -30,6 +31,7 @@ object KomojuSDK {
         internal val sessionId: String?, // Unique session ID for payment transaction.
         internal val redirectURL: String = "", // URL to redirect after payment completion.
         internal val configurableTheme: ConfigurableTheme, // Custom theme for UI elements.
+        internal val inlinedProcessing: Boolean, // Flag to enable inlined processing.
     ) : Parcelable {
 
         /**
@@ -41,6 +43,7 @@ object KomojuSDK {
             private var currency: Currency = Currency.JPY // Default currency is Japanese Yen.
             private var isDebugMode: Boolean = false // Debug mode is off by default.
             private var configurableTheme: ConfigurableTheme = ConfigurableTheme.default // Custom theme for UI elements.
+            private var inlinedProcessing: Boolean = false // Inlined processing is off by default.
 
             /** Sets the language for the payment. */
             fun setLanguage(language: Language) = apply {
@@ -57,8 +60,25 @@ object KomojuSDK {
                 this.isDebugMode = isDebugMode
             }
 
+            /** Sets the custom theme for the payment UI. */
             fun setConfigurableTheme(configurableTheme: ConfigurableTheme) = apply {
                 this.configurableTheme = configurableTheme
+            }
+
+            /**
+             * WARNING: Experimental API [Try this only if you are sure] Disabled by Default.
+             *
+             * This API enables or disables inlined processing.
+             * If this is enabled then The SDK will try to do processing with minimum amount of screens.
+             *
+             * For e.g.
+             * * If PayPay Payment id captured, it will close the SDK ASAP it verifies the payment.
+             * * When you will try to pay with Credit Card and Second step verification is not required, SDK will never show the WebView and will handle the callback itself.
+             *
+             */
+            @ExperimentalKomojuPaymentApi
+            fun setInlinedProcessing(inlinedProcessing: Boolean) = apply {
+                this.inlinedProcessing = inlinedProcessing
             }
 
             /**
@@ -71,6 +91,7 @@ object KomojuSDK {
                 sessionId = sessionId,
                 isDebugMode = isDebugMode,
                 configurableTheme = configurableTheme,
+                inlinedProcessing = inlinedProcessing,
             )
         }
     }
@@ -79,7 +100,8 @@ object KomojuSDK {
      * Data class to hold the result of a payment transaction.
      * @param isSuccessFul Whether the payment was successful or not.
      */
-    data class PaymentResult(val isSuccessFul: Boolean)
+    @Parcelize
+    data class PaymentResult(val isSuccessFul: Boolean) : Parcelable
 
     /**
      * Property that provides the contract to start the payment process
@@ -107,6 +129,7 @@ internal class KomojuStartPaymentForResultContract : ActivityResultContract<Komo
 
     companion object {
         const val CONFIGURATION_KEY: String = "KomojuSDK.Configuration" // Key for passing configuration data via Intent.
+        const val RESULT_KEY: String = "KomojuSDK.PaymentResult" // Key for passing result data via Intent.
     }
 
     /**
@@ -145,6 +168,10 @@ internal class KomojuStartPaymentForResultContract : ActivityResultContract<Komo
      * @param intent The returned [Intent] containing the result data.
      * @return [KomojuSDK.PaymentResult] indicating whether the payment was successful or not.
      */
-    override fun parseResult(resultCode: Int, intent: Intent?): KomojuSDK.PaymentResult =
-        KomojuSDK.PaymentResult(isSuccessFul = false) // Default result set to false; actual implementation may vary.
+    override fun parseResult(resultCode: Int, intent: Intent?): KomojuSDK.PaymentResult = when {
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> intent?.getParcelableExtra(RESULT_KEY, KomojuSDK.PaymentResult::class.java)
+        else ->
+            @Suppress("DEPRECATION")
+            intent?.getParcelableExtra(RESULT_KEY)
+    } ?: KomojuSDK.PaymentResult(isSuccessFul = false)
 }

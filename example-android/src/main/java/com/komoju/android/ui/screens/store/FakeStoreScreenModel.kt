@@ -2,6 +2,7 @@ package com.komoju.android.ui.screens.store
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import com.komoju.android.sdk.ExperimentalKomojuPaymentApi
 import com.komoju.android.sdk.KomojuSDK
 import com.komoju.android.sdk.types.Currency
 import com.komoju.android.sdk.types.Language
@@ -58,6 +59,7 @@ class FakeStoreScreenModel : ScreenModel {
         )
     }
 
+    @OptIn(ExperimentalKomojuPaymentApi::class)
     fun onBuyClicked(item: Item) {
         screenModelScope.launch {
             createSession(item)?.let { sessionId ->
@@ -67,6 +69,7 @@ class FakeStoreScreenModel : ScreenModel {
                 ).setLanguage(language)
                     .setCurrency(currency)
                     .setConfigurableTheme(komojuConfigurableTheme)
+                    .setInlinedProcessing(true)
                     .build().let { komojuConfig ->
                         _komojuSDKConfiguration.value = komojuConfig
                     }

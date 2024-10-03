@@ -17,4 +17,11 @@
     <string name="off_white">Off-White</string>
     <string name="blue">Blue</string>
     <string name="pink">Pink</string>
+    <string name="buy_this_item">Buy this Item</string>
+    <string name="continue_shopping">Continue Shopping</string>
+    <string name="share">Share</string>
+    <string name="close">Close</string>
+    <string name="retry_payment">Retry Payment</string>
+    <string name="thank_you_for_your_order">Thank you for your Order, it has been confirmed, Shipping Details will be shared on your registered email address soon</string>
+    <string name="order_confirmed">Order Confirmed</string>
 </resources>

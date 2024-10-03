@@ -1,6 +1,5 @@
 package com.komoju.android.sdk
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.komoju.android.sdk.ui.screens.KomojuPaymentRoute
@@ -40,7 +39,6 @@ internal class KomojuPaymentViewModel(internal val configuration: KomojuSDK.Conf
                 },
             ),
         )
-        Log.d("Aman", "handleIntentAction $deeplinkEntity")
     }
 }
 

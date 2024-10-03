@@ -18,5 +18,12 @@
     <string name="off_white">オフホワイト</string>
     <string name="blue">ブルー</string>
     <string name="pink">ピンク</string>
+    <string name="buy_this_item">この商品を購入する</string>
+    <string name="continue_shopping">買い物を続ける</string>
+    <string name="share">共有</string>
+    <string name="close">近い</string>
+    <string name="retry_payment">支払いを再試行する</string>
+    <string name="thank_you_for_your_order">ご注文ありがとうございます。ご注文は確認されました。発送の詳細は、ご登録のメールアドレスにすぐに送信されます。</string>
+    <string name="order_confirmed">注文確定</string>
 
 </resources>

@@ -1,7 +1,6 @@
 package com.komoju.android.sdk.ui.screens.webview
 
 import androidx.activity.compose.BackHandler
-import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -33,11 +32,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import com.kevinnzou.web.LoadingState
 import com.kevinnzou.web.WebView
 import com.kevinnzou.web.rememberWebViewState
 import com.komoju.android.sdk.ui.screens.KomojuPaymentRoute
+import com.komoju.android.sdk.ui.screens.RouterEffect
 import com.komoju.android.sdk.ui.theme.LocalConfigurableTheme
 
 internal data class WebViewScreen(val route: KomojuPaymentRoute.WebView) : Screen {
@@ -48,10 +50,11 @@ internal data class WebViewScreen(val route: KomojuPaymentRoute.WebView) : Scree
 }
 
 @Composable
-private fun WebViewScreenContent(route: KomojuPaymentRoute.WebView) {
+private fun Screen.WebViewScreenContent(route: KomojuPaymentRoute.WebView) {
     val state = rememberWebViewState(route.url)
     var showBackPressDialog by remember { mutableStateOf(false) }
-    val onBackPressedDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+    val screenModel = rememberScreenModel { WebViewScreenModel() }
+    RouterEffect(screenModel.router.collectAsStateWithLifecycle(), screenModel::onRouteConsumed)
     if (route.canComeBack.not() && showBackPressDialog.not()) {
         BackHandler {
             showBackPressDialog = true
@@ -72,7 +75,7 @@ private fun WebViewScreenContent(route: KomojuPaymentRoute.WebView) {
                             indication = ripple(bounded = true, radius = 24.dp),
                             interactionSource = remember { MutableInteractionSource() },
                             onClick = {
-                                onBackPressedDispatcher?.onBackPressed()
+                                screenModel.onBackPressed()
                             },
                         )
                         .padding(16.dp),
@@ -139,7 +142,7 @@ private fun WebViewScreenContent(route: KomojuPaymentRoute.WebView) {
                         text = "Yes",
                         modifier = Modifier
                             .clickable {
-                                onBackPressedDispatcher?.onBackPressed()
+                                screenModel.onBackPressed()
                             }
                             .padding(16.dp),
                     )

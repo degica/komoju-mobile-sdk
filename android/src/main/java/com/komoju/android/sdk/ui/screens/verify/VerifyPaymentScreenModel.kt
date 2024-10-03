@@ -7,6 +7,7 @@ import com.komoju.android.sdk.ui.screens.KomojuPaymentRoute
 import com.komoju.android.sdk.ui.screens.Router
 import com.komoju.android.sdk.ui.screens.failed.Reason
 import com.komoju.mobile.sdk.entities.PaymentStatus
+import com.komoju.mobile.sdk.entities.PaymentStatus.Companion.isSuccessful
 import com.komoju.mobile.sdk.remote.apis.KomojuRemoteApi
 import kotlinx.coroutines.launch
 
@@ -26,9 +27,17 @@ internal class VerifyPaymentScreenModel(private val config: KomojuSDK.Configurat
 
     private suspend fun processBySession() {
         komojuApi.sessions.verifyPaymentBySessionID(config.sessionId.orEmpty()).onSuccess { paymentDetails ->
-            mutableRouter.value = when (paymentDetails.status) {
-                PaymentStatus.COMPLETED, PaymentStatus.CAPTURED -> Router.ReplaceAll(KomojuPaymentRoute.PaymentSuccess)
-                else -> Router.ReplaceAll(KomojuPaymentRoute.PaymentFailed(Reason.OTHER))
+            mutableRouter.value = when {
+                config.inlinedProcessing -> Router.SetPaymentResultAndPop(
+                    KomojuSDK.PaymentResult(
+                        isSuccessFul = paymentDetails.status.isSuccessful(),
+                    ),
+                )
+
+                else -> when (paymentDetails.status.isSuccessful()) {
+                    true -> Router.ReplaceAll(KomojuPaymentRoute.PaymentSuccess)
+                    else -> Router.ReplaceAll(KomojuPaymentRoute.PaymentFailed(Reason.OTHER))
+                }
             }
         }.onFailure {
             mutableRouter.value = Router.ReplaceAll(KomojuPaymentRoute.PaymentFailed(Reason.OTHER))
