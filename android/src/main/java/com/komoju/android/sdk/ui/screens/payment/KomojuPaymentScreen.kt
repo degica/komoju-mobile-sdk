@@ -30,11 +30,14 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.google.pay.button.ButtonTheme
 import com.google.pay.button.ButtonType
 import com.google.pay.button.PayButton
 import com.komoju.android.sdk.KomojuSDK
 import com.komoju.android.sdk.R
+import com.komoju.android.sdk.navigation.paymentResultScreenModel
 import com.komoju.android.sdk.ui.composables.ThemedCircularProgressIndicator
 import com.komoju.android.sdk.ui.screens.RouterEffect
 import com.komoju.android.sdk.ui.screens.payment.composables.PaymentMethodForm
@@ -70,6 +73,7 @@ internal data class KomojuPaymentScreen(private val sdkConfiguration: KomojuSDK.
     override fun Content() {
         val screenViewModel = rememberScreenModel { KomojuPaymentScreenModel(sdkConfiguration) }
         val uiState by screenViewModel.state.collectAsStateWithLifecycle()
+        val resultScreenModel = LocalNavigator.currentOrThrow.paymentResultScreenModel()
         LaunchedEffect(sdkConfiguration.sessionId) {
             screenViewModel.init()
         }
@@ -85,7 +89,10 @@ internal data class KomojuPaymentScreen(private val sdkConfiguration: KomojuSDK.
                             modifier = Modifier
                                 .testTag("payButton")
                                 .fillMaxWidth().padding(12.dp),
-                            onClick = screenViewModel::onGooglePayButtonClicked,
+                            onClick = {
+                                resultScreenModel.setResult(KomojuSDK.PaymentResult(isSuccessFul = true))
+                                screenViewModel.onGooglePayButtonClicked()
+                            },
                             allowedPaymentMethods = allowedPaymentMethods,
                             theme = ButtonTheme.Dark,
                             type = ButtonType.Pay,
