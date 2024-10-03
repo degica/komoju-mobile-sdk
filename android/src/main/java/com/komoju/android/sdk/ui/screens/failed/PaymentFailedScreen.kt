@@ -36,12 +36,6 @@ internal class PaymentFailedScreen(private val route: KomojuPaymentRoute.Payment
     }
 }
 
-enum class Reason {
-    USER_CANCEL,
-    CREDIT_CARD_ERROR,
-    OTHER,
-}
-
 @Composable
 private fun Screen.PaymentFailedScreenContent(route: KomojuPaymentRoute.PaymentFailed) {
     val i18nTexts = LocalI18nTexts.current

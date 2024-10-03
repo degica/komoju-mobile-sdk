@@ -32,6 +32,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
+import com.komoju.android.sdk.navigation.PaymentResultScreenModel
+import com.komoju.android.sdk.navigation.paymentResultScreenModel
 import com.komoju.android.sdk.ui.screens.RouterEffect
 import com.komoju.android.sdk.ui.screens.payment.KomojuPaymentScreen
 import com.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
@@ -58,6 +60,8 @@ internal class KomojuPaymentActivity : ComponentActivity() {
             )
         },
     )
+
+    private var commonScreenModel: PaymentResultScreenModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,6 +96,7 @@ internal class KomojuPaymentActivity : ComponentActivity() {
                                 Navigator(
                                     KomojuPaymentScreen(viewModel.configuration),
                                 ) { navigator ->
+                                    commonScreenModel = navigator.paymentResultScreenModel()
                                     SlideTransition(navigator)
                                     RouterEffect(viewModel.router.collectAsStateWithLifecycle(), viewModel::onRouteConsumed)
                                     NewIntentEffect(LocalContext.current, viewModel::onNewDeeplink)
@@ -120,11 +125,16 @@ internal class KomojuPaymentActivity : ComponentActivity() {
     }
 
     override fun finish() {
+        setResult(
+            RESULT_OK,
+            Intent().apply {
+                putExtra(KomojuStartPaymentForResultContract.RESULT_KEY, commonScreenModel?.result)
+            },
+        )
         lifecycleScope.launch {
             viewModel.toggleVisibility(false)
             delay(ANIMATION_DURATION.toLong()) // Let the animation finish
             super.finish()
         }
-        // TODO: Set Result
     }
 }

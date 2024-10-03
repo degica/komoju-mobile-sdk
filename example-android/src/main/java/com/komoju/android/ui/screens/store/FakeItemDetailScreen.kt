@@ -62,6 +62,7 @@ data class FakeItemDetailScreen(private val index: Int) : Screen {
         val komojuSDKConfiguration by screenModel.komojuSDKConfiguration.collectAsStateWithLifecycle()
         val komojuPaymentLauncher = rememberLauncherForActivityResult(KomojuSDK.KomojuPaymentResultContract) {
             screenModel.onKomojuPaymentCompleted()
+            navigator.push(if (it.isSuccessFul) FakeOrderSuccessScreen() else FakeOrderFailedScreen())
         }
         LaunchedEffect(komojuSDKConfiguration) {
             val configuration = komojuSDKConfiguration
@@ -159,7 +160,7 @@ data class FakeItemDetailScreen(private val index: Int) : Screen {
                         .padding(16.dp),
                 ) {
                     Text(
-                        "Buy this Item",
+                        stringResource(R.string.buy_this_item),
                     )
                 }
             }

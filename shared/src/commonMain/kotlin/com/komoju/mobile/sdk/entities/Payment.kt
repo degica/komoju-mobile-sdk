@@ -39,5 +39,7 @@ enum class PaymentStatus {
 
     companion object {
         fun fromString(status: String): PaymentStatus = entries.find { it.name == status.uppercase() } ?: throw IllegalArgumentException("Invalid payment status: $status")
+
+        fun PaymentStatus.isSuccessful(): Boolean = this in listOf(COMPLETED, CAPTURED)
     }
 }
