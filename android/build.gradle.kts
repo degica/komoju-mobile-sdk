@@ -72,6 +72,7 @@ dependencies {
     implementation(libs.voyager.navigator)
     implementation(libs.voyager.screenModel)
     implementation(libs.voyager.transitions)
+    implementation(libs.compose.pay.button)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

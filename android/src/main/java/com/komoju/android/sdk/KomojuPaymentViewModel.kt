@@ -35,6 +35,7 @@ internal class KomojuPaymentViewModel(internal val configuration: KomojuSDK.Conf
                         amount = deeplinkEntity.amount,
                         currency = deeplinkEntity.currency,
                     )
+
                     DeeplinkEntity.Verify.BySessionId -> KomojuPaymentRoute.ProcessPayment.ProcessType.Session
                 },
             ),

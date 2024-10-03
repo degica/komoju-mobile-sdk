@@ -96,6 +96,7 @@ private val englishTexts = """
 "EXPIRY_DATE_ERROR": "Please input the full expiration date",
 "CVV_ERROR": "Please input the CVV",
 "EMAIL_ERROR": "Please enter a valid email address",
+"OR_PAY_USING": "Or pay using",
 "": ""
 }
 """.trimIndent().run {
@@ -191,6 +192,7 @@ private val japaneseTexts = """
 "EXPIRY_DATE_ERROR": "有効期限を入力してください",
 "CVV_ERROR": "CVVを入力してください",
 "EMAIL_ERROR": "有効なメールアドレスを入力してください",
+"OR_PAY_USING": "または、",
 "": ""
 }
 """.trimIndent().run {

@@ -21,6 +21,8 @@ import com.komoju.mobile.sdk.entities.SecureTokenResponse.Status.OK
 import com.komoju.mobile.sdk.entities.SecureTokenResponse.Status.SKIPPED
 import com.komoju.mobile.sdk.entities.SecureTokenResponse.Status.UNKNOWN
 import com.komoju.mobile.sdk.remote.apis.KomojuRemoteApi
+import kotlin.time.Duration.Companion.seconds
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -216,5 +218,13 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
 
     fun onCloseClicked() {
         mutableRouter.pop()
+    }
+
+    fun onGooglePayButtonClicked() {
+        mutableState.update { it.copy(isLoading = true) }
+        screenModelScope.launch {
+            delay(3.seconds)
+            mutableRouter.pop()
+        }
     }
 }
