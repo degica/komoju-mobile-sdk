@@ -1,0 +1,26 @@
+# android_flow.yaml
+
+appId: com.komoju.android
+---
+- launchApp:
+    appId: com.komoju.android
+    clearState: true
+- tapOn: "Premium Wireless Headphone"
+- tapOn: "Buy this item"
+- assertVisible: "Credit Card"
+- assertVisible: "Konbini"
+- assertVisible: "PayPay"
+- assertVisible: "Cardholder name"
+- tapOn: "Full name on card"
+- inputRandomPersonName
+- assertVisible: "Card Number"
+- tapOn: "1234 1234 1234 1234"
+- inputText: "4100000000000100"
+- tapOn: "MM/YY"
+- inputText: "0825"
+- tapOn: "CVV"
+- inputText: "123"
+- hideKeyboard
+- tapOn:
+    id: "credit_card_pay"
+- assertVisible: "Order Confirmed"

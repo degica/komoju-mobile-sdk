@@ -25,11 +25,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -54,8 +58,10 @@ import com.komoju.android.sdk.utils.CreditCardUtils.formatDinnersClub
 import com.komoju.android.sdk.utils.CreditCardUtils.formatOtherCardNumbers
 import com.komoju.android.sdk.utils.CreditCardUtils.identifyCardScheme
 import com.komoju.android.sdk.utils.CreditCardUtils.makeExpirationFilter
+import com.komoju.android.sdk.utils.testID
 import com.komoju.mobile.sdk.entities.PaymentMethod
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 internal fun CreditCardForm(
     creditCard: PaymentMethod.CreditCard,
@@ -206,7 +212,7 @@ internal fun CreditCardForm(
 
         Spacer(modifier = Modifier.height(8.dp))
         PrimaryButton(
-            modifier = Modifier
+            modifier = Modifier.testID("credit_card_pay")
                 .padding(horizontal = 16.dp)
                 .fillMaxWidth(),
             text = "${LocalI18nTexts.current["PAY"]} $displayPayableAmount",
