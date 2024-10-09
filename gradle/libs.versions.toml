@@ -1,5 +1,6 @@
 [versions]
 agp = "8.7.0"
+browser = "1.8.0"
 kotlin = "2.0.20"
 nexus-publish = "2.0.0"
 android-minSdk = "24"
@@ -27,6 +28,7 @@ nmcp = "0.0.7"
 dokka = "1.9.20"
 
 [libraries]
+androidx-browser = { module = "androidx.browser:browser", version.ref = "browser" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 nexus-publish = { module = "io.github.gradle-nexus.publish-plugin:io.github.gradle-nexus.publish-plugin.gradle.plugin", version.ref = "nexus-publish" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

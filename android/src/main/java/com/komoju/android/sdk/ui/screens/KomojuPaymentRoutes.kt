@@ -1,14 +1,9 @@
 package com.komoju.android.sdk.ui.screens
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.LocalContext
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.komoju.android.sdk.KomojuSDK
@@ -28,8 +23,6 @@ internal sealed class Router {
     data class Push(val route: KomojuPaymentRoute) : Router()
     data class Replace(val route: KomojuPaymentRoute) : Router()
     data class ReplaceAll(val route: KomojuPaymentRoute) : Router()
-    data class Handle(val url: String) : Router()
-    data class Browser(val url: String) : Router()
     data class SetPaymentResultAndPop(val result: KomojuSDK.PaymentResult) : Router()
 }
 
@@ -62,7 +55,6 @@ internal sealed interface KomojuPaymentRoute {
 @Composable
 internal fun RouterEffect(routerState: State<Router?>, onHandled: () -> Unit) {
     val navigator = LocalNavigator.currentOrThrow
-    val context = LocalContext.current
     val router = routerState.value
     val backPressDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     val resultScreenModel = navigator.paymentResultScreenModel()
@@ -74,12 +66,7 @@ internal fun RouterEffect(routerState: State<Router?>, onHandled: () -> Unit) {
             is Router.Push -> navigator.push(router.route.screen)
             is Router.Replace -> navigator.replace(router.route.screen)
             is Router.ReplaceAll -> navigator.replaceAll(router.route.screen)
-            is Router.Handle -> when (router.url.canOpenAnApp(context)) {
-                true -> context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(router.url)))
-                false -> navigator.push(KomojuPaymentRoute.WebView(router.url).screen)
-            }
 
-            is Router.Browser -> context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(router.url)))
             null -> Unit
             is Router.SetPaymentResultAndPop -> {
                 resultScreenModel.setResult(router.result)
@@ -89,7 +76,3 @@ internal fun RouterEffect(routerState: State<Router?>, onHandled: () -> Unit) {
         onHandled()
     }
 }
-
-internal fun String.canOpenAnApp(context: Context): Boolean = Intent(Intent.ACTION_VIEW).apply {
-    data = Uri.parse(this@canOpenAnApp)
-}.resolveActivity(context.packageManager) != null

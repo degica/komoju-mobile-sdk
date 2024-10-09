@@ -6,6 +6,7 @@ import com.komoju.android.sdk.types.Currency
 
 internal object AmountUtils {
     fun formatToDecimal(currency: Currency, amount: String): String {
+        if (amount.isBlank()) return ""
         val locale = currency.toLocale()
         return NumberFormat.getCurrencyInstance(locale).apply {
             this.maximumFractionDigits = 2
