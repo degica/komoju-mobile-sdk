@@ -134,6 +134,7 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
         when (this) {
             is Payment.Konbini -> mutableRouter.value = Router.Replace(KomojuPaymentRoute.KonbiniAwaitingPayment(config, payment = this))
             is Payment.PayPay -> _offSitePaymentURL.value = redirectURL
+            is Payment.RakutenPay -> _offSitePaymentURL.value = redirectURL
             else -> Unit
         }
     }
@@ -142,6 +143,7 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
         is PaymentMethod.CreditCard -> state.value.creditCardDisplayData.validate()
         is PaymentMethod.Konbini -> state.value.konbiniDisplayData.validate(state.value.commonDisplayData)
         is PaymentMethod.PayPay -> true // No input required
+        is PaymentMethod.RakutenPay -> true // No input required
         else -> false
     }
 
@@ -215,7 +217,7 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
         is PaymentMethod.Paidy -> TODO()
         is PaymentMethod.PayEasy -> TODO()
         is PaymentMethod.PayPay -> PaymentRequest.PayPay(paymentMethod = this)
-        is PaymentMethod.RakutenPay -> TODO()
+        is PaymentMethod.RakutenPay -> PaymentRequest.RakutenPay(paymentMethod = this)
         is PaymentMethod.WebMoney -> TODO()
     }
 
