@@ -28,20 +28,9 @@ dependencies {
 ```
 
 ### iOS
-#### Requirements
-* iOS 13+
-The iOS SDK utilize the SwiftUI.
-
-#### Setup
-Add below to your Podfile
-```shell
-pod 'komoju.mobile.sdk.ios', '~> 0.0.1'
-```
-
-Once done, run `pod install` to fetch the komoju sdk
+// WIP
 
 Find Platform specific guide below.
 * [Android](https://doc.komoju.com/docs/android)
-* [iOS](https://doc.komoju.com/docs/ios)
 
-Or you can browse the [Android Sample](https://github.com/degica/komoju-mobile-sdk/tree/main/example-android) or [iOS Sample]() to know more :)
+Or you can browse the [Android Sample](https://github.com/degica/komoju-mobile-sdk/tree/main/example-android) :)
