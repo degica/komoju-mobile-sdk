@@ -24,7 +24,7 @@ konlinXJson = "1.7.2"
 voyager = "1.1.0-beta02"
 mavenPublish = "0.29.0"
 nmcp = "0.0.7"
-kotlinPlugin = "1.8.10"
+kotlinPlugin = "2.0.20"
 dokka = "1.9.20"
 
 [libraries]
