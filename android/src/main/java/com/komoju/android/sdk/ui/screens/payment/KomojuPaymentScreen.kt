@@ -1,6 +1,7 @@
 package com.komoju.android.sdk.ui.screens.payment
 
 import android.os.Parcelable
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -30,6 +31,7 @@ import com.komoju.android.sdk.ui.screens.payment.composables.PaymentMethodForm
 import com.komoju.android.sdk.ui.screens.payment.composables.PaymentMethodsRow
 import com.komoju.android.sdk.ui.screens.payment.composables.PaymentSheetHandle
 import com.komoju.android.sdk.ui.theme.LocalI18nTexts
+import com.komoju.android.sdk.utils.OffsiteCustomTabResultContract
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -40,8 +42,19 @@ internal data class KomojuPaymentScreen(private val sdkConfiguration: KomojuSDK.
     override fun Content() {
         val screenViewModel = rememberScreenModel { KomojuPaymentScreenModel(sdkConfiguration) }
         val uiState by screenViewModel.state.collectAsStateWithLifecycle()
+        val offSitePaymentURL by screenViewModel.offSitePaymentURL.collectAsStateWithLifecycle()
+        val offsitePaymentLauncher = rememberLauncherForActivityResult(OffsiteCustomTabResultContract()) {
+            screenViewModel.onOffsitePaymentResult()
+        }
         LaunchedEffect(sdkConfiguration.sessionId) {
             screenViewModel.init()
+        }
+        LaunchedEffect(offSitePaymentURL) {
+            val url = offSitePaymentURL
+            if (url != null) {
+                offsitePaymentLauncher.launch(url)
+                screenViewModel.onOffSitePaymentURLConsumed()
+            }
         }
         RouterEffect(screenViewModel.router.collectAsStateWithLifecycle(), screenViewModel::onRouteConsumed)
         Box {
