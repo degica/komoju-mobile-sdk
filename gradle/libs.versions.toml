@@ -23,7 +23,7 @@ uiTooling = "1.7.3"
 composeWebView = "0.33.6"
 konlinXJson = "1.7.3"
 voyager = "1.1.0-beta03"
-mavenPublish = "0.29.0"
+mavenPublish = "0.30.0"
 nmcp = "0.0.7"
 dokka = "1.9.20"
 
