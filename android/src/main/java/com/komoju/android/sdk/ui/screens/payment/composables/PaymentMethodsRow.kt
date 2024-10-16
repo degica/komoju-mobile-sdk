@@ -23,6 +23,7 @@ import com.komoju.android.sdk.R
 import com.komoju.android.sdk.ui.theme.Gray200
 import com.komoju.android.sdk.ui.theme.KomojuDarkGreen
 import com.komoju.mobile.sdk.entities.PaymentMethod
+import com.komoju.mobile.sdk.types.OffSitePaymentType
 
 @Composable
 internal fun PaymentMethodsRow(paymentMethods: List<PaymentMethod>, selectedPaymentMethod: PaymentMethod?, onSelected: (PaymentMethod) -> Unit) {
@@ -58,18 +59,20 @@ private fun PaymentMethodComposable(paymentMethod: PaymentMethod, isSelected: Bo
 
 private val PaymentMethod.displayIcon
     get() = when (this) {
-        is PaymentMethod.AliPay -> R.drawable.komoju_ic_alipay
-        is PaymentMethod.AuPay -> R.drawable.komoju_ic_au_pay
+        is PaymentMethod.OffSitePayment -> when (type) {
+            OffSitePaymentType.ALI_PAY -> R.drawable.komoju_ic_alipay
+            OffSitePaymentType.AU_PAY -> R.drawable.komoju_ic_au_pay
+            OffSitePaymentType.MER_PAY -> R.drawable.komoju_ic_merpay
+            OffSitePaymentType.PAY_PAY -> R.drawable.komoju_ic_paypay
+            OffSitePaymentType.RAKUTEN_PAY -> R.drawable.komoju_ic_rakuten_pay
+        }
         is PaymentMethod.BankTransfer -> R.drawable.komoju_ic_bank_transfer
         is PaymentMethod.BitCash -> R.drawable.komoju_ic_bitcash
         is PaymentMethod.CreditCard -> R.drawable.komoju_ic_credit_card
         is PaymentMethod.Konbini -> R.drawable.komoju_ic_konbini
-        is PaymentMethod.MerPay -> R.drawable.komoju_ic_merpay
         is PaymentMethod.NetCash -> R.drawable.komoju_ic_credit_card
         is PaymentMethod.Paidy -> R.drawable.komoju_ic_paidy
         is PaymentMethod.PayEasy -> R.drawable.komoju_ic_pay_easy
-        is PaymentMethod.PayPay -> R.drawable.komoju_ic_paypay
-        is PaymentMethod.RakutenPay -> R.drawable.komoju_ic_rakuten_pay
         is PaymentMethod.WebMoney -> R.drawable.komoju_ic_web_money
         is PaymentMethod.Other -> R.drawable.komoju_ic_credit_card
     }
@@ -97,14 +100,14 @@ private fun PaymentMethodComposablePreview() {
             brands = listOf(),
             displayName = "Konbini",
         ),
-        PaymentMethod.PayPay(
+        PaymentMethod.OffSitePayment(
             hashedGateway = "",
             exchangeRate = 0.0,
             currency = "",
             amount = "0",
             additionalFields = listOf(),
-            isOffsite = false,
             displayName = "PayPay",
+            type = OffSitePaymentType.PAY_PAY,
         ),
     )
     PaymentMethodsRow(paymentMethods, paymentMethods.first()) {}

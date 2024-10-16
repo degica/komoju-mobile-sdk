@@ -5,6 +5,7 @@ import com.komoju.mobile.sdk.entities.PaymentMethod.Konbini.KonbiniBrand
 import com.komoju.mobile.sdk.entities.Session
 import com.komoju.mobile.sdk.i18n.I18nTexts
 import com.komoju.mobile.sdk.remote.dtos.SessionResponse
+import com.komoju.mobile.sdk.types.OffSitePaymentType
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 
@@ -47,24 +48,19 @@ internal object SessionMapper {
                     }.orEmpty(),
                 )
 
-                "paypay" -> PaymentMethod.PayPay(
+                OffSitePaymentType.PAY_PAY.id,
+                OffSitePaymentType.MER_PAY.id,
+                OffSitePaymentType.ALI_PAY.id,
+                OffSitePaymentType.AU_PAY.id,
+                OffSitePaymentType.RAKUTEN_PAY.id,
+                -> PaymentMethod.OffSitePayment(
                     hashedGateway = paymentMethod.hashedGateway.orEmpty(),
                     exchangeRate = paymentMethod.exchangeRate ?: 1.0,
                     currency = paymentMethod.currency.orEmpty(),
                     amount = (response.amount ?: 0).toString(),
                     additionalFields = paymentMethod.additionalFields?.filterNotNull().orEmpty(),
-                    isOffsite = paymentMethod.offsite ?: false,
                     displayName = i18nTexts[paymentMethodType],
-                )
-
-                "merpay" -> PaymentMethod.MerPay(
-                    hashedGateway = paymentMethod.hashedGateway.orEmpty(),
-                    exchangeRate = paymentMethod.exchangeRate ?: 1.0,
-                    currency = paymentMethod.currency.orEmpty(),
-                    amount = (response.amount ?: 0).toString(),
-                    additionalFields = paymentMethod.additionalFields?.filterNotNull().orEmpty(),
-                    isOffsite = paymentMethod.offsite ?: false,
-                    displayName = i18nTexts[paymentMethodType],
+                    type = OffSitePaymentType.entries.first { it.id == paymentMethodType },
                 )
 
                 "bank_transfer" -> PaymentMethod.BankTransfer(
@@ -124,36 +120,6 @@ internal object SessionMapper {
                     displayName = i18nTexts[paymentMethodType],
                 )
 
-                "rakutenpay" -> PaymentMethod.RakutenPay(
-                    hashedGateway = paymentMethod.hashedGateway.orEmpty(),
-                    exchangeRate = paymentMethod.exchangeRate ?: 1.0,
-                    currency = paymentMethod.currency.orEmpty(),
-                    amount = (response.amount ?: 0).toString(),
-                    additionalFields = paymentMethod.additionalFields?.filterNotNull().orEmpty(),
-                    isOffsite = paymentMethod.offsite ?: false,
-                    displayName = i18nTexts[paymentMethodType],
-                )
-
-                "aupay" -> PaymentMethod.AuPay(
-                    hashedGateway = paymentMethod.hashedGateway.orEmpty(),
-                    exchangeRate = paymentMethod.exchangeRate ?: 1.0,
-                    currency = paymentMethod.currency.orEmpty(),
-                    amount = (response.amount ?: 0).toString(),
-                    additionalFields = paymentMethod.additionalFields?.filterNotNull().orEmpty(),
-                    isOffsite = paymentMethod.offsite ?: false,
-                    displayName = i18nTexts[paymentMethodType],
-                )
-
-                "alipay" -> PaymentMethod.AliPay(
-                    hashedGateway = paymentMethod.hashedGateway.orEmpty(),
-                    exchangeRate = paymentMethod.exchangeRate ?: 1.0,
-                    currency = paymentMethod.currency.orEmpty(),
-                    amount = (response.amount ?: 0).toString(),
-                    additionalFields = paymentMethod.additionalFields?.filterNotNull().orEmpty(),
-                    isOffsite = paymentMethod.offsite ?: false,
-                    secondIcon = paymentMethod.secondIcon.orEmpty(),
-                    displayName = i18nTexts[paymentMethodType],
-                )
                 null -> null
                 else -> PaymentMethod.Other(
                     hashedGateway = paymentMethod.hashedGateway.orEmpty(),
