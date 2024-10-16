@@ -65,6 +65,8 @@ private val PaymentMethod.displayIcon
             OffSitePaymentType.MER_PAY -> R.drawable.komoju_ic_merpay
             OffSitePaymentType.PAY_PAY -> R.drawable.komoju_ic_paypay
             OffSitePaymentType.RAKUTEN_PAY -> R.drawable.komoju_ic_rakuten_pay
+            OffSitePaymentType.LINE_PAY -> R.drawable.komoju_ic_linepay
+            OffSitePaymentType.UNKNOWN -> R.drawable.komoju_ic_credit_card
         }
         is PaymentMethod.BankTransfer -> R.drawable.komoju_ic_bank_transfer
         is PaymentMethod.BitCash -> R.drawable.komoju_ic_bitcash

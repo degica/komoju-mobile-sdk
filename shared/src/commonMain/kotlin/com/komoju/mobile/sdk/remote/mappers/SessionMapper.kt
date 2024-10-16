@@ -48,19 +48,14 @@ internal object SessionMapper {
                     }.orEmpty(),
                 )
 
-                OffSitePaymentType.PAY_PAY.id,
-                OffSitePaymentType.MER_PAY.id,
-                OffSitePaymentType.ALI_PAY.id,
-                OffSitePaymentType.AU_PAY.id,
-                OffSitePaymentType.RAKUTEN_PAY.id,
-                -> PaymentMethod.OffSitePayment(
-                    hashedGateway = paymentMethod.hashedGateway.orEmpty(),
-                    exchangeRate = paymentMethod.exchangeRate ?: 1.0,
-                    currency = paymentMethod.currency.orEmpty(),
+                in OffSitePaymentType.supportedTypes -> PaymentMethod.OffSitePayment(
+                    hashedGateway = paymentMethod?.hashedGateway.orEmpty(),
+                    exchangeRate = paymentMethod?.exchangeRate ?: 1.0,
+                    currency = paymentMethod?.currency.orEmpty(),
                     amount = (response.amount ?: 0).toString(),
-                    additionalFields = paymentMethod.additionalFields?.filterNotNull().orEmpty(),
-                    displayName = i18nTexts[paymentMethodType],
-                    type = OffSitePaymentType.entries.first { it.id == paymentMethodType },
+                    additionalFields = paymentMethod?.additionalFields?.filterNotNull().orEmpty(),
+                    displayName = i18nTexts[paymentMethodType.toString()],
+                    type = OffSitePaymentType.fromId(paymentMethodType.orEmpty()),
                 )
 
                 "bank_transfer" -> PaymentMethod.BankTransfer(

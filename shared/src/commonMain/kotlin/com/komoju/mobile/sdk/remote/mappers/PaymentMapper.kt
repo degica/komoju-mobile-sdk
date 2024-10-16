@@ -29,20 +29,13 @@ internal object PaymentMapper {
             currency = payment.currency.orEmpty(),
             status = PaymentStatus.fromString(payment.status.orEmpty()),
         )
-
-        OffSitePaymentType.RAKUTEN_PAY.id,
-        OffSitePaymentType.AU_PAY.id,
-        OffSitePaymentType.ALI_PAY.id,
-        OffSitePaymentType.MER_PAY.id,
-        OffSitePaymentType.PAY_PAY.id,
-        -> Payment.OffSitePayment(
-            amount = payment.amount.orEmpty(),
-            currency = payment.currency.orEmpty(),
-            redirectURL = payment.paymentDetails.redirectUrl.orEmpty(),
-            status = PaymentStatus.fromString(payment.status.orEmpty()),
-            type = type,
+        in OffSitePaymentType.supportedTypes -> Payment.OffSitePayment(
+            amount = payment?.amount.orEmpty(),
+            currency = payment?.currency.orEmpty(),
+            redirectURL = payment?.paymentDetails?.redirectUrl.orEmpty(),
+            status = PaymentStatus.fromString(payment?.status.orEmpty()),
+            type = type.orEmpty(),
         )
-
         else -> error("Invalid payment type")
     }
 }
