@@ -20,6 +20,12 @@ internal data class PaymentRequestDto(@SerialName("payment_details") val payment
                     type = "paypay",
                 ),
             )
+
+            is PaymentRequest.RakutenPay -> PaymentRequestDto(
+                paymentDetails = PaymentDetails(
+                    type = "rakutenpay",
+                ),
+            )
         }
     }
 
