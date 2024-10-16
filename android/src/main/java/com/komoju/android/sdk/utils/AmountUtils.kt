@@ -9,8 +9,8 @@ internal object AmountUtils {
         if (amount.isBlank()) return ""
         val locale = currency.toLocale()
         return NumberFormat.getCurrencyInstance(locale).apply {
-            this.maximumFractionDigits = 2
-            this.minimumFractionDigits = 2
+            this.maximumFractionDigits = 0
+            this.minimumFractionDigits = 0
             this.currency = PlatformCurrency.getInstance(locale)
         }.format(amount.toDouble())
     }

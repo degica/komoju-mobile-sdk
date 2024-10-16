@@ -1,5 +1,7 @@
 package com.komoju.mobile.sdk.entities
 
+import com.komoju.mobile.sdk.types.OffSitePaymentType
+
 sealed interface PaymentMethod {
     val displayName: String
     val hashedGateway: String
@@ -18,44 +20,14 @@ sealed interface PaymentMethod {
         val brands: List<String>,
     ) : PaymentMethod
 
-    data class PayPay(
+    data class OffSitePayment(
         override val displayName: String,
         override val hashedGateway: String,
         override val exchangeRate: Double,
         override val currency: String,
         override val amount: String,
         override val additionalFields: List<String>,
-        val isOffsite: Boolean,
-    ) : PaymentMethod
-
-    data class MerPay(
-        override val displayName: String,
-        override val hashedGateway: String,
-        override val exchangeRate: Double,
-        override val currency: String,
-        override val amount: String,
-        override val additionalFields: List<String>,
-        val isOffsite: Boolean,
-    ) : PaymentMethod
-
-    data class RakutenPay(
-        override val displayName: String,
-        override val hashedGateway: String,
-        override val exchangeRate: Double,
-        override val currency: String,
-        override val amount: String,
-        override val additionalFields: List<String>,
-        val isOffsite: Boolean,
-    ) : PaymentMethod
-
-    data class AuPay(
-        override val displayName: String,
-        override val hashedGateway: String,
-        override val exchangeRate: Double,
-        override val currency: String,
-        override val amount: String,
-        override val additionalFields: List<String>,
-        val isOffsite: Boolean,
+        val type: OffSitePaymentType,
     ) : PaymentMethod
 
     data class BankTransfer(
@@ -113,17 +85,6 @@ sealed interface PaymentMethod {
         override val amount: String,
         override val additionalFields: List<String>,
         val isOffsite: Boolean,
-    ) : PaymentMethod
-
-    data class AliPay(
-        override val displayName: String,
-        override val hashedGateway: String,
-        override val exchangeRate: Double,
-        override val currency: String,
-        override val amount: String,
-        override val additionalFields: List<String>,
-        val isOffsite: Boolean,
-        val secondIcon: String,
     ) : PaymentMethod
 
     data class Konbini(

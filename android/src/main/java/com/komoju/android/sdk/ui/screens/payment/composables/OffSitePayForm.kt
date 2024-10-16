@@ -28,38 +28,39 @@ import com.komoju.android.sdk.ui.composables.PrimaryButton
 import com.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
 import com.komoju.android.sdk.ui.theme.LocalI18nTexts
 import com.komoju.mobile.sdk.entities.PaymentMethod
+import com.komoju.mobile.sdk.types.OffSitePaymentType
 
 @Composable
-internal fun AppPayForm(paymentMethod: PaymentMethod, onPayButtonClicked: () -> Unit) {
+internal fun OffSitePayForm(paymentMethod: PaymentMethod.OffSitePayment, onPayButtonClicked: () -> Unit) {
     val titleKey = remember(paymentMethod) {
-        when (paymentMethod) {
-            is PaymentMethod.AliPay -> "PAYMENT_VIA_ALI_PAY"
-            is PaymentMethod.AuPay -> "PAYMENT_VIA_AU_PAY"
-            is PaymentMethod.MerPay -> "PAYMENT_VIA_MER_PAY"
-            is PaymentMethod.PayPay -> "PAYMENT_VIA_PAY_PAY"
-            is PaymentMethod.RakutenPay -> "PAYMENT_VIA_RAKUTEN"
+        when (paymentMethod.type) {
+            OffSitePaymentType.ALI_PAY -> "PAYMENT_VIA_ALI_PAY"
+            OffSitePaymentType.AU_PAY -> "PAYMENT_VIA_AU_PAY"
+            OffSitePaymentType.MER_PAY -> "PAYMENT_VIA_MER_PAY"
+            OffSitePaymentType.PAY_PAY -> "PAYMENT_VIA_PAY_PAY"
+            OffSitePaymentType.RAKUTEN_PAY -> "PAYMENT_VIA_RAKUTEN"
             else -> null
         }
     }
 
     val messageKey = remember(paymentMethod) {
-        when (paymentMethod) {
-            is PaymentMethod.AliPay -> "ALI_PAY_REDIRECT_MESSAGE"
-            is PaymentMethod.AuPay -> "AU_PAY_REDIRECT_MESSAGE"
-            is PaymentMethod.MerPay -> "MER_PAY_REDIRECT_MESSAGE"
-            is PaymentMethod.PayPay -> "PAY_PAY_REDIRECT_MESSAGE"
-            is PaymentMethod.RakutenPay -> "RAKUTEN_REDIRECT_MESSAGE"
+        when (paymentMethod.type) {
+            OffSitePaymentType.ALI_PAY -> "ALI_PAY_REDIRECT_MESSAGE"
+            OffSitePaymentType.AU_PAY -> "AU_PAY_REDIRECT_MESSAGE"
+            OffSitePaymentType.MER_PAY -> "MER_PAY_REDIRECT_MESSAGE"
+            OffSitePaymentType.PAY_PAY -> "PAY_PAY_REDIRECT_MESSAGE"
+            OffSitePaymentType.RAKUTEN_PAY -> "RAKUTEN_REDIRECT_MESSAGE"
             else -> null
         }
     }
 
     val paymentButtonKey = remember(paymentMethod) {
-        when (paymentMethod) {
-            is PaymentMethod.AliPay -> "CONTINUE_TO_ALI_PAY"
-            is PaymentMethod.AuPay -> "CONTINUE_TO_AU_PAY"
-            is PaymentMethod.MerPay -> "CONTINUE_TO_MER_PAY"
-            is PaymentMethod.PayPay -> "CONTINUE_TO_PAY_PAY"
-            is PaymentMethod.RakutenPay -> "CONTINUE_TO_RAKUTEN"
+        when (paymentMethod.type) {
+            OffSitePaymentType.ALI_PAY -> "CONTINUE_TO_ALI_PAY"
+            OffSitePaymentType.AU_PAY -> "CONTINUE_TO_AU_PAY"
+            OffSitePaymentType.MER_PAY -> "CONTINUE_TO_MER_PAY"
+            OffSitePaymentType.PAY_PAY -> "CONTINUE_TO_PAY_PAY"
+            OffSitePaymentType.RAKUTEN_PAY -> "CONTINUE_TO_RAKUTEN"
             else -> null
         }
     }
@@ -94,15 +95,15 @@ internal fun AppPayForm(paymentMethod: PaymentMethod, onPayButtonClicked: () -> 
 @Preview(showBackground = true)
 private fun AppPayFormPreview() {
     KomojuMobileSdkTheme {
-        AppPayForm(
-            PaymentMethod.PayPay(
+        OffSitePayForm(
+            PaymentMethod.OffSitePayment(
                 displayName = "PayPay",
                 hashedGateway = "paypay",
                 exchangeRate = 1.0,
                 currency = "JPY",
                 amount = "100",
                 additionalFields = listOf(),
-                isOffsite = false,
+                type = OffSitePaymentType.PAY_PAY,
             ),
         ) { }
     }

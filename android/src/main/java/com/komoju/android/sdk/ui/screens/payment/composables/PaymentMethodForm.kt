@@ -47,14 +47,12 @@ internal fun PaymentMethodForm(
             },
         )
 
-        is PaymentMethod.AliPay,
-        is PaymentMethod.AuPay,
-        is PaymentMethod.MerPay,
-        is PaymentMethod.PayPay,
-        is PaymentMethod.RakutenPay,
-        -> AppPayForm(paymentMethod, onPayButtonClicked = {
-            onPaymentRequested(paymentMethod)
-        })
+        is PaymentMethod.OffSitePayment -> OffSitePayForm(
+            paymentMethod,
+            onPayButtonClicked = {
+                onPaymentRequested(paymentMethod)
+            },
+        )
 
         is PaymentMethod.BankTransfer -> BankForm(
             bankTransfer = paymentMethod,

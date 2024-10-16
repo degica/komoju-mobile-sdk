@@ -133,8 +133,7 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
     private fun Payment.handle() {
         when (this) {
             is Payment.Konbini -> mutableRouter.value = Router.Replace(KomojuPaymentRoute.KonbiniAwaitingPayment(config, payment = this))
-            is Payment.PayPay -> _offSitePaymentURL.value = redirectURL
-            is Payment.RakutenPay -> _offSitePaymentURL.value = redirectURL
+            is Payment.OffSitePayment -> _offSitePaymentURL.value = redirectURL
             else -> Unit
         }
     }
@@ -142,8 +141,7 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
     private fun PaymentMethod.validate() = when (this) {
         is PaymentMethod.CreditCard -> state.value.creditCardDisplayData.validate()
         is PaymentMethod.Konbini -> state.value.konbiniDisplayData.validate(state.value.commonDisplayData)
-        is PaymentMethod.PayPay -> true // No input required
-        is PaymentMethod.RakutenPay -> true // No input required
+        is PaymentMethod.OffSitePayment -> true // No input required for Offsite payment
         else -> false
     }
 
@@ -200,8 +198,6 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
     )
 
     private fun PaymentMethod.toPaymentRequest(): PaymentRequest = when (this) {
-        is PaymentMethod.AliPay -> TODO()
-        is PaymentMethod.AuPay -> TODO()
         is PaymentMethod.BankTransfer -> TODO()
         is PaymentMethod.BitCash -> TODO()
         is PaymentMethod.CreditCard -> error("Credit Card needs to generate tokens first!")
@@ -211,14 +207,12 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
             email = state.value.commonDisplayData.email,
         )
 
-        is PaymentMethod.MerPay -> TODO()
         is PaymentMethod.NetCash -> TODO()
         is PaymentMethod.Other -> TODO()
         is PaymentMethod.Paidy -> TODO()
         is PaymentMethod.PayEasy -> TODO()
-        is PaymentMethod.PayPay -> PaymentRequest.PayPay(paymentMethod = this)
-        is PaymentMethod.RakutenPay -> PaymentRequest.RakutenPay(paymentMethod = this)
         is PaymentMethod.WebMoney -> TODO()
+        is PaymentMethod.OffSitePayment -> PaymentRequest.OffSitePaymentRequest(this)
     }
 
     fun onCloseClicked() {

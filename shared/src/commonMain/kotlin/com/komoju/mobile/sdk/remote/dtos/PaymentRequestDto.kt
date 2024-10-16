@@ -15,15 +15,9 @@ internal data class PaymentRequestDto(@SerialName("payment_details") val payment
                     email = paymentRequest.email,
                 ),
             )
-            is PaymentRequest.PayPay -> PaymentRequestDto(
+            is PaymentRequest.OffSitePaymentRequest -> PaymentRequestDto(
                 paymentDetails = PaymentDetails(
-                    type = "paypay",
-                ),
-            )
-
-            is PaymentRequest.RakutenPay -> PaymentRequestDto(
-                paymentDetails = PaymentDetails(
-                    type = "rakutenpay",
+                    type = paymentRequest.paymentMethod.type.id,
                 ),
             )
         }
