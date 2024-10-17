@@ -343,7 +343,6 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
     )
 
     private fun PaymentMethod.toPaymentRequest(): PaymentRequest = when (this) {
-        is PaymentMethod.BankTransfer -> TODO()
         is PaymentMethod.BitCash -> PaymentRequest.BitCash(
             paymentMethod = this,
             bitCashId = state.value.bitCashDisplayData.bitCashId,
@@ -365,6 +364,7 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
             fullName = state.value.paidyDisplayData.fullName,
             phoneNumber = state.value.paidyDisplayData.phoneNumber,
         )
+        is PaymentMethod.BankTransfer -> TODO()
         is PaymentMethod.PayEasy -> TODO()
         is PaymentMethod.WebMoney -> PaymentRequest.WebMoney(
             paymentMethod = this,
