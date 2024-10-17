@@ -10,4 +10,5 @@ sealed interface PaymentRequest {
     data class OffSitePaymentRequest(override val paymentMethod: PaymentMethod.OffSitePayment) : PaymentRequest
     data class NetCash(override val paymentMethod: PaymentMethod.NetCash, val netCashId: String) : PaymentRequest
     data class BitCash(override val paymentMethod: PaymentMethod.BitCash, val bitCashId: String) : PaymentRequest
+    data class WebMoney(override val paymentMethod: PaymentMethod.WebMoney, val prepaidNumber: String) : PaymentRequest
 }

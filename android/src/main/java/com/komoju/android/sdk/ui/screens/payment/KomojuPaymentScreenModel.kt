@@ -216,8 +216,25 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
         is PaymentMethod.Paidy -> state.value.paidyDisplayData.validate()
         is PaymentMethod.NetCash -> state.value.netCashDisplayData.validate()
         is PaymentMethod.BitCash -> state.value.bitCashDisplayData.validate()
+        is PaymentMethod.WebMoney -> state.value.webMoneyDisplayData.validate()
         is PaymentMethod.OffSitePayment -> true // No input required for Offsite payment
         else -> false
+    }
+
+    private fun WebMoneyDisplayData.validate(): Boolean{
+        val prepaidNumberError = when {
+            prepaidNumber.isBlank() -> "The entered prepaid number cannot be empty"
+            prepaidNumber.length != 16 -> "The entered prepaid number is not valid"
+            else -> null
+        }
+        mutableState.update {
+            it.copy(
+                webMoneyDisplayData = it.webMoneyDisplayData.copy(
+                    prepaidNumberError = prepaidNumberError,
+                ),
+                )
+        }
+        return prepaidNumberError == null
     }
 
     private fun BitCashDisplayData.validate(): Boolean {
@@ -349,7 +366,10 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
             phoneNumber = state.value.paidyDisplayData.phoneNumber,
         )
         is PaymentMethod.PayEasy -> TODO()
-        is PaymentMethod.WebMoney -> TODO()
+        is PaymentMethod.WebMoney -> PaymentRequest.WebMoney(
+            paymentMethod = this,
+            prepaidNumber = state.value.webMoneyDisplayData.prepaidNumber,
+        )
         is PaymentMethod.OffSitePayment -> PaymentRequest.OffSitePaymentRequest(this)
     }
 

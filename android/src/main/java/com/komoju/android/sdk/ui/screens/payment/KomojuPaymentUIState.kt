@@ -55,7 +55,7 @@ internal data class BitCashDisplayData(val bitCashId: String = String.empty, val
 
 internal data class NetCashDisplayData(val netCashId: String = String.empty, val netCashError: String? = null)
 
-internal data class WebMoneyDisplayData(val prepaidNumber: String = String.empty)
+internal data class WebMoneyDisplayData(val prepaidNumber: String = String.empty, val prepaidNumberError: String? = null)
 
 internal data class PaidyDisplayData(
     val fullName: String = String.empty,

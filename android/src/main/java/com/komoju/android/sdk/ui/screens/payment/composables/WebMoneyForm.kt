@@ -38,6 +38,7 @@ internal fun WebMoneyForm(
             onValueChange = {
                 onWebMoneyDisplayDataChange(webMoneyDisplayData.copy(prepaidNumber = it))
             },
+            error = webMoneyDisplayData.prepaidNumberError,
         )
         Spacer(modifier = Modifier.height(16.dp))
         PrimaryButton(

@@ -38,7 +38,7 @@ internal object PaymentMapper {
             type = type.orEmpty(),
         )
 
-        "net_cash", "bit_cash" -> Payment.Completed(
+        "net_cash", "bit_cash", "web_money" -> Payment.Completed(
             amount = payment.amount.orEmpty(),
             currency = payment.currency.orEmpty(),
             status = PaymentStatus.fromString(payment.status.orEmpty()),

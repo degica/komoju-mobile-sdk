@@ -42,6 +42,13 @@ internal data class PaymentRequestDto(@SerialName("payment_details") val payment
                     prepaidNumber = paymentRequest.bitCashId,
                 ),
             )
+
+            is PaymentRequest.WebMoney -> PaymentRequestDto(
+                paymentDetails = PaymentDetails(
+                    type = "bit_cash",
+                    prepaidNumber = paymentRequest.prepaidNumber,
+                ),
+            )
         }
     }
 
