@@ -20,6 +20,16 @@ $dokka.location:com.komoju.android.sdk.types/Language/entries/#/PointingToDeclar
 $dokka.location:com.komoju.android.sdk.types/Language/languageCode/#/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.types/-language/language-code.html
 $dokka.location:com.komoju.android.sdk.types/Language/valueOf/#kotlin.String/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.types/-language/value-of.html
 $dokka.location:com.komoju.android.sdk.types/Language/values/#/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.types/-language/values.html
+$dokka.location:com.komoju.android.sdk.ui.composables////PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.ui.composables/index.html
+$dokka.location:com.komoju.android.sdk.ui.composables//rememberInlinedPaymentPrimaryButtonState/#com.komoju.android.sdk.ui.composables.InlinedPaymentPrimaryButtonState/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.ui.composables/remember-inlined-payment-primary-button-state.html
+$dokka.location:com.komoju.android.sdk.ui.composables/InlinedPaymentPrimaryButtonState.ERROR///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-komoju -android -s-d-k -documentation/com.komoju.android.sdk.ui.composables/-inlined-payment-primary-button-state/-e-r-r-o-r/index.html
+$dokka.location:com.komoju.android.sdk.ui.composables/InlinedPaymentPrimaryButtonState.IDLE///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-komoju -android -s-d-k -documentation/com.komoju.android.sdk.ui.composables/-inlined-payment-primary-button-state/-i-d-l-e/index.html
+$dokka.location:com.komoju.android.sdk.ui.composables/InlinedPaymentPrimaryButtonState.LOADING///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-komoju -android -s-d-k -documentation/com.komoju.android.sdk.ui.composables/-inlined-payment-primary-button-state/-l-o-a-d-i-n-g/index.html
+$dokka.location:com.komoju.android.sdk.ui.composables/InlinedPaymentPrimaryButtonState.SUCCESS///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-komoju -android -s-d-k -documentation/com.komoju.android.sdk.ui.composables/-inlined-payment-primary-button-state/-s-u-c-c-e-s-s/index.html
+$dokka.location:com.komoju.android.sdk.ui.composables/InlinedPaymentPrimaryButtonState///PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.ui.composables/-inlined-payment-primary-button-state/index.html
+$dokka.location:com.komoju.android.sdk.ui.composables/InlinedPaymentPrimaryButtonState/entries/#/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.ui.composables/-inlined-payment-primary-button-state/entries.html
+$dokka.location:com.komoju.android.sdk.ui.composables/InlinedPaymentPrimaryButtonState/valueOf/#kotlin.String/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.ui.composables/-inlined-payment-primary-button-state/value-of.html
+$dokka.location:com.komoju.android.sdk.ui.composables/InlinedPaymentPrimaryButtonState/values/#/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.ui.composables/-inlined-payment-primary-button-state/values.html
 $dokka.location:com.komoju.android.sdk.ui.screens.failed////PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk.ui.screens.failed/index.html
 $dokka.location:com.komoju.android.sdk.ui.screens.failed/Reason.CREDIT_CARD_ERROR///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-komoju -android -s-d-k -documentation/com.komoju.android.sdk.ui.screens.failed/-reason/-c-r-e-d-i-t_-c-a-r-d_-e-r-r-o-r/index.html
 $dokka.location:com.komoju.android.sdk.ui.screens.failed/Reason.OTHER///PointingToDeclaration/{"org.jetbrains.dokka.links.EnumEntryDRIExtra":{"key":"org.jetbrains.dokka.links.EnumEntryDRIExtra"}}-komoju -android -s-d-k -documentation/com.komoju.android.sdk.ui.screens.failed/-reason/-o-t-h-e-r/index.html
@@ -62,6 +72,7 @@ $dokka.location:com.komoju.android.sdk/KomojuSDK///PointingToDeclaration/-komoj
 $dokka.location:com.komoju.android.sdk/KomojuSDK/KomojuPaymentResultContract/#/PointingToDeclaration/-komoju -android -s-d-k -documentation/com.komoju.android.sdk/-komoju-s-d-k/-komoju-payment-result-contract.html
 com.komoju.android.sdk
 com.komoju.android.sdk.types
+com.komoju.android.sdk.ui.composables
 com.komoju.android.sdk.ui.screens.failed
 com.komoju.android.sdk.ui.theme
 
