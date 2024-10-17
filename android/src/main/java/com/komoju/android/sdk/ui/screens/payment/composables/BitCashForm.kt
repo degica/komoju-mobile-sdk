@@ -38,6 +38,7 @@ internal fun BitCashForm(
             onValueChange = {
                 onBitCashDisplayDataChange(bitCashDisplayData.copy(bitCashId = it))
             },
+            error = bitCashDisplayData.bitCashError,
         )
         Spacer(modifier = Modifier.height(16.dp))
         PrimaryButton(

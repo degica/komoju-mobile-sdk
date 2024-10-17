@@ -33,11 +33,12 @@ internal fun NetCashForm(
     Column {
         TextField(
             value = netCashDisplayData.netCashId,
-            titleKey = "BIT_CASH_INPUT_LABEL",
-            placeholderKey = "BIT_CASH_INPUT_PLACEHOLDER",
+            titleKey = "NET_CASH_INPUT_LABEL",
+            placeholderKey = "NET_CASH_INPUT_PLACEHOLDER",
             onValueChange = {
                 onNetCashDisplayDataChange(netCashDisplayData.copy(netCashId = it))
             },
+            error = netCashDisplayData.netCashError,
         )
         Spacer(modifier = Modifier.height(16.dp))
         PrimaryButton(

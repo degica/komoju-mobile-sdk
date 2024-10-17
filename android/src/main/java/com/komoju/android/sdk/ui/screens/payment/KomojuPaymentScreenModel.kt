@@ -1,5 +1,6 @@
 package com.komoju.android.sdk.ui.screens.payment
 
+import androidx.core.text.isDigitsOnly
 import cafe.adriel.voyager.core.model.screenModelScope
 import com.komoju.android.sdk.KomojuSDK
 import com.komoju.android.sdk.navigation.RouterStateScreenModel
@@ -16,6 +17,7 @@ import com.komoju.android.sdk.utils.isValidEmail
 import com.komoju.mobile.sdk.entities.Payment
 import com.komoju.mobile.sdk.entities.PaymentMethod
 import com.komoju.mobile.sdk.entities.PaymentRequest
+import com.komoju.mobile.sdk.entities.PaymentStatus
 import com.komoju.mobile.sdk.entities.PaymentStatus.Companion.isSuccessful
 import com.komoju.mobile.sdk.entities.SecureTokenRequest
 import com.komoju.mobile.sdk.entities.SecureTokenResponse.Status.ERRORED
@@ -96,6 +98,10 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
         it.copy(webMoneyDisplayData = webMoneyDisplayData)
     }
 
+    fun onPaidyDisplayDataChange(paidyDisplayData: PaidyDisplayData) = mutableState.update {
+        it.copy(paidyDisplayData = paidyDisplayData)
+    }
+
     fun onPaymentRequested(paymentMethod: PaymentMethod) {
         if (paymentMethod.validate()) {
             changeInlinePaymentState(InlinedPaymentPrimaryButtonState.LOADING)
@@ -106,9 +112,14 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
                 val request = paymentMethod.toPaymentRequest()
                 screenModelScope.launch {
                     komojuApi.sessions.pay(config.sessionId.orEmpty(), request).onSuccess { payment ->
-                        mutableState.update { it.copy(isLoading = true) }
-                        changeInlinePaymentState(InlinedPaymentPrimaryButtonState.LOADING)
-                        payment.handle()
+                        if (payment is Payment.Error) {
+                            mutableState.update { it.copy(isLoading = false) }
+                            changeInlinePaymentState(InlinedPaymentPrimaryButtonState.ERROR)
+                        } else {
+                            mutableState.update { it.copy(isLoading = true) }
+                            changeInlinePaymentState(InlinedPaymentPrimaryButtonState.LOADING)
+                            payment.handle()
+                        }
                     }.onFailure {
                         mutableState.update { it.copy(isLoading = false) }
                         changeInlinePaymentState(InlinedPaymentPrimaryButtonState.ERROR)
@@ -159,6 +170,9 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
                 ),
             )
         }
+        if (newState == InlinedPaymentPrimaryButtonState.ERROR) {
+            mutableRouter.value = Router.SetPaymentResultAndPop()
+        }
     }
 
     private suspend fun verifyAndProcessInlinedPayment(token: String, amount: String, currency: String) {
@@ -169,7 +183,6 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
             currency = currency,
             onError = {
                 changeInlinePaymentState(InlinedPaymentPrimaryButtonState.ERROR)
-                mutableRouter.value = Router.SetPaymentResultAndPop()
             },
             onSuccess = {
                 changeInlinePaymentState(InlinedPaymentPrimaryButtonState.SUCCESS)
@@ -192,6 +205,7 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
         when (this) {
             is Payment.Konbini -> mutableRouter.value = Router.Replace(KomojuPaymentRoute.KonbiniAwaitingPayment(config, payment = this))
             is Payment.OffSitePayment -> _offSitePaymentURL.value = redirectURL
+            is Payment.Completed -> mutableRouter.value = Router.SetPaymentResultAndPop(KomojuSDK.PaymentResult(isSuccessFul = status == PaymentStatus.CAPTURED))
             else -> Unit
         }
     }
@@ -199,8 +213,64 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
     private fun PaymentMethod.validate() = when (this) {
         is PaymentMethod.CreditCard -> state.value.creditCardDisplayData.validate()
         is PaymentMethod.Konbini -> state.value.konbiniDisplayData.validate(state.value.commonDisplayData)
+        is PaymentMethod.Paidy -> state.value.paidyDisplayData.validate()
+        is PaymentMethod.NetCash -> state.value.netCashDisplayData.validate()
+        is PaymentMethod.BitCash -> state.value.bitCashDisplayData.validate()
         is PaymentMethod.OffSitePayment -> true // No input required for Offsite payment
         else -> false
+    }
+
+    private fun BitCashDisplayData.validate(): Boolean {
+        val idError = when {
+            bitCashId.isBlank() -> "The entered net cash id cannot be empty"
+            bitCashId.length != 16 -> "The entered net cash id is not valid"
+            else -> null
+        }
+        mutableState.update {
+            it.copy(
+                bitCashDisplayData = it.bitCashDisplayData.copy(
+                    bitCashError = idError,
+                ),
+            )
+        }
+        return idError == null
+    }
+    private fun NetCashDisplayData.validate(): Boolean {
+        val idError = when {
+            netCashId.isBlank() -> "The entered net cash id cannot be empty"
+            netCashId.length !in 16..20 -> "The entered net cash id is not valid"
+            else -> null
+        }
+        mutableState.update {
+            it.copy(
+                netCashDisplayData = it.netCashDisplayData.copy(
+                    netCashError = idError,
+                ),
+            )
+        }
+        return idError == null
+    }
+
+    private fun PaidyDisplayData.validate(): Boolean {
+        val fullNameError = when {
+            fullName.isBlank() -> "The entered name cannot be empty"
+            else -> null
+        }
+        val phoneNumberError = when {
+            phoneNumber.isBlank() -> "The entered phone number cannot be empty"
+            phoneNumber.length < 7 -> "The entered phone number is not valid"
+            phoneNumber.isDigitsOnly().not() -> "The entered phone number is not valid"
+            else -> null
+        }
+        mutableState.update {
+            it.copy(
+                paidyDisplayData = it.paidyDisplayData.copy(
+                    fullNameError = fullNameError,
+                    phoneNumberError = phoneNumberError,
+                ),
+            )
+        }
+        return fullNameError == null && phoneNumberError == null
     }
 
     private fun CreditCardDisplayData.validate(): Boolean {
@@ -257,7 +327,10 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
 
     private fun PaymentMethod.toPaymentRequest(): PaymentRequest = when (this) {
         is PaymentMethod.BankTransfer -> TODO()
-        is PaymentMethod.BitCash -> TODO()
+        is PaymentMethod.BitCash -> PaymentRequest.BitCash(
+            paymentMethod = this,
+            bitCashId = state.value.bitCashDisplayData.bitCashId,
+        )
         is PaymentMethod.CreditCard -> error("Credit Card needs to generate tokens first!")
         is PaymentMethod.Konbini -> PaymentRequest.Konbini(
             paymentMethod = this,
@@ -265,9 +338,16 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
             email = state.value.commonDisplayData.email,
         )
 
-        is PaymentMethod.NetCash -> TODO()
-        is PaymentMethod.Other -> TODO()
-        is PaymentMethod.Paidy -> TODO()
+        is PaymentMethod.NetCash -> PaymentRequest.NetCash(
+            paymentMethod = this,
+            netCashId = state.value.netCashDisplayData.netCashId,
+        )
+        is PaymentMethod.Other -> error("payment method is not supported!")
+        is PaymentMethod.Paidy -> PaymentRequest.Paidy(
+            paymentMethod = this,
+            fullName = state.value.paidyDisplayData.fullName,
+            phoneNumber = state.value.paidyDisplayData.phoneNumber,
+        )
         is PaymentMethod.PayEasy -> TODO()
         is PaymentMethod.WebMoney -> TODO()
         is PaymentMethod.OffSitePayment -> PaymentRequest.OffSitePaymentRequest(this)
