@@ -39,6 +39,7 @@ internal fun OffSitePayForm(paymentMethod: PaymentMethod.OffSitePayment, onPayBu
             OffSitePaymentType.MER_PAY -> "PAYMENT_VIA_MER_PAY"
             OffSitePaymentType.PAY_PAY -> "PAYMENT_VIA_PAY_PAY"
             OffSitePaymentType.RAKUTEN_PAY -> "PAYMENT_VIA_RAKUTEN"
+            OffSitePaymentType.LINE_PAY -> "PAYMENT_VIA_LINE_PAY"
             else -> null
         }
     }
@@ -50,6 +51,7 @@ internal fun OffSitePayForm(paymentMethod: PaymentMethod.OffSitePayment, onPayBu
             OffSitePaymentType.MER_PAY -> "MER_PAY_REDIRECT_MESSAGE"
             OffSitePaymentType.PAY_PAY -> "PAY_PAY_REDIRECT_MESSAGE"
             OffSitePaymentType.RAKUTEN_PAY -> "RAKUTEN_REDIRECT_MESSAGE"
+            OffSitePaymentType.LINE_PAY -> "LINE_PAY_REDIRECT_MESSAGE"
             else -> null
         }
     }
@@ -61,6 +63,7 @@ internal fun OffSitePayForm(paymentMethod: PaymentMethod.OffSitePayment, onPayBu
             OffSitePaymentType.MER_PAY -> "CONTINUE_TO_MER_PAY"
             OffSitePaymentType.PAY_PAY -> "CONTINUE_TO_PAY_PAY"
             OffSitePaymentType.RAKUTEN_PAY -> "CONTINUE_TO_RAKUTEN"
+            OffSitePaymentType.LINE_PAY -> "CONTINUE_TO_LINE_PAY"
             else -> null
         }
     }
