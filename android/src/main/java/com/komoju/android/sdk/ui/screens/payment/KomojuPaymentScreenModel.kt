@@ -221,7 +221,7 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
         else -> false
     }
 
-    private fun WebMoneyDisplayData.validate(): Boolean{
+    private fun WebMoneyDisplayData.validate(): Boolean {
         val prepaidNumberError = when {
             prepaidNumber.isBlank() -> "The entered prepaid number cannot be empty"
             prepaidNumber.length != 16 -> "The entered prepaid number is not valid"
@@ -232,7 +232,7 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
                 webMoneyDisplayData = it.webMoneyDisplayData.copy(
                     prepaidNumberError = prepaidNumberError,
                 ),
-                )
+            )
         }
         return prepaidNumberError == null
     }
