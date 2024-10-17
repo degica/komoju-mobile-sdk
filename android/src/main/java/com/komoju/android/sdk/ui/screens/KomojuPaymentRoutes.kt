@@ -23,7 +23,7 @@ internal sealed class Router {
     data class Push(val route: KomojuPaymentRoute) : Router()
     data class Replace(val route: KomojuPaymentRoute) : Router()
     data class ReplaceAll(val route: KomojuPaymentRoute) : Router()
-    data class SetPaymentResultAndPop(val result: KomojuSDK.PaymentResult) : Router()
+    data class SetPaymentResultAndPop(val result: KomojuSDK.PaymentResult = KomojuSDK.PaymentResult(false)) : Router()
 }
 
 internal sealed interface KomojuPaymentRoute {

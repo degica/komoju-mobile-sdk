@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.komoju.android.sdk.R
 import com.komoju.android.sdk.types.Currency
+import com.komoju.android.sdk.ui.composables.InlinedPaymentPrimaryButton
 import com.komoju.android.sdk.ui.composables.PrimaryButton
 import com.komoju.android.sdk.ui.screens.payment.CreditCardDisplayData
 import com.komoju.android.sdk.ui.theme.Gray200
@@ -205,13 +206,24 @@ internal fun CreditCardForm(
         )
 
         Spacer(modifier = Modifier.height(8.dp))
-        PrimaryButton(
-            modifier = Modifier.testID("credit_card_pay")
-                .padding(horizontal = 16.dp)
-                .fillMaxWidth(),
-            text = "${LocalI18nTexts.current["PAY"]} $displayPayableAmount",
-            onClick = onPayButtonClicked,
-        )
+        if (creditCardDisplayData.inlinePaymentEnabled) {
+            InlinedPaymentPrimaryButton(
+                modifier = Modifier.testID("credit_card_pay")
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth(),
+                text = "${LocalI18nTexts.current["PAY"]} $displayPayableAmount",
+                onClick = onPayButtonClicked,
+                state = creditCardDisplayData.inlinedPaymentPrimaryButtonState,
+            )
+        } else {
+            PrimaryButton(
+                modifier = Modifier.testID("credit_card_pay")
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth(),
+                text = "${LocalI18nTexts.current["PAY"]} $displayPayableAmount",
+                onClick = onPayButtonClicked,
+            )
+        }
 
         if (creditCardDisplayData.canSaveCard) {
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
@@ -250,8 +262,7 @@ private fun CreditCardFormPreview() {
             onCreditCardDisplayDataChange = {
                 creditCardDisplayData = it
             },
-            onPayButtonClicked = {
-            },
+            onPayButtonClicked = {},
         )
     }
 }
