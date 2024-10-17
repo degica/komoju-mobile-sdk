@@ -16,10 +16,12 @@ internal data class KomojuPaymentUIState(
     val bitCashDisplayData: BitCashDisplayData = BitCashDisplayData(),
     val netCashDisplayData: NetCashDisplayData = NetCashDisplayData(),
     val webMoneyDisplayData: WebMoneyDisplayData = WebMoneyDisplayData(),
+    val paidyDisplayData: PaidyDisplayData = PaidyDisplayData(),
     val inlinedCreditCardProcessingURL: String? = null,
 )
 
 internal data class CommonDisplayData(
+    val fullName: String = String.empty,
     val lastName: String = String.empty,
     val firstName: String = String.empty,
     val lastNamePhonetic: String = String.empty,
@@ -49,8 +51,15 @@ internal data class KonbiniDisplayData(
     val konbiniBrandNullError: String? = null,
 )
 
-internal data class BitCashDisplayData(val bitCashId: String = String.empty)
+internal data class BitCashDisplayData(val bitCashId: String = String.empty, val bitCashError: String? = null)
 
-internal data class NetCashDisplayData(val netCashId: String = String.empty)
+internal data class NetCashDisplayData(val netCashId: String = String.empty, val netCashError: String? = null)
 
-internal data class WebMoneyDisplayData(val prepaidNumber: String = String.empty)
+internal data class WebMoneyDisplayData(val prepaidNumber: String = String.empty, val prepaidNumberError: String? = null)
+
+internal data class PaidyDisplayData(
+    val fullName: String = String.empty,
+    val fullNameError: String? = null,
+    val phoneNumber: String = String.empty,
+    val phoneNumberError: String? = null,
+)

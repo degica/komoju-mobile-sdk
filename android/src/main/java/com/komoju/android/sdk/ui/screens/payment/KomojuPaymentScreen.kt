@@ -100,6 +100,8 @@ internal data class KomojuPaymentScreen(private val sdkConfiguration: KomojuSDK.
                                 onNetCashDisplayDataChange = screenViewModel::onNetCashDisplayDataChange,
                                 webMoneyDisplayData = uiState.webMoneyDisplayData,
                                 onWebMoneyDisplayDataChange = screenViewModel::onWebMoneyDisplayDataChange,
+                                paidyDisplayData = uiState.paidyDisplayData,
+                                onPaidyDisplayDataChange = screenViewModel::onPaidyDisplayDataChange,
                                 onPaymentRequested = screenViewModel::onPaymentRequested,
                             )
                         }
@@ -114,6 +116,8 @@ internal data class KomojuPaymentScreen(private val sdkConfiguration: KomojuSDK.
             }
             if (uiState.selectedPaymentMethod is PaymentMethod.CreditCard &&
                 sdkConfiguration.inlinedProcessing.not() &&
+                uiState.isLoading ||
+                uiState.selectedPaymentMethod !is PaymentMethod.CreditCard &&
                 uiState.isLoading
             ) {
                 Box(
@@ -128,12 +132,19 @@ internal data class KomojuPaymentScreen(private val sdkConfiguration: KomojuSDK.
             }
             if (inlineWebViewURL != null) {
                 InlinedWebView(
-                    modifier = Modifier.background(Color.White).align(Alignment.CenterEnd).animateContentSize().then(
-                        when {
-                            shouldShowFullScreenWebView -> Modifier.fillMaxSize()
-                            else -> Modifier.width(Dp.Hairline).fillMaxHeight()
-                        },
-                    ),
+                    modifier = Modifier
+                        .background(Color.White)
+                        .align(Alignment.CenterEnd)
+                        .animateContentSize()
+                        .then(
+                            when {
+                                shouldShowFullScreenWebView -> Modifier.fillMaxSize()
+                                else ->
+                                    Modifier
+                                        .width(Dp.Hairline)
+                                        .fillMaxHeight()
+                            },
+                        ),
                     url = inlineWebViewURL,
                     onDone = {
                         screenViewModel.onInlinedDeeplinkCaptured(it)

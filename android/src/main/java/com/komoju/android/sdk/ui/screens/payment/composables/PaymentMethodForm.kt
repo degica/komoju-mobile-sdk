@@ -6,6 +6,7 @@ import com.komoju.android.sdk.ui.screens.payment.CommonDisplayData
 import com.komoju.android.sdk.ui.screens.payment.CreditCardDisplayData
 import com.komoju.android.sdk.ui.screens.payment.KonbiniDisplayData
 import com.komoju.android.sdk.ui.screens.payment.NetCashDisplayData
+import com.komoju.android.sdk.ui.screens.payment.PaidyDisplayData
 import com.komoju.android.sdk.ui.screens.payment.WebMoneyDisplayData
 import com.komoju.mobile.sdk.entities.PaymentMethod
 
@@ -24,6 +25,8 @@ internal fun PaymentMethodForm(
     onNetCashDisplayDataChange: (NetCashDisplayData) -> Unit,
     webMoneyDisplayData: WebMoneyDisplayData,
     onWebMoneyDisplayDataChange: (WebMoneyDisplayData) -> Unit,
+    paidyDisplayData: PaidyDisplayData,
+    onPaidyDisplayDataChange: (PaidyDisplayData) -> Unit,
     onPaymentRequested: (PaymentMethod) -> Unit,
 ) {
     when (paymentMethod) {
@@ -90,7 +93,14 @@ internal fun PaymentMethodForm(
             },
         )
 
-        is PaymentMethod.Paidy -> Unit
+        is PaymentMethod.Paidy -> PaidyForm(
+            paidy = paymentMethod,
+            paidyDisplayData = paidyDisplayData,
+            onPaidyDisplayDataChange = onPaidyDisplayDataChange,
+            onPayButtonClicked = {
+                onPaymentRequested(paymentMethod)
+            },
+        )
         is PaymentMethod.PayEasy -> Unit
 
         is PaymentMethod.Other -> Unit

@@ -29,13 +29,21 @@ internal object PaymentMapper {
             currency = payment.currency.orEmpty(),
             status = PaymentStatus.fromString(payment.status.orEmpty()),
         )
-        in OffSitePaymentType.supportedTypes -> Payment.OffSitePayment(
+
+        in OffSitePaymentType.supportedTypes, "paidy" -> Payment.OffSitePayment(
             amount = payment?.amount.orEmpty(),
             currency = payment?.currency.orEmpty(),
             redirectURL = payment?.paymentDetails?.redirectUrl.orEmpty(),
             status = PaymentStatus.fromString(payment?.status.orEmpty()),
             type = type.orEmpty(),
         )
+
+        "net_cash", "bit_cash", "web_money" -> Payment.Completed(
+            amount = payment.amount.orEmpty(),
+            currency = payment.currency.orEmpty(),
+            status = PaymentStatus.fromString(payment.status.orEmpty()),
+        )
+
         else -> error("Invalid payment type")
     }
 }

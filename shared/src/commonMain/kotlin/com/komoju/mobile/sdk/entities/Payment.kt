@@ -19,6 +19,7 @@ sealed interface Payment {
 
     data class CreditCard(override val status: PaymentStatus, override val amount: String, override val currency: String) : Payment
     data class OffSitePayment(override val status: PaymentStatus, override val amount: String, override val currency: String, val type: String, val redirectURL: String) : Payment
+    data class Completed(override val status: PaymentStatus, override val amount: String, override val currency: String) : Payment
 
     data class Error(val code: String, val message: String, override val amount: String, override val currency: String) : Payment {
         override val status: PaymentStatus = PaymentStatus.EXPIRED
