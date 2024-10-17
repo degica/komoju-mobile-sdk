@@ -16,9 +16,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.komoju.android.sdk.R
 import com.komoju.android.sdk.ui.theme.Gray200
 import com.komoju.android.sdk.ui.theme.KomojuDarkGreen
@@ -49,11 +52,11 @@ private fun PaymentMethodComposable(paymentMethod: PaymentMethod, isSelected: Bo
             .clip(RoundedCornerShape(8.dp))
             .border(1.dp, if (isSelected) KomojuDarkGreen else Gray200, RoundedCornerShape(8.dp))
             .clickable(onClick = onSelected)
-            .padding(12.dp),
+            .padding(start = 12.dp, end = 12.dp, top = 12.dp, bottom = 8.dp),
     ) {
         Image(painter = painterResource(paymentMethod.displayIcon), contentDescription = "${paymentMethod.displayName} icon", modifier = Modifier.height(32.dp))
         Spacer(modifier = Modifier.height(4.dp))
-        Text(paymentMethod.displayName)
+        Text(paymentMethod.displayName, color = Color.Black, fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
     }
 }
 
