@@ -1,12 +1,15 @@
 package com.komoju.android.sdk.ui.composables
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -28,7 +31,14 @@ internal fun PrimaryButton(text: String, modifier: Modifier = Modifier, onClick:
         ),
         shape = RoundedCornerShape(configurableTheme.primaryButtonCornerRadiusInDP.dp),
     ) {
-        Text(modifier = Modifier.padding(8.dp), text = text, style = TextStyle(fontWeight = FontWeight.Bold), maxLines = 1)
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(38.dp),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(modifier = Modifier.padding(8.dp), text = text, style = TextStyle(fontWeight = FontWeight.Bold), maxLines = 1)
+        }
     }
 }
 

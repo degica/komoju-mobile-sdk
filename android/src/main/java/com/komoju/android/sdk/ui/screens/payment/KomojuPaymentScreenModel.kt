@@ -3,6 +3,7 @@ package com.komoju.android.sdk.ui.screens.payment
 import cafe.adriel.voyager.core.model.screenModelScope
 import com.komoju.android.sdk.KomojuSDK
 import com.komoju.android.sdk.navigation.RouterStateScreenModel
+import com.komoju.android.sdk.ui.composables.InlinedPaymentPrimaryButtonState
 import com.komoju.android.sdk.ui.screens.KomojuPaymentRoute
 import com.komoju.android.sdk.ui.screens.Router
 import com.komoju.android.sdk.ui.screens.failed.Reason
@@ -10,10 +11,12 @@ import com.komoju.android.sdk.utils.CreditCardUtils.isValidCVV
 import com.komoju.android.sdk.utils.CreditCardUtils.isValidCardHolderNameChar
 import com.komoju.android.sdk.utils.CreditCardUtils.isValidCardNumber
 import com.komoju.android.sdk.utils.CreditCardUtils.isValidExpiryDate
+import com.komoju.android.sdk.utils.DeeplinkEntity
 import com.komoju.android.sdk.utils.isValidEmail
 import com.komoju.mobile.sdk.entities.Payment
 import com.komoju.mobile.sdk.entities.PaymentMethod
 import com.komoju.mobile.sdk.entities.PaymentRequest
+import com.komoju.mobile.sdk.entities.PaymentStatus.Companion.isSuccessful
 import com.komoju.mobile.sdk.entities.SecureTokenRequest
 import com.komoju.mobile.sdk.entities.SecureTokenResponse.Status.ERRORED
 import com.komoju.mobile.sdk.entities.SecureTokenResponse.Status.NEEDS_VERIFY
@@ -21,6 +24,8 @@ import com.komoju.mobile.sdk.entities.SecureTokenResponse.Status.OK
 import com.komoju.mobile.sdk.entities.SecureTokenResponse.Status.SKIPPED
 import com.komoju.mobile.sdk.entities.SecureTokenResponse.Status.UNKNOWN
 import com.komoju.mobile.sdk.remote.apis.KomojuRemoteApi
+import kotlin.time.Duration.Companion.milliseconds
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -41,6 +46,9 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
                             isLoading = false,
                             session = session,
                             selectedPaymentMethod = session.paymentMethods.firstOrNull(),
+                            creditCardDisplayData = it.creditCardDisplayData.copy(
+                                inlinePaymentEnabled = config.inlinedProcessing,
+                            ),
                         )
                     }
                 }
@@ -90,6 +98,7 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
 
     fun onPaymentRequested(paymentMethod: PaymentMethod) {
         if (paymentMethod.validate()) {
+            changeInlinePaymentState(InlinedPaymentPrimaryButtonState.LOADING)
             mutableState.update { it.copy(isLoading = true) }
             if (paymentMethod is PaymentMethod.CreditCard) {
                 paymentMethod.createSecureTokens()
@@ -98,9 +107,11 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
                 screenModelScope.launch {
                     komojuApi.sessions.pay(config.sessionId.orEmpty(), request).onSuccess { payment ->
                         mutableState.update { it.copy(isLoading = true) }
+                        changeInlinePaymentState(InlinedPaymentPrimaryButtonState.LOADING)
                         payment.handle()
                     }.onFailure {
                         mutableState.update { it.copy(isLoading = false) }
+                        changeInlinePaymentState(InlinedPaymentPrimaryButtonState.ERROR)
                     }
                 }
             }
@@ -110,22 +121,69 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
     private fun PaymentMethod.CreditCard.createSecureTokens() {
         val request = toSecureTokenRequest()
         screenModelScope.launch {
-            komojuApi.tokens.generateSecureToken(request).onSuccess {
-                when (it.status) {
-                    OK, SKIPPED ->
-                        mutableRouter.value =
-                            Router.ReplaceAll(
+            komojuApi.tokens.generateSecureToken(request).onSuccess { tokens ->
+                when (tokens.status) {
+                    OK, SKIPPED -> {
+                        if (config.inlinedProcessing) {
+                            verifyAndProcessInlinedPayment(tokens.id, request.amount, request.currency)
+                        } else {
+                            mutableRouter.value = Router.ReplaceAll(
                                 KomojuPaymentRoute.ProcessPayment(
-                                    config,
-                                    processType = KomojuPaymentRoute.ProcessPayment.ProcessType.PayByToken(it.id, request.amount, request.currency),
+                                    configuration = config,
+                                    processType = KomojuPaymentRoute.ProcessPayment.ProcessType.PayByToken(tokens.id, request.amount, request.currency),
                                 ),
                             )
+                        }
+                    }
 
-                    NEEDS_VERIFY -> mutableRouter.value = Router.ReplaceAll(KomojuPaymentRoute.WebView(url = it.authURL, isJavaScriptEnabled = true))
+                    NEEDS_VERIFY -> {
+                        if (config.inlinedProcessing) {
+                            mutableState.update { it.copy(inlinedCreditCardProcessingURL = tokens.authURL) }
+                        } else {
+                            mutableRouter.value = Router.ReplaceAll(KomojuPaymentRoute.WebView(url = tokens.authURL, isJavaScriptEnabled = true))
+                        }
+                    }
                     ERRORED, UNKNOWN -> mutableRouter.value = Router.ReplaceAll(KomojuPaymentRoute.PaymentFailed(Reason.CREDIT_CARD_ERROR))
                 }
             }.onFailure {
                 mutableRouter.value = Router.ReplaceAll(KomojuPaymentRoute.PaymentFailed(Reason.CREDIT_CARD_ERROR))
+            }
+        }
+    }
+
+    private fun changeInlinePaymentState(newState: InlinedPaymentPrimaryButtonState) {
+        mutableState.update {
+            it.copy(
+                creditCardDisplayData = it.creditCardDisplayData.copy(
+                    inlinedPaymentPrimaryButtonState = newState,
+                ),
+            )
+        }
+    }
+
+    private suspend fun verifyAndProcessInlinedPayment(token: String, amount: String, currency: String) {
+        komojuApi.verifyTokenAndProcessPayment(
+            sessionId = config.sessionId.orEmpty(),
+            token = token,
+            amount = amount,
+            currency = currency,
+            onError = {
+                changeInlinePaymentState(InlinedPaymentPrimaryButtonState.ERROR)
+                mutableRouter.value = Router.SetPaymentResultAndPop()
+            },
+            onSuccess = {
+                changeInlinePaymentState(InlinedPaymentPrimaryButtonState.SUCCESS)
+                delay(400.milliseconds)
+                mutableRouter.value = Router.SetPaymentResultAndPop(KomojuSDK.PaymentResult(isSuccessFul = it.isSuccessful()))
+            },
+        )
+    }
+
+    fun onInlinedDeeplinkCaptured(deeplink: String) {
+        val deeplinkEntity = DeeplinkEntity.from(deeplink)
+        if (deeplinkEntity is DeeplinkEntity.Verify.BySecureToken) {
+            screenModelScope.launch {
+                verifyAndProcessInlinedPayment(deeplinkEntity.secureTokenId, deeplinkEntity.amount, deeplinkEntity.currency)
             }
         }
     }
