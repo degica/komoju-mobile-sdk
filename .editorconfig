@@ -8,7 +8,7 @@ ktlint_standard = disabled
 
 [*.{java,kt,kts,xml}]
 indent_size = 4
-max_line_length = 180
+max_line_length = 140
 
 [**/test/**]
 ktlint_standard_class-naming = disabled

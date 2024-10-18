@@ -44,6 +44,19 @@ internal object PaymentMapper {
             status = PaymentStatus.fromString(payment.status.orEmpty()),
         )
 
+        "bank_transfer" -> Payment.BankTransfer(
+            amount = payment.amount.orEmpty(),
+            currency = payment.currency.orEmpty(),
+            status = PaymentStatus.fromString(payment.status.orEmpty()),
+            instructionURL = payment.paymentDetails.instructionsUrl.orEmpty(),
+        )
+        "pay_easy" -> Payment.PayEasy(
+            amount = payment.amount.orEmpty(),
+            currency = payment.currency.orEmpty(),
+            status = PaymentStatus.fromString(payment.status.orEmpty()),
+            instructionURL = payment.paymentDetails.instructionsUrl.orEmpty(),
+        )
+
         else -> error("Invalid payment type")
     }
 }

@@ -42,7 +42,11 @@ private suspend fun KomojuRemoteApi.payByToken(
     }
 }
 
-private suspend fun KomojuRemoteApi.processBySession(sessionId: String, onSuccess: suspend (PaymentStatus) -> Unit, onError: (Reason) -> Unit) {
+private suspend fun KomojuRemoteApi.processBySession(
+    sessionId: String,
+    onSuccess: suspend (PaymentStatus) -> Unit,
+    onError: (Reason) -> Unit,
+) {
     sessions.verifyPaymentBySessionID(sessionId).onSuccess { paymentDetails ->
         onSuccess(paymentDetails.status)
     }.onFailure {

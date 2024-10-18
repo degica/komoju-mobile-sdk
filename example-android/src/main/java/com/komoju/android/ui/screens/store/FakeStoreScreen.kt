@@ -144,7 +144,14 @@ fun Item(item: Item, onItemChanged: (Item) -> Unit = {}, onItemClicked: () -> Un
             )
         }
         Text("¥" + item.price, fontSize = 18.sp, color = Color.Black, fontWeight = FontWeight.Bold, modifier = Modifier.padding(4.dp))
-        Text(stringResource(item.name), fontSize = 14.sp, color = Color.Black, fontWeight = FontWeight.Medium, lineHeight = 16.sp, modifier = Modifier.padding(horizontal = 4.dp))
+        Text(
+            stringResource(item.name),
+            fontSize = 14.sp,
+            color = Color.Black,
+            fontWeight = FontWeight.Medium,
+            lineHeight = 16.sp,
+            modifier = Modifier.padding(horizontal = 4.dp),
+        )
         Text(
             stringResource(R.string.model) + ": " + item.model + ", " + stringResource(item.color),
             fontSize = 12.sp,

@@ -191,7 +191,11 @@ internal fun CreditCardForm(
                             }
                         }
 
-                        Image(painter = painterResource(R.drawable.komoju_ic_cvv), contentDescription = null, modifier = Modifier.padding(start = 16.dp))
+                        Image(
+                            painter = painterResource(R.drawable.komoju_ic_cvv),
+                            contentDescription = null,
+                            modifier = Modifier.padding(start = 16.dp),
+                        )
                     }
                 }
             }

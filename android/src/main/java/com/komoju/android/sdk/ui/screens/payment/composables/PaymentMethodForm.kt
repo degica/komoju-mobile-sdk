@@ -101,7 +101,15 @@ internal fun PaymentMethodForm(
                 onPaymentRequested(paymentMethod)
             },
         )
-        is PaymentMethod.PayEasy -> Unit
+
+        is PaymentMethod.PayEasy -> PayEasyForm(
+            payEasy = paymentMethod,
+            commonDisplayData = commonDisplayData,
+            onCommonDisplayDataChange = onCommonDisplayDataChange,
+            onPayButtonClicked = {
+                onPaymentRequested(paymentMethod)
+            },
+        )
 
         is PaymentMethod.Other -> Unit
     }

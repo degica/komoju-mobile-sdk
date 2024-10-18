@@ -19,7 +19,12 @@ import com.komoju.android.sdk.ui.theme.LocalI18nTexts
 import com.komoju.mobile.sdk.entities.PaymentMethod
 
 @Composable
-internal fun PaidyForm(paidy: PaymentMethod.Paidy, paidyDisplayData: PaidyDisplayData, onPaidyDisplayDataChange: (PaidyDisplayData) -> Unit, onPayButtonClicked: () -> Unit) {
+internal fun PaidyForm(
+    paidy: PaymentMethod.Paidy,
+    paidyDisplayData: PaidyDisplayData,
+    onPaidyDisplayDataChange: (PaidyDisplayData) -> Unit,
+    onPayButtonClicked: () -> Unit,
+) {
     Column {
         TextField(
             value = paidyDisplayData.fullName,
@@ -40,7 +45,11 @@ internal fun PaidyForm(paidy: PaymentMethod.Paidy, paidyDisplayData: PaidyDispla
             },
             error = paidyDisplayData.phoneNumberError,
         )
-        PrimaryButton(LocalI18nTexts.current["CONTINUE_TO_PAIDY"], modifier = Modifier.fillMaxWidth().padding(all = 16.dp), onPayButtonClicked)
+        PrimaryButton(
+            LocalI18nTexts.current["CONTINUE_TO_PAIDY"],
+            modifier = Modifier.fillMaxWidth().padding(all = 16.dp),
+            onPayButtonClicked,
+        )
     }
 }
 

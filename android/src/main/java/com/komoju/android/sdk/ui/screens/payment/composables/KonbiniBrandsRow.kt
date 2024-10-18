@@ -54,7 +54,11 @@ private fun KonbiniBrand(konbiniBrand: KonbiniBrand, isSelected: Boolean, onSele
             .clickable(onClick = onSelected)
             .padding(8.dp),
     ) {
-        Image(painter = painterResource(konbiniBrand.displayIcon), contentDescription = "${konbiniBrand.key} icon", modifier = Modifier.size(32.dp))
+        Image(
+            painter = painterResource(konbiniBrand.displayIcon),
+            contentDescription = "${konbiniBrand.key} icon",
+            modifier = Modifier.size(32.dp),
+        )
         Spacer(modifier = Modifier.height(4.dp))
         Text(LocalI18nTexts.current[konbiniBrand.key], fontSize = 14.sp)
     }

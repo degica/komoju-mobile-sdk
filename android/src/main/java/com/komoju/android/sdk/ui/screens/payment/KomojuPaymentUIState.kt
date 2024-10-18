@@ -28,6 +28,13 @@ internal data class CommonDisplayData(
     val firstNamePhonetic: String = String.empty,
     val email: String = String.empty,
     val phoneNumber: String = String.empty,
+    val fullNameError: String? = null,
+    val lastNameError: String? = null,
+    val firstNameError: String? = null,
+    val lastNamePhoneticError: String? = null,
+    val firstNamePhoneticError: String? = null,
+    val emailError: String? = null,
+    val phoneNumberError: String? = null,
 )
 
 internal data class CreditCardDisplayData(
