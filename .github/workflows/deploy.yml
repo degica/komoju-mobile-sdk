@@ -1,13 +1,13 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
-
 name: Deploy to central
 
-on: workflow_dispatch
+on:
+  release:
+    types:
+      - published
+
+concurrency:
+  group: release
+  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -43,13 +43,17 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: Deploy
-      uses: gradle/gradle-build-action@v3
-      with:
-        arguments: ${{ matrix.target }} --no-configuration-cache --no-daemon
-      env:
-        ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.OSSRH_USERNAME }}
-        ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.OSSRH_PASSWORD }}
-        ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.MEMORY_KEY }}
-        ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
-
+    - name: Write release version
+      run: |
+        VERSION=${GITHUB_REF_NAME#v}
+        echo Version: $VERSION
+#    - name: Deploy
+#      uses: gradle/gradle-build-action@v3
+#      with:
+#        arguments: ${{ matrix.target }} --no-configuration-cache --no-daemon
+#      env:
+#        ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.OSSRH_USERNAME }}
+#        ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.OSSRH_PASSWORD }}
+#        ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.MEMORY_KEY }}
+#        ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
+#        SDK_VERSION: ${GITHUB_REF_NAME#v}

@@ -82,7 +82,7 @@ dependencies {
 mavenPublishing {
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
     signAllPublications()
-    coordinates(groupId = "com.komoju.mobile.sdk", artifactId = "android", version = "0.0.1")
+    coordinates(groupId = "com.komoju.mobile.sdk", artifactId = "android", version = (System.getenv("SDK_VERSION") ?: "0.0.1"))
     pom {
         name.set("Komoju Mobile SDK For Android")
         description.set("Komoju Mobile SDK For Android")
@@ -118,7 +118,6 @@ tasks.matching { task ->
 
 tasks.withType<DokkaTask>().configureEach {
     moduleName.set("Komoju Android SDK Documentation")
-    moduleVersion.set("v0.0.1")
     outputDirectory.set(layout.projectDirectory.dir("docs/"))
     dokkaSourceSets.configureEach {
         displayName.set("Android")

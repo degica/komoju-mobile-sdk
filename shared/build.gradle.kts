@@ -64,7 +64,7 @@ android {
 mavenPublishing {
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
     signAllPublications()
-    coordinates(groupId = "com.komoju.mobile.sdk", artifactId = "shared", version = "0.0.1")
+    coordinates(groupId = "com.komoju.mobile.sdk", artifactId = "shared", version = (System.getenv("SDK_VERSION") ?: "0.0.1"))
     pom {
         name.set("Komoju Mobile SDK")
         description.set("Komoju Payment SDK for Mobile")
