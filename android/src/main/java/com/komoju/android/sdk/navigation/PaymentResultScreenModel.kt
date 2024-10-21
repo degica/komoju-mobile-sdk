@@ -16,6 +16,7 @@ internal class PaymentResultScreenModel : ScreenModel {
 }
 
 @Composable
-internal fun Navigator.paymentResultScreenModel() = rememberNavigatorScreenModel(PaymentResultScreenModel::class.simpleName) {
-    PaymentResultScreenModel()
-}
+internal fun Navigator.paymentResultScreenModel() = rememberNavigatorScreenModel(
+    tag = PaymentResultScreenModel::class.simpleName,
+    factory = ::PaymentResultScreenModel,
+)

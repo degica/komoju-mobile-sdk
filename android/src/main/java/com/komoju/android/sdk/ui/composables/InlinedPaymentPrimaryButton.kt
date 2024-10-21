@@ -85,7 +85,7 @@ internal fun InlinedPaymentPrimaryButton(
     }
 }
 
-enum class InlinedPaymentPrimaryButtonState {
+internal enum class InlinedPaymentPrimaryButtonState {
     LOADING,
     IDLE,
     SUCCESS,
@@ -93,7 +93,7 @@ enum class InlinedPaymentPrimaryButtonState {
 }
 
 @Composable
-fun rememberInlinedPaymentPrimaryButtonState(
+internal fun rememberInlinedPaymentPrimaryButtonState(
     default: InlinedPaymentPrimaryButtonState = InlinedPaymentPrimaryButtonState.IDLE,
 ): MutableState<InlinedPaymentPrimaryButtonState> = rememberSaveable { mutableStateOf(default) }
 

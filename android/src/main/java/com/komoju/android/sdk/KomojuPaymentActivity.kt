@@ -113,7 +113,7 @@ internal class KomojuPaymentActivity : ComponentActivity() {
     }
 
     @Composable
-    fun NewIntentEffect(context: Context, onNewDeeplink: (String) -> Unit) {
+    private fun NewIntentEffect(context: Context, onNewDeeplink: (String) -> Unit) {
         LaunchedEffect(Unit) {
             callbackFlow {
                 val componentActivity = context as ComponentActivity
