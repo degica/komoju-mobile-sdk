@@ -46,8 +46,9 @@ jobs:
           java-version: 17
       - name: Write release version
         run: |
-          VERSION=${GITHUB_REF_NAME#v}
-          echo Version: $VERSION
+          TAG=${{ github.event.release.tag_name }}
+          echo Version: TAG
+          echo "SDK_VERSION=${TAG#v}" >> $GITHUB_ENV
 
       - name: Deploy
         uses: gradle/gradle-build-action@v3
@@ -58,7 +59,7 @@ jobs:
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.OSSRH_PASSWORD }}
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.MEMORY_KEY }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
-          SDK_VERSION: ${GITHUB_REF_NAME#v}
+          SDK_VERSION: ${{ env.SDK_VERSION }}
 
 
   deploy-app:
@@ -76,8 +77,9 @@ jobs:
           java-version: 17
       - name: Write release version
         run: |
-          VERSION=${GITHUB_REF_NAME#v}
-          echo Version: $VERSION
+          TAG=${{ github.event.release.tag_name }}
+          echo Version: TAG
+          echo "SDK_VERSION=${TAG#v}" >> $GITHUB_ENV
       - name: Setup local.properties
         run: touch local.properties && echo "TEST_SERVER_URL=$TEST_SERVER_URL" >> local.properties
       - name: Build SoundBud!
@@ -87,8 +89,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: example-android/build/outputs/apk/dev/release/example-android-dev-release.apk
-          asset_name: SoundBud-v$VERSION.apk
-          tag: $VERSION
+          asset_name: soundBud-release.apk
           make_latest: false
         env:
-          VERSION: ${GITHUB_REF_NAME#v}
+          SDK_VERSION: ${{ env.SDK_VERSION }}
