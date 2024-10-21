@@ -47,13 +47,28 @@ jobs:
       run: |
         VERSION=${GITHUB_REF_NAME#v}
         echo Version: $VERSION
-#    - name: Deploy
-#      uses: gradle/gradle-build-action@v3
-#      with:
-#        arguments: ${{ matrix.target }} --no-configuration-cache --no-daemon
-#      env:
-#        ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.OSSRH_USERNAME }}
-#        ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.OSSRH_PASSWORD }}
-#        ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.MEMORY_KEY }}
-#        ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
-#        SDK_VERSION: ${GITHUB_REF_NAME#v}
+
+    - name: Deploy
+      uses: gradle/gradle-build-action@v3
+      with:
+        arguments: ${{ matrix.target }} --no-configuration-cache --no-daemon
+      env:
+        ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.OSSRH_USERNAME }}
+        ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.OSSRH_PASSWORD }}
+        ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.MEMORY_KEY }}
+        ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
+        SDK_VERSION: ${GITHUB_REF_NAME#v}
+    - name: Setup local.properties
+      run: touch local.properties && echo "TEST_SERVER_URL=$TEST_SERVER_URL" >> local.properties
+    - name: Build SoundBud!
+      run: ./gradlew :example-android:assembleDevRelease
+    - name: Publish SoundBud!
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: example-android/build/outputs/apk/dev/release/example-android-dev-release.apk
+        asset_name: SoundBud-v$VERSION.apk
+        tag: $VERSION
+        make_latest: false
+      env:
+        VERSION: ${GITHUB_REF_NAME#v}

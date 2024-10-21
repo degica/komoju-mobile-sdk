@@ -2,6 +2,7 @@ package com.komoju.android.ui.screens.store
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import com.komoju.android.BuildConfig
 import com.komoju.android.sdk.ExperimentalKomojuPaymentApi
 import com.komoju.android.sdk.KomojuSDK
 import com.komoju.android.sdk.types.Currency
@@ -45,9 +46,10 @@ class FakeStoreScreenModel : ScreenModel {
         remoteApiService.getPublishableKey().body()?.publishableKey
     }.onSuccess { publishableKey ->
         if (publishableKey == null) {
-            _uiState.update { it.copy(error = "Failed to fetch publishable key.") }
+            _uiState.update { it.copy(error = "Failed to fetch publishable key from Server ${BuildConfig.SERVER_URL}") }
         }
     }.onFailure { error ->
+        error.printStackTrace()
         _uiState.update { it.copy(error = "Failed to fetch publishable key.\n${error.message}") }
     }.getOrNull()
 
