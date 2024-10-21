@@ -36,7 +36,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-internal fun InlinedPaymentPrimaryButton(text: String, state: InlinedPaymentPrimaryButtonState, modifier: Modifier = Modifier, onClick: () -> Unit) {
+internal fun InlinedPaymentPrimaryButton(
+    text: String,
+    state: InlinedPaymentPrimaryButtonState,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
     val configurableTheme = LocalConfigurableTheme.current
     Button(
         modifier = modifier,
@@ -54,10 +59,27 @@ internal fun InlinedPaymentPrimaryButton(text: String, state: InlinedPaymentPrim
             contentAlignment = Alignment.Center,
         ) {
             when (state) {
-                InlinedPaymentPrimaryButtonState.LOADING -> CircularProgressIndicator(strokeWidth = 2.dp, color = LocalContentColor.current, modifier = Modifier.size(24.dp))
-                InlinedPaymentPrimaryButtonState.IDLE -> Text(modifier = Modifier.padding(8.dp), text = text, style = TextStyle(fontWeight = FontWeight.Bold), maxLines = 1)
-                InlinedPaymentPrimaryButtonState.SUCCESS -> Icon(Icons.Rounded.CheckCircle, contentDescription = null, modifier = Modifier.size(24.dp))
-                InlinedPaymentPrimaryButtonState.ERROR -> Icon(Icons.Rounded.Close, contentDescription = null, modifier = Modifier.size(24.dp))
+                InlinedPaymentPrimaryButtonState.LOADING -> CircularProgressIndicator(
+                    strokeWidth = 2.dp,
+                    color = LocalContentColor.current,
+                    modifier = Modifier.size(24.dp),
+                )
+                InlinedPaymentPrimaryButtonState.IDLE -> Text(
+                    modifier = Modifier.padding(8.dp),
+                    text = text,
+                    style = TextStyle(fontWeight = FontWeight.Bold),
+                    maxLines = 1,
+                )
+                InlinedPaymentPrimaryButtonState.SUCCESS -> Icon(
+                    Icons.Rounded.CheckCircle,
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp),
+                )
+                InlinedPaymentPrimaryButtonState.ERROR -> Icon(
+                    Icons.Rounded.Close,
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp),
+                )
             }
         }
     }
@@ -71,8 +93,9 @@ enum class InlinedPaymentPrimaryButtonState {
 }
 
 @Composable
-fun rememberInlinedPaymentPrimaryButtonState(default: InlinedPaymentPrimaryButtonState = InlinedPaymentPrimaryButtonState.IDLE): MutableState<InlinedPaymentPrimaryButtonState> =
-    rememberSaveable { mutableStateOf(default) }
+fun rememberInlinedPaymentPrimaryButtonState(
+    default: InlinedPaymentPrimaryButtonState = InlinedPaymentPrimaryButtonState.IDLE,
+): MutableState<InlinedPaymentPrimaryButtonState> = rememberSaveable { mutableStateOf(default) }
 
 @Composable
 @Preview(showBackground = true, showSystemUi = true)

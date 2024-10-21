@@ -49,6 +49,30 @@ internal data class PaymentRequestDto(@SerialName("payment_details") val payment
                     prepaidNumber = paymentRequest.prepaidNumber,
                 ),
             )
+
+            is PaymentRequest.BankTransfer -> PaymentRequestDto(
+                paymentDetails = PaymentDetails(
+                    type = "bank_transfer",
+                    phoneNumber = paymentRequest.phoneNumber,
+                    email = paymentRequest.email,
+                    givenName = paymentRequest.firstName,
+                    givenNameKana = paymentRequest.firstNamePhonetic,
+                    familyName = paymentRequest.lastName,
+                    familyNameKana = paymentRequest.lastNamePhonetic,
+                ),
+            )
+
+            is PaymentRequest.PayEasy -> PaymentRequestDto(
+                paymentDetails = PaymentDetails(
+                    type = "pay_easy",
+                    phoneNumber = paymentRequest.phoneNumber,
+                    email = paymentRequest.email,
+                    givenName = paymentRequest.firstName,
+                    givenNameKana = paymentRequest.firstNamePhonetic,
+                    familyName = paymentRequest.lastName,
+                    familyNameKana = paymentRequest.lastNamePhonetic,
+                ),
+            )
         }
     }
 
@@ -60,5 +84,9 @@ internal data class PaymentRequestDto(@SerialName("payment_details") val payment
         @SerialName("customer_name") val fullName: String? = null,
         @SerialName("phone") val phoneNumber: String? = null,
         @SerialName("prepaid_number") val prepaidNumber: String? = null,
+        @SerialName("given_name") val givenName: String? = null,
+        @SerialName("given_name_kana") val givenNameKana: String? = null,
+        @SerialName("family_name") val familyName: String? = null,
+        @SerialName("family_name_kana") val familyNameKana: String? = null,
     )
 }

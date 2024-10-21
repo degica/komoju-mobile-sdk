@@ -55,7 +55,11 @@ internal data class KonbiniAwaitingPaymentScreen(val route: KomojuPaymentRoute.K
         val uiState by screenModel.state.collectAsStateWithLifecycle()
         RouterEffect(screenModel.router.collectAsStateWithLifecycle(), screenModel::onRouteConsumed)
         uiState.payment?.let {
-            PaymentStatus(it, onPrimaryButtonClicked = screenModel::onPrimaryButtonClicked, onSecondaryButtonClicked = screenModel::onSecondaryButtonClicked)
+            PaymentStatus(
+                payment = it,
+                onPrimaryButtonClicked = screenModel::onPrimaryButtonClicked,
+                onSecondaryButtonClicked = screenModel::onSecondaryButtonClicked,
+            )
         }
         if (uiState.isLoading) {
             Box(
@@ -88,7 +92,12 @@ private fun PaymentStatus(payment: Payment, onPrimaryButtonClicked: () -> Unit, 
         Spacer(modifier = Modifier.padding(16.dp))
         Text(payment.title, fontSize = 32.sp, style = TextStyle(fontWeight = FontWeight.Medium))
         Spacer(modifier = Modifier.padding(8.dp))
-        Text(payment.description, fontSize = 16.sp, color = Gray700, style = TextStyle(fontWeight = FontWeight.Normal, textAlign = TextAlign.Center))
+        Text(
+            text = payment.description,
+            fontSize = 16.sp,
+            color = Gray700,
+            style = TextStyle(fontWeight = FontWeight.Normal, textAlign = TextAlign.Center),
+        )
         Box(
             modifier = Modifier
                 .weight(1f)
@@ -179,7 +188,9 @@ private val Payment.description
     get() = when {
         status == PaymentStatus.COMPLETED -> "Your payment has been processed successfully."
         status == PaymentStatus.FAILED -> "Your payment has failed."
-        this is Payment.Konbini && status == PaymentStatus.AUTHORIZED -> "You need to go to your local ${this.konbiniStoreKey} and make the payment to proceed."
+        this is Payment.Konbini && status == PaymentStatus.AUTHORIZED ->
+            "You need to go to your local ${this.konbiniStoreKey}" +
+                " and make the payment to proceed."
         else -> "Your payment is awaiting processing."
     }
 

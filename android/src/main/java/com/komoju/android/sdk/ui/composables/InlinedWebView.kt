@@ -32,7 +32,13 @@ import com.komoju.android.sdk.R
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-internal fun InlinedWebView(modifier: Modifier, url: String, onDone: (String) -> Unit, onChallengePresented: () -> Unit, onCloseButtonClicked: () -> Unit) {
+internal fun InlinedWebView(
+    modifier: Modifier,
+    url: String,
+    onDone: (String) -> Unit,
+    onChallengePresented: () -> Unit,
+    onCloseButtonClicked: () -> Unit,
+) {
     val state = rememberWebViewState(url)
     Column(modifier = modifier) {
         Row(
@@ -81,7 +87,8 @@ internal fun InlinedWebView(modifier: Modifier, url: String, onDone: (String) ->
     }
 }
 
-private class InlinedWebViewClient(private val onDeeplinkCaptured: (String) -> Unit, private val onChallengePresented: () -> Unit) : AccompanistWebViewClient() {
+private class InlinedWebViewClient(private val onDeeplinkCaptured: (String) -> Unit, private val onChallengePresented: () -> Unit) :
+    AccompanistWebViewClient() {
     @Deprecated("Deprecated in Java")
     override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean = view.checkAndOpen(url)
     override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean = view.checkAndOpen(request.url.toString())

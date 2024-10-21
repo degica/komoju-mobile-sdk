@@ -13,6 +13,7 @@ import com.komoju.android.sdk.utils.CreditCardUtils.isValidCardHolderNameChar
 import com.komoju.android.sdk.utils.CreditCardUtils.isValidCardNumber
 import com.komoju.android.sdk.utils.CreditCardUtils.isValidExpiryDate
 import com.komoju.android.sdk.utils.DeeplinkEntity
+import com.komoju.android.sdk.utils.isKatakanaOnly
 import com.komoju.android.sdk.utils.isValidEmail
 import com.komoju.mobile.sdk.entities.Payment
 import com.komoju.mobile.sdk.entities.PaymentMethod
@@ -33,7 +34,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configuration) : RouterStateScreenModel<KomojuPaymentUIState>(KomojuPaymentUIState()) {
+internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configuration) :
+    RouterStateScreenModel<KomojuPaymentUIState>(KomojuPaymentUIState()) {
     private val komojuApi: KomojuRemoteApi = KomojuRemoteApi(config.publishableKey, config.language.languageCode)
     private val _offSitePaymentURL = MutableStateFlow<String?>(null)
     val offSitePaymentURL = _offSitePaymentURL.asStateFlow()
@@ -141,7 +143,11 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
                             mutableRouter.value = Router.ReplaceAll(
                                 KomojuPaymentRoute.ProcessPayment(
                                     configuration = config,
-                                    processType = KomojuPaymentRoute.ProcessPayment.ProcessType.PayByToken(tokens.id, request.amount, request.currency),
+                                    processType = KomojuPaymentRoute.ProcessPayment.ProcessType.PayByToken(
+                                        tokens.id,
+                                        request.amount,
+                                        request.currency,
+                                    ),
                                 ),
                             )
                         }
@@ -151,9 +157,11 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
                         if (config.inlinedProcessing) {
                             mutableState.update { it.copy(inlinedCreditCardProcessingURL = tokens.authURL) }
                         } else {
-                            mutableRouter.value = Router.ReplaceAll(KomojuPaymentRoute.WebView(url = tokens.authURL, isJavaScriptEnabled = true))
+                            mutableRouter.value =
+                                Router.ReplaceAll(KomojuPaymentRoute.WebView(url = tokens.authURL, isJavaScriptEnabled = true))
                         }
                     }
+
                     ERRORED, UNKNOWN -> mutableRouter.value = Router.ReplaceAll(KomojuPaymentRoute.PaymentFailed(Reason.CREDIT_CARD_ERROR))
                 }
             }.onFailure {
@@ -205,7 +213,11 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
         when (this) {
             is Payment.Konbini -> mutableRouter.value = Router.Replace(KomojuPaymentRoute.KonbiniAwaitingPayment(config, payment = this))
             is Payment.OffSitePayment -> _offSitePaymentURL.value = redirectURL
-            is Payment.Completed -> mutableRouter.value = Router.SetPaymentResultAndPop(KomojuSDK.PaymentResult(isSuccessFul = status == PaymentStatus.CAPTURED))
+            is Payment.Completed ->
+                mutableRouter.value =
+                    Router.SetPaymentResultAndPop(KomojuSDK.PaymentResult(isSuccessFul = status == PaymentStatus.CAPTURED))
+            is Payment.BankTransfer -> mutableRouter.value = Router.ReplaceAll(KomojuPaymentRoute.WebView(url = instructionURL))
+            is Payment.PayEasy -> mutableRouter.value = Router.ReplaceAll(KomojuPaymentRoute.WebView(url = instructionURL))
             else -> Unit
         }
     }
@@ -217,8 +229,52 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
         is PaymentMethod.NetCash -> state.value.netCashDisplayData.validate()
         is PaymentMethod.BitCash -> state.value.bitCashDisplayData.validate()
         is PaymentMethod.WebMoney -> state.value.webMoneyDisplayData.validate()
+        is PaymentMethod.BankTransfer,
+        is PaymentMethod.PayEasy,
+        -> state.value.commonDisplayData.validate()
+
         is PaymentMethod.OffSitePayment -> true // No input required for Offsite payment
         else -> false
+    }
+
+    private fun CommonDisplayData.validate(): Boolean {
+        val lastNameError = if (lastName.isBlank()) "The entered last name cannot be empty" else null
+        val firstNameError = if (firstName.isBlank()) "The entered first name cannot be empty" else null
+        val firstNamePhoneticError = when {
+            firstNamePhonetic.isBlank() -> "The entered first name phonetic cannot be empty"
+            firstNamePhonetic.isKatakanaOnly.not() -> "The entered first name phonetic must be a kana"
+            else -> null
+        }
+        val lastNamePhoneticError = when {
+            lastNamePhonetic.isBlank() -> "The entered last name phonetic cannot be empty"
+            lastNamePhonetic.isKatakanaOnly.not() -> "The entered last name phonetic must be a kana"
+            else -> null
+        }
+        val emailError = if (email.isValidEmail.not()) "The entered email is not valid" else null
+        val phoneNumberError = when {
+            phoneNumber.isBlank() -> "The entered phone number cannot be empty"
+            phoneNumber.length < 7 -> "The entered phone number is not valid"
+            phoneNumber.isDigitsOnly().not() -> "The entered phone number is not valid"
+            else -> null
+        }
+        mutableState.update {
+            it.copy(
+                commonDisplayData = it.commonDisplayData.copy(
+                    lastNameError = lastNameError,
+                    firstNameError = firstNameError,
+                    firstNamePhoneticError = firstNamePhoneticError,
+                    lastNamePhoneticError = lastNamePhoneticError,
+                    emailError = emailError,
+                    phoneNumberError = phoneNumberError,
+                ),
+            )
+        }
+        return lastNameError == null &&
+            firstNameError == null &&
+            firstNamePhoneticError == null &&
+            lastNamePhoneticError == null &&
+            emailError == null &&
+            phoneNumberError == null
     }
 
     private fun WebMoneyDisplayData.validate(): Boolean {
@@ -252,6 +308,7 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
         }
         return idError == null
     }
+
     private fun NetCashDisplayData.validate(): Boolean {
         val idError = when {
             netCashId.isBlank() -> "The entered net cash id cannot be empty"
@@ -347,7 +404,7 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
             paymentMethod = this,
             bitCashId = state.value.bitCashDisplayData.bitCashId,
         )
-        is PaymentMethod.CreditCard -> error("Credit Card needs to generate tokens first!")
+
         is PaymentMethod.Konbini -> PaymentRequest.Konbini(
             paymentMethod = this,
             konbiniBrand = state.value.konbiniDisplayData.selectedKonbiniBrand!!,
@@ -358,19 +415,40 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
             paymentMethod = this,
             netCashId = state.value.netCashDisplayData.netCashId,
         )
-        is PaymentMethod.Other -> error("payment method is not supported!")
+
         is PaymentMethod.Paidy -> PaymentRequest.Paidy(
             paymentMethod = this,
             fullName = state.value.paidyDisplayData.fullName,
             phoneNumber = state.value.paidyDisplayData.phoneNumber,
         )
-        is PaymentMethod.BankTransfer -> TODO()
-        is PaymentMethod.PayEasy -> TODO()
+
+        is PaymentMethod.BankTransfer -> PaymentRequest.BankTransfer(
+            paymentMethod = this,
+            lastName = state.value.commonDisplayData.lastName,
+            firstName = state.value.commonDisplayData.firstName,
+            lastNamePhonetic = state.value.commonDisplayData.lastNamePhonetic,
+            firstNamePhonetic = state.value.commonDisplayData.firstNamePhonetic,
+            email = state.value.commonDisplayData.email,
+            phoneNumber = state.value.commonDisplayData.phoneNumber,
+        )
+
+        is PaymentMethod.PayEasy -> PaymentRequest.PayEasy(
+            paymentMethod = this,
+            lastName = state.value.commonDisplayData.lastName,
+            firstName = state.value.commonDisplayData.firstName,
+            lastNamePhonetic = state.value.commonDisplayData.lastNamePhonetic,
+            firstNamePhonetic = state.value.commonDisplayData.firstNamePhonetic,
+            email = state.value.commonDisplayData.email,
+            phoneNumber = state.value.commonDisplayData.phoneNumber,
+        )
         is PaymentMethod.WebMoney -> PaymentRequest.WebMoney(
             paymentMethod = this,
             prepaidNumber = state.value.webMoneyDisplayData.prepaidNumber,
         )
+
         is PaymentMethod.OffSitePayment -> PaymentRequest.OffSitePaymentRequest(this)
+        is PaymentMethod.CreditCard -> error("Credit Card needs to generate tokens first!")
+        is PaymentMethod.Other -> error("payment method is not supported!")
     }
 
     fun onCloseClicked() {

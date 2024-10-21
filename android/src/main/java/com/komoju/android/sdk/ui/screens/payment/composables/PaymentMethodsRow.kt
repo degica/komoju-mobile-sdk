@@ -29,7 +29,11 @@ import com.komoju.mobile.sdk.entities.PaymentMethod
 import com.komoju.mobile.sdk.types.OffSitePaymentType
 
 @Composable
-internal fun PaymentMethodsRow(paymentMethods: List<PaymentMethod>, selectedPaymentMethod: PaymentMethod?, onSelected: (PaymentMethod) -> Unit) {
+internal fun PaymentMethodsRow(
+    paymentMethods: List<PaymentMethod>,
+    selectedPaymentMethod: PaymentMethod?,
+    onSelected: (PaymentMethod) -> Unit,
+) {
     LazyRow(contentPadding = PaddingValues(horizontal = 8.dp)) {
         items(paymentMethods) { paymentMethod ->
             PaymentMethodComposable(
@@ -54,7 +58,11 @@ private fun PaymentMethodComposable(paymentMethod: PaymentMethod, isSelected: Bo
             .clickable(onClick = onSelected)
             .padding(start = 12.dp, end = 12.dp, top = 12.dp, bottom = 8.dp),
     ) {
-        Image(painter = painterResource(paymentMethod.displayIcon), contentDescription = "${paymentMethod.displayName} icon", modifier = Modifier.height(32.dp))
+        Image(
+            painter = painterResource(paymentMethod.displayIcon),
+            contentDescription = "${paymentMethod.displayName} icon",
+            modifier = Modifier.height(32.dp),
+        )
         Spacer(modifier = Modifier.height(4.dp))
         Text(paymentMethod.displayName, color = Color.Black, fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
     }

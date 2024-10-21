@@ -6,7 +6,6 @@ internal inline val String.Companion.empty get() = ""
 
 internal inline val String.isValidEmail: Boolean get() = matches(EMAIL_REGEX)
 
-internal inline val String.hostName get() = replace("https://", "")
-    .replace("http://", "").run {
-        substring(0..<indexOf('/'))
-    }
+internal inline val String.isKatakanaOnly: Boolean get() = all { it.isKatakana }
+
+internal inline val Char.isKatakana get() = Character.UnicodeBlock.of(this) == Character.UnicodeBlock.KATAKANA
