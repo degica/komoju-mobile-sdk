@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 internal class VerifyPaymentScreenModel(private val config: KomojuSDK.Configuration) : RouterStateScreenModel<Unit>(Unit) {
 
-    private val komojuApi: KomojuRemoteApi = KomojuRemoteApi(config.publishableKey, config.language.languageCode)
+    private val komojuApi: KomojuRemoteApi = KomojuRemoteApi.create(config.publishableKey, config.language.languageCode)
 
     fun process(type: KomojuPaymentRoute.ProcessPayment.ProcessType) {
         screenModelScope.launch {
@@ -69,5 +69,10 @@ internal class VerifyPaymentScreenModel(private val config: KomojuSDK.Configurat
         }.onFailure {
             mutableRouter.value = Router.ReplaceAll(KomojuPaymentRoute.PaymentFailed(Reason.CREDIT_CARD_ERROR))
         }
+    }
+
+    override fun onDispose() {
+        komojuApi.close()
+        super.onDispose()
     }
 }
