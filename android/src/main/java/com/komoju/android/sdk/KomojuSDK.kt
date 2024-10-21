@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContract
 import com.komoju.android.sdk.types.Currency
 import com.komoju.android.sdk.types.Language
 import com.komoju.android.sdk.ui.theme.ConfigurableTheme
+import com.komoju.android.sdk.utils.empty
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 import kotlinx.parcelize.Parcelize
@@ -29,7 +30,7 @@ object KomojuSDK {
         internal val publishableKey: String?, // Public API key for Komoju integration.
         internal val isDebugMode: Boolean, // Debug mode flag for logging and testing.
         internal val sessionId: String?, // Unique session ID for payment transaction.
-        internal val redirectURL: String = "", // URL to redirect after payment completion.
+        internal val redirectURL: String = String.empty, // URL to redirect after payment completion.
         internal val configurableTheme: ConfigurableTheme, // Custom theme for UI elements.
         internal val inlinedProcessing: Boolean, // Flag to enable inlined processing.
     ) : Parcelable {

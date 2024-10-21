@@ -36,7 +36,7 @@ import kotlinx.coroutines.launch
 
 internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configuration) :
     RouterStateScreenModel<KomojuPaymentUIState>(KomojuPaymentUIState()) {
-    private val komojuApi: KomojuRemoteApi = KomojuRemoteApi(config.publishableKey, config.language.languageCode)
+    private val komojuApi: KomojuRemoteApi = KomojuRemoteApi.create(config.publishableKey, config.language.languageCode)
     private val _offSitePaymentURL = MutableStateFlow<String?>(null)
     val offSitePaymentURL = _offSitePaymentURL.asStateFlow()
 
@@ -466,5 +466,10 @@ internal class KomojuPaymentScreenModel(private val config: KomojuSDK.Configurat
 
     fun onOffSitePaymentURLConsumed() {
         _offSitePaymentURL.value = null
+    }
+
+    override fun onDispose() {
+        komojuApi.close()
+        super.onDispose()
     }
 }
