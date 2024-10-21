@@ -51,7 +51,7 @@ import com.komoju.mobile.sdk.entities.PaymentStatus
 internal data class KonbiniAwaitingPaymentScreen(val route: KomojuPaymentRoute.KonbiniAwaitingPayment) : Screen {
     @Composable
     override fun Content() {
-        val screenModel = rememberScreenModel { KonbiniAwaitingPaymentScreenModel(route.configuration, route.payment) }
+        val screenModel = rememberScreenModel { KonbiniAwaitingPaymentScreenModel(route.payment) }
         val uiState by screenModel.state.collectAsStateWithLifecycle()
         RouterEffect(screenModel.router.collectAsStateWithLifecycle(), screenModel::onRouteConsumed)
         uiState.payment?.let {
