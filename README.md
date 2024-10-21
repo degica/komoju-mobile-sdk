@@ -23,7 +23,7 @@ The Android SDK utilize the latest version of jetpack compose.
 #### Setup
 ```kotlin
 dependencies {
-    implementation("com.komoju.mobile.sdk:android:0.0.1")
+    implementation("com.komoju.mobile.sdk:android:<latest-version-here>")
 }
 ```
 

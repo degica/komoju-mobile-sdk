@@ -1,55 +1,96 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
-
 name: Deploy to central
 
-on: workflow_dispatch
+on:
+  release:
+    types:
+      - published
+
+concurrency:
+  group: release
+  cancel-in-progress: true
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  deploy:
+  deploy-sdk:
+    name: Deploy SDK
     strategy:
       matrix:
         include:
-#          - target: publishIosArm64PublicationToSonatypeRepository
-#            os: macos-latest
+          #          - target: publishIosArm64PublicationToSonatypeRepository
+          #            os: macos-latest
           - target: :shared:publishAllPublicationsToMavenCentralRepository
             os: ubuntu-latest
           - target: :android:publishAllPublicationsToMavenCentralRepository
             os: ubuntu-latest
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v4
-    - name: Validate Gradle Wrapper
-      uses: gradle/wrapper-validation-action@v3
-    - uses: actions/cache@v4
-      with:
-        path: |
-          ~/.konan
-        key: ${{ runner.os }}-${{ hashFiles('**/.lock') }}
-    - name: Import GPG key
-      uses: crazy-max/ghaction-import-gpg@v6
-      with:
-        gpg_private_key: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
-        passphrase: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-    - name: Deploy
-      uses: gradle/gradle-build-action@v3
-      with:
-        arguments: ${{ matrix.target }} --no-configuration-cache --no-daemon
-      env:
-        ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.OSSRH_USERNAME }}
-        ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.OSSRH_PASSWORD }}
-        ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.MEMORY_KEY }}
-        ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
+      - uses: actions/checkout@v4
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v3
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.konan
+          key: ${{ runner.os }}-${{ hashFiles('**/.lock') }}
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
+          passphrase: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: zulu
+          java-version: 17
+      - name: Write release version
+        run: |
+          TAG=${{ github.event.release.tag_name }}
+          echo Version: TAG
+          echo "SDK_VERSION=${TAG#v}" >> $GITHUB_ENV
 
+      - name: Deploy
+        run: chmod +x gradlew && ./gradlew ${{ matrix.target }} --no-configuration-cache --no-daemon
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.OSSRH_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.OSSRH_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.MEMORY_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
+          SDK_VERSION: ${{ env.SDK_VERSION }}
+
+
+  deploy-app:
+    name: Deploy Android App
+    needs: deploy-sdk
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: zulu
+          java-version: 17
+      - name: Write release version
+        run: |
+          TAG=${{ github.event.release.tag_name }}
+          echo Version: TAG
+          echo "SDK_VERSION=${TAG#v}" >> $GITHUB_ENV
+      - name: Setup local.properties
+        run: |
+          touch local.properties
+          echo "TEST_SERVER_URL=${{ secrets.TEST_SERVER_URL }}" >> local.properties
+          cat local.properties
+      - name: Build SoundBud!
+        run: ./gradlew :example-android:assembleDevRelease
+      - name: Publish SoundBud!
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: example-android/build/outputs/apk/dev/release/example-android-dev-release.apk
+          asset_name: soundBud-release.apk
+          make_latest: false
+        env:
+          SDK_VERSION: ${{ env.SDK_VERSION }}
