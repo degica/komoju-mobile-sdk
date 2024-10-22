@@ -12,16 +12,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.komoju.android.sdk.R
 import com.komoju.android.sdk.types.Currency
 import com.komoju.android.sdk.ui.composables.PrimaryButton
 import com.komoju.android.sdk.ui.screens.payment.CommonDisplayData
 import com.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
-import com.komoju.android.sdk.ui.theme.LocalI18nTexts
 import com.komoju.android.sdk.utils.AmountUtils
 import com.komoju.mobile.sdk.entities.PaymentMethod
 
@@ -41,36 +42,42 @@ internal fun BankForm(
     }
     Column {
         CompatTextField(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
             value = commonDisplayData.lastName,
-            titleKey = "LAST_NAME",
-            placeholderKey = "LAST_NAME",
+            title = stringResource(R.string.komoju_last_name),
+            placeholder = stringResource(R.string.komoju_last_name),
             onValueChange = {
                 onCommonDisplayDataChange(commonDisplayData.copy(lastName = it))
             },
             keyboardType = KeyboardType.Text,
             imeActions = ImeAction.Next,
             singleLine = true,
-            error = commonDisplayData.lastNameError,
+            error = commonDisplayData.lastNameErrorStringResource?.let { stringResource(it) },
         )
         CompatTextField(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
             value = commonDisplayData.firstName,
-            titleKey = "FIRST_NAME",
-            placeholderKey = "FIRST_NAME",
+            title = stringResource(R.string.komoju_first_name),
+            placeholder = stringResource(R.string.komoju_first_name),
             onValueChange = {
                 onCommonDisplayDataChange(commonDisplayData.copy(firstName = it))
             },
             keyboardType = KeyboardType.Text,
             imeActions = ImeAction.Next,
             singleLine = true,
-            error = commonDisplayData.firstNameError,
+            error = commonDisplayData.firstNameErrorStringResource?.let { stringResource(it) },
         )
         CompatTextField(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
             value = commonDisplayData.lastNamePhonetic,
-            titleKey = "LAST_NAME_PHONETIC",
-            placeholderKey = "LAST_NAME_PHONETIC",
+            title = stringResource(R.string.komoju_last_name_phonetic),
+            placeholder = stringResource(R.string.komoju_last_name_phonetic),
             onValueChange = {
                 onCommonDisplayDataChange(commonDisplayData.copy(lastNamePhonetic = it))
             },
@@ -78,13 +85,15 @@ internal fun BankForm(
             keyBoardLocale = JAPANESE_LOCALE,
             imeActions = ImeAction.Next,
             singleLine = true,
-            error = commonDisplayData.lastNamePhoneticError,
+            error = commonDisplayData.lastNamePhoneticErrorStringResource?.let { stringResource(it) },
         )
         CompatTextField(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
             value = commonDisplayData.firstNamePhonetic,
-            titleKey = "FIRST_NAME_PHONETIC",
-            placeholderKey = "FIRST_NAME_PHONETIC",
+            title = stringResource(R.string.komoju_first_name_phonetic),
+            placeholder = stringResource(R.string.komoju_first_name_phonetic),
             onValueChange = {
                 onCommonDisplayDataChange(commonDisplayData.copy(firstNamePhonetic = it))
             },
@@ -92,40 +101,44 @@ internal fun BankForm(
             keyBoardLocale = JAPANESE_LOCALE,
             imeActions = ImeAction.Next,
             singleLine = true,
-            error = commonDisplayData.firstNamePhoneticError,
+            error = commonDisplayData.firstNamePhoneticErrorStringResource?.let { stringResource(it) },
         )
         CompatTextField(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
             value = commonDisplayData.email,
-            titleKey = "EMAIL",
-            placeholderKey = "EXAMPLE_EMAIL",
+            title = stringResource(R.string.komoju_email),
+            placeholder = stringResource(R.string.komoju_enter_your_email_address),
             onValueChange = {
                 onCommonDisplayDataChange(commonDisplayData.copy(email = it))
             },
             keyboardType = KeyboardType.Email,
             imeActions = ImeAction.Next,
             singleLine = true,
-            error = commonDisplayData.emailError,
+            error = commonDisplayData.emailErrorStringResource?.let { stringResource(it) },
         )
         CompatTextField(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
             value = commonDisplayData.phoneNumber,
-            titleKey = "TELEPHONE_NUMBER",
-            placeholderKey = "TELEPHONE_NUMBER_PLACEHOLDER",
+            title = stringResource(R.string.komoju_phone_number),
+            placeholder = stringResource(R.string.komoju_enter_your_phone_number),
             onValueChange = {
                 onCommonDisplayDataChange(commonDisplayData.copy(phoneNumber = it))
             },
             keyboardType = KeyboardType.Number,
             imeActions = ImeAction.Done,
             singleLine = true,
-            error = commonDisplayData.phoneNumberError,
+            error = commonDisplayData.phoneNumberErrorStringResource?.let { stringResource(it) },
         )
         Spacer(modifier = Modifier.height(16.dp))
         PrimaryButton(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
-            text = "${LocalI18nTexts.current["PAY"]} $displayPayableAmount",
+            text = stringResource(R.string.komoju_pay, displayPayableAmount),
             onClick = onPayButtonClicked,
         )
     }
@@ -135,7 +148,6 @@ internal fun BankForm(
 @Preview(showBackground = true)
 private fun BankFormPreview() {
     val bankTransfer = PaymentMethod.BankTransfer(
-        displayName = "Bank Transfer",
         hashedGateway = "hashedGateway",
         exchangeRate = 1.0,
         currency = "JPY",

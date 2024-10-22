@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -46,7 +47,6 @@ import com.komoju.android.sdk.ui.screens.payment.CreditCardDisplayData
 import com.komoju.android.sdk.ui.theme.Gray200
 import com.komoju.android.sdk.ui.theme.Gray500
 import com.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
-import com.komoju.android.sdk.ui.theme.LocalI18nTexts
 import com.komoju.android.sdk.ui.theme.Red600
 import com.komoju.android.sdk.utils.AmountUtils
 import com.komoju.android.sdk.utils.CardScheme
@@ -73,14 +73,14 @@ internal fun CreditCardForm(
             AmountUtils.formatToDecimal(Currency.parse(creditCard.currency), creditCard.amount)
         }
     }
-    val dividerColor = if (creditCardDisplayData.creditCardError == null) Gray200 else Red600
+    val dividerColor = if (creditCardDisplayData.creditCardErrorStringResource == null) Gray200 else Red600
     Column {
         TextField(
             creditCardDisplayData.fullNameOnCard,
-            titleKey = "CARD_HOLDER_NAME",
-            placeholderKey = "FULL_NAME_ON_CARD",
+            title = stringResource(R.string.komoju_cardholder_name),
+            placeholder = stringResource(R.string.komoju_full_name_on_card),
             capitalization = KeyboardCapitalization.Characters,
-            error = creditCardDisplayData.fullNameOnCardError,
+            error = creditCardDisplayData.fullNameOnCardErrorStringResource?.let { stringResource(it) },
             onValueChange = {
                 onCreditCardDisplayDataChange(creditCardDisplayData.copy(fullNameOnCard = it.toUpperCase(Locale.current)))
             },
@@ -90,7 +90,7 @@ internal fun CreditCardForm(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
-            text = LocalI18nTexts.current["CARD_NUMBER"],
+            text = stringResource(R.string.komoju_card_number),
         )
 
         Box(
@@ -165,7 +165,7 @@ internal fun CreditCardForm(
                         )
                         if (creditCardDisplayData.creditCardExpiryDate.isEmpty()) {
                             Text(
-                                text = LocalI18nTexts.current["EXPIRY_DATE"],
+                                text = stringResource(R.string.komoju_mm_yy),
                                 style = TextStyle(fontSize = 16.sp, color = Gray500),
                             )
                         }
@@ -185,7 +185,7 @@ internal fun CreditCardForm(
                             )
                             if (creditCardDisplayData.creditCardCvv.isEmpty()) {
                                 Text(
-                                    text = LocalI18nTexts.current["CVV"],
+                                    text = stringResource(R.string.komoju_cvv),
                                     style = TextStyle(fontSize = 16.sp, color = Gray500),
                                 )
                             }
@@ -205,26 +205,28 @@ internal fun CreditCardForm(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
-            text = creditCardDisplayData.creditCardError.orEmpty(),
+            text = creditCardDisplayData.creditCardErrorStringResource?.let { stringResource(it) }.orEmpty(),
             style = TextStyle(fontSize = 16.sp, color = Red600),
         )
 
         Spacer(modifier = Modifier.height(8.dp))
         if (creditCardDisplayData.inlinePaymentEnabled) {
             InlinedPaymentPrimaryButton(
-                modifier = Modifier.testID("credit_card_pay")
+                modifier = Modifier
+                    .testID("credit_card_pay")
                     .padding(horizontal = 16.dp)
                     .fillMaxWidth(),
-                text = "${LocalI18nTexts.current["PAY"]} $displayPayableAmount",
+                text = stringResource(R.string.komoju_pay, displayPayableAmount),
                 onClick = onPayButtonClicked,
                 state = creditCardDisplayData.inlinedPaymentPrimaryButtonState,
             )
         } else {
             PrimaryButton(
-                modifier = Modifier.testID("credit_card_pay")
+                modifier = Modifier
+                    .testID("credit_card_pay")
                     .padding(horizontal = 16.dp)
                     .fillMaxWidth(),
-                text = "${LocalI18nTexts.current["PAY"]} $displayPayableAmount",
+                text = stringResource(R.string.komoju_pay, displayPayableAmount),
                 onClick = onPayButtonClicked,
             )
         }
@@ -238,7 +240,7 @@ internal fun CreditCardForm(
                     },
                     colors = CheckboxDefaults.colors(checkedColor = Color.Black, uncheckedColor = Color.Black),
                 )
-                Text(LocalI18nTexts.current["SAVE_CARD"])
+                Text(stringResource(R.string.komoju_save_this_card_for_future_payments))
             }
         }
     }
@@ -256,7 +258,6 @@ private fun CreditCardFormPreview() {
         amount = "0",
         additionalFields = listOf(),
         brands = listOf(),
-        displayName = "Credit Card",
     )
     var creditCardDisplayData by remember { mutableStateOf(CreditCardDisplayData()) }
     KomojuMobileSdkTheme {

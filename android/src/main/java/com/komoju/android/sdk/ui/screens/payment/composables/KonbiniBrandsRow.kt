@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,7 +26,6 @@ import com.komoju.android.sdk.R
 import com.komoju.android.sdk.ui.theme.Gray200
 import com.komoju.android.sdk.ui.theme.KomojuDarkGreen
 import com.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
-import com.komoju.android.sdk.ui.theme.LocalI18nTexts
 import com.komoju.mobile.sdk.entities.PaymentMethod.Konbini.KonbiniBrand
 
 @Composable
@@ -60,9 +60,20 @@ private fun KonbiniBrand(konbiniBrand: KonbiniBrand, isSelected: Boolean, onSele
             modifier = Modifier.size(32.dp),
         )
         Spacer(modifier = Modifier.height(4.dp))
-        Text(LocalI18nTexts.current[konbiniBrand.key], fontSize = 14.sp)
+        Text(konbiniBrand.displayText, fontSize = 14.sp)
     }
 }
+
+private val KonbiniBrand.displayText
+    @Composable
+    get() = when (this) {
+        is KonbiniBrand.DailyYamazaki -> stringResource(R.string.komoju_daily_yamazaki)
+        is KonbiniBrand.FamilyMart -> stringResource(R.string.komoju_family_mart)
+        is KonbiniBrand.Lawson -> stringResource(R.string.komoju_lawson)
+        is KonbiniBrand.MiniStop -> stringResource(R.string.komoju_ministop)
+        is KonbiniBrand.SeicoMart -> stringResource(R.string.komoju_seicomart)
+        is KonbiniBrand.SevenEleven -> stringResource(R.string.komoju__7_eleven)
+    }
 
 private val KonbiniBrand.displayIcon
     get() = when (this) {

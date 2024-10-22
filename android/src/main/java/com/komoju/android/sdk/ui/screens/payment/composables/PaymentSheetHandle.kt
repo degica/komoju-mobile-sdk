@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 internal fun PaymentSheetHandle(title: String, onCloseClicked: () -> Unit) {
     Box(modifier = Modifier.padding(top = 16.dp)) {
         Text(
-            title,
+            text = title,
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),

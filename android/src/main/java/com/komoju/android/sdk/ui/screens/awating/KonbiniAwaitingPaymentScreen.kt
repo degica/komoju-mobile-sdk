@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
@@ -24,11 +22,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -103,13 +101,9 @@ private fun PaymentStatus(payment: Payment, onPrimaryButtonClicked: () -> Unit, 
                 .weight(1f)
                 .padding(vertical = 16.dp),
         ) {
-            LazyColumn(
-                modifier = Modifier.background(Gray50, RoundedCornerShape(8.dp)),
-            ) {
-                item {
-                    InformationItem("Total Payment", displayPayableAmount)
-                }
-                items(payment.additionalInformation) {
+            Column(modifier = Modifier.background(Gray50, RoundedCornerShape(8.dp))) {
+                InformationItem(title = stringResource(R.string.komoju_total_payment), displayPayableAmount)
+                payment.additionalInformation.forEach {
                     HorizontalDivider(color = Gray200, modifier = Modifier.padding(horizontal = 16.dp))
                     InformationItem(it.first, it.second)
                 }
@@ -128,44 +122,16 @@ private fun PaymentStatus(payment: Payment, onPrimaryButtonClicked: () -> Unit, 
 }
 
 @Composable
-private fun InformationItem(key: String, value: String) {
+private fun InformationItem(title: String, description: String) {
     Row(Modifier.padding(16.dp)) {
-        Text(key, maxLines = 1, style = TextStyle(color = Gray700))
+        Text(title, maxLines = 1, style = TextStyle(color = Gray700))
         Spacer(modifier = Modifier.weight(1f))
         Text(
-            text = value,
+            text = description,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             style = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold),
         )
-    }
-}
-
-@Composable
-@Preview(showBackground = true)
-private fun InformationItemPreview() {
-    InformationItem("Total payment", "$200.00")
-}
-
-@Composable
-@Preview(showBackground = true, showSystemUi = true)
-private fun KonbiniPaymentStatusPreview() {
-    val konbini = Payment.Konbini(
-        status = PaymentStatus.AUTHORIZED,
-        redirectURL = "",
-        konbiniStoreKey = "lawson",
-        email = "",
-        instructionURL = "",
-        amount = "110",
-        currency = "JPY",
-        receiptNumber = "123456789",
-        confirmationCode = "123456",
-    )
-    PaymentStatus(
-        konbini,
-        {
-        },
-    ) {
     }
 }
 
@@ -178,44 +144,48 @@ private val Payment.icon
     }
 
 private val Payment.title
+    @Composable
     get() = when (status) {
-        PaymentStatus.COMPLETED -> "Payment successful"
-        PaymentStatus.FAILED -> "Payment failed"
-        else -> "Awaiting payment"
+        PaymentStatus.COMPLETED -> stringResource(R.string.komoju_payment_successful)
+        PaymentStatus.FAILED -> stringResource(R.string.komoju_payment_failed)
+        else -> stringResource(R.string.komoju_awaiting_payment)
     }
 
 private val Payment.description
+    @Composable
     get() = when {
-        status == PaymentStatus.COMPLETED -> "Your payment has been processed successfully."
-        status == PaymentStatus.FAILED -> "Your payment has failed."
+        status == PaymentStatus.COMPLETED -> stringResource(R.string.komoju_your_payment_has_been_processed_successfully)
+        status == PaymentStatus.FAILED -> stringResource(R.string.komoju_your_payment_has_failed)
         this is Payment.Konbini && status == PaymentStatus.AUTHORIZED ->
-            "You need to go to your local ${this.konbiniStoreKey}" +
-                " and make the payment to proceed."
-        else -> "Your payment is awaiting processing."
+            stringResource(R.string.komoju_awaiting_payment_instruction, this.konbiniStoreKey)
+        else -> stringResource(R.string.komoju_your_payment_is_awaiting_processing)
     }
 
 private val Payment.additionalInformation
+    @Composable
     get() = when {
-        this is Payment.Error -> listOf("Error" to code + message)
+        this is Payment.Error -> listOf(stringResource(R.string.komoju_error) to code + message)
         this is Payment.Konbini && status == PaymentStatus.AUTHORIZED -> listOfNotNull(
-            receiptNumber?.let { "Receipt Number" to it },
-            confirmationCode?.let { "Confirmation Code" to it },
+            receiptNumber?.let { stringResource(R.string.komoju_receipt_number) to it },
+            confirmationCode?.let { stringResource(R.string.komoju_confirmation_code) to it },
         )
 
         else -> emptyList()
     }
 
 private val Payment.primaryButtonText
+    @Composable
     get() = when {
-        status == PaymentStatus.COMPLETED -> "Done"
-        status == PaymentStatus.FAILED -> "Update Payment method"
-        this is Payment.Konbini && status == PaymentStatus.AUTHORIZED -> "View instructions"
-        else -> "Okay"
+        status == PaymentStatus.COMPLETED -> stringResource(R.string.komoju_done)
+        status == PaymentStatus.FAILED -> stringResource(R.string.komoju_update_payment_method)
+        this is Payment.Konbini && status == PaymentStatus.AUTHORIZED -> stringResource(R.string.komoju_view_instructions)
+        else -> stringResource(R.string.komoju_okay)
     }
 
 private val Payment.secondaryButtonText
+    @Composable
     get() = when {
-        status == PaymentStatus.FAILED -> "Have a question? Contact us"
-        this is Payment.Konbini && status == PaymentStatus.AUTHORIZED -> "I will do it later"
+        status == PaymentStatus.FAILED -> stringResource(R.string.komoju_have_a_question_contact_us)
+        this is Payment.Konbini && status == PaymentStatus.AUTHORIZED -> stringResource(R.string.komoju_i_will_do_it_later)
         else -> null
     }

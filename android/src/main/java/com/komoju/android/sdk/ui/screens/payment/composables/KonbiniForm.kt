@@ -13,17 +13,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.komoju.android.sdk.R
 import com.komoju.android.sdk.types.Currency
 import com.komoju.android.sdk.ui.composables.PrimaryButton
 import com.komoju.android.sdk.ui.screens.payment.CommonDisplayData
 import com.komoju.android.sdk.ui.screens.payment.KonbiniDisplayData
 import com.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
-import com.komoju.android.sdk.ui.theme.LocalI18nTexts
 import com.komoju.android.sdk.ui.theme.Red600
 import com.komoju.android.sdk.utils.AmountUtils
 import com.komoju.mobile.sdk.entities.PaymentMethod
@@ -46,18 +47,18 @@ internal fun KonbiniForm(
     Column {
         TextField(
             konbiniDisplayData.receiptName,
-            titleKey = "NAME_SHOWN_ON_RECEIPT",
-            placeholderKey = "FULL_NAME_ON_RECEIPT",
-            error = konbiniDisplayData.receiptNameError,
+            title = stringResource(R.string.komoju_name_shown_on_receipt),
+            placeholder = stringResource(R.string.komoju_full_name_on_receipt),
+            error = konbiniDisplayData.receiptNameErrorStringResource?.let { stringResource(it) },
             onValueChange = {
                 onKonbiniDisplayDataChange(konbiniDisplayData.copy(receiptName = it))
             },
         )
         TextField(
             commonDisplayData.email,
-            titleKey = "EMAIL",
-            placeholderKey = "EXAMPLE_EMAIL",
-            error = konbiniDisplayData.receiptEmailError,
+            title = stringResource(R.string.komoju_email),
+            placeholder = stringResource(R.string.komoju_enter_your_email_address),
+            error = konbiniDisplayData.receiptEmailErrorStringResource?.let { stringResource(it) },
             onValueChange = {
                 onCommonDisplayDataChange(commonDisplayData.copy(email = it))
             },
@@ -75,14 +76,14 @@ internal fun KonbiniForm(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
-            text = konbiniDisplayData.konbiniBrandNullError.orEmpty(),
+            text = konbiniDisplayData.konbiniBrandNullErrorStringResource?.let { stringResource(it) }.orEmpty(),
             style = TextStyle(fontSize = 16.sp, color = Red600),
         )
         PrimaryButton(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
-            text = "${LocalI18nTexts.current["PAY"]} $displayPayableAmount",
+            text = stringResource(R.string.komoju_pay, displayPayableAmount),
             onClick = onPayButtonClicked,
         )
     }
@@ -108,7 +109,6 @@ private fun KonbiniFormPreview() {
             KonbiniBrand.DailyYamazaki(key = "daily-yamazaki"),
             KonbiniBrand.SeicoMart(key = "seicomart"),
         ),
-        displayName = "Konbini",
         customerFee = 0,
     )
 

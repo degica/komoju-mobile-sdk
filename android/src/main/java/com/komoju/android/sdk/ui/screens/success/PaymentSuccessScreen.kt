@@ -17,6 +17,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -32,7 +33,6 @@ import com.komoju.android.sdk.navigation.paymentResultScreenModel
 import com.komoju.android.sdk.ui.composables.PrimaryButton
 import com.komoju.android.sdk.ui.screens.RouterEffect
 import com.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
-import com.komoju.android.sdk.ui.theme.LocalI18nTexts
 import com.komoju.android.sdk.utils.PreviewScreen
 
 internal class PaymentSuccessScreen : Screen {
@@ -46,7 +46,6 @@ internal class PaymentSuccessScreen : Screen {
 private fun Screen.PaymentSuccessScreenContent() {
     val screenModel = rememberScreenModel { PaymentSuccessScreenModel() }
     RouterEffect(screenModel.router.collectAsStateWithLifecycle(), screenModel::onRouteConsumed)
-    val i18nTexts = LocalI18nTexts.current
     val navigator = LocalNavigator.currentOrThrow
     val resultScreenModel = navigator.paymentResultScreenModel()
     LaunchedEffect(Unit) {
@@ -66,15 +65,15 @@ private fun Screen.PaymentSuccessScreenContent() {
         }
         Image(painterResource(R.drawable.komoju_ic_payment_status_completed), "status_icon")
         Spacer(Modifier.height(16.dp))
-        Text(i18nTexts["PAYMENT_SUCCESS"], fontSize = 24.sp, fontWeight = FontWeight.Bold)
+        Text(stringResource(R.string.komoju_payment_success), fontSize = 24.sp, fontWeight = FontWeight.Bold)
         Spacer(Modifier.height(16.dp))
-        Text(i18nTexts["ORDER_THANK_YOU_NOTE"])
+        Text(stringResource(R.string.komoju_thank_you_for_your_order))
         Spacer(Modifier.weight(1f))
         PrimaryButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            text = i18nTexts["BACK_TO_STORE"],
+            text = stringResource(R.string.komoju_back_to_store),
         ) {
             screenModel.onBackToStoreButtonClicked()
         }

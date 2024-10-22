@@ -10,11 +10,12 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.komoju.android.sdk.R
 import com.komoju.android.sdk.types.Currency
 import com.komoju.android.sdk.ui.composables.PrimaryButton
 import com.komoju.android.sdk.ui.screens.payment.NetCashDisplayData
-import com.komoju.android.sdk.ui.theme.LocalI18nTexts
 import com.komoju.android.sdk.utils.AmountUtils
 import com.komoju.mobile.sdk.entities.PaymentMethod
 
@@ -33,19 +34,19 @@ internal fun NetCashForm(
     Column {
         TextField(
             value = netCashDisplayData.netCashId,
-            titleKey = "NET_CASH_INPUT_LABEL",
-            placeholderKey = "NET_CASH_INPUT_PLACEHOLDER",
+            title = stringResource(R.string.komoju_net_cash_information),
+            placeholder = stringResource(R.string.komoju_net_cash_id),
             onValueChange = {
                 onNetCashDisplayDataChange(netCashDisplayData.copy(netCashId = it))
             },
-            error = netCashDisplayData.netCashError,
+            error = netCashDisplayData.netCashErrorStringResource?.let { stringResource(it) },
         )
         Spacer(modifier = Modifier.height(16.dp))
         PrimaryButton(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
-            text = "${LocalI18nTexts.current["PAY"]} $displayPayableAmount",
+            text = stringResource(R.string.komoju_pay, displayPayableAmount),
             onClick = onPayButtonClicked,
         )
     }

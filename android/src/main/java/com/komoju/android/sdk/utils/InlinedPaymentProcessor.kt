@@ -1,4 +1,4 @@
-package com.komoju.android.sdk.ui.screens.payment
+package com.komoju.android.sdk.utils
 
 import com.komoju.android.sdk.ui.screens.failed.Reason
 import com.komoju.mobile.sdk.entities.PaymentStatus

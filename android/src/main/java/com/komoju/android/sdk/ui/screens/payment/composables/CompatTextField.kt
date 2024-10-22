@@ -16,15 +16,14 @@ import androidx.compose.ui.text.intl.LocaleList
 import androidx.compose.ui.unit.dp
 import com.komoju.android.sdk.ui.theme.Gray200
 import com.komoju.android.sdk.ui.theme.LocalConfigurableTheme
-import com.komoju.android.sdk.ui.theme.LocalI18nTexts
 import com.komoju.android.sdk.ui.theme.Red600
 
 @Composable
 internal fun CompatTextField(
     modifier: Modifier = Modifier,
     value: String,
-    titleKey: String,
-    placeholderKey: String,
+    title: String,
+    placeholder: String,
     onValueChange: (String) -> Unit,
     error: String? = null,
     keyboardType: KeyboardType = KeyboardType.Unspecified,
@@ -40,10 +39,10 @@ internal fun CompatTextField(
         onValueChange = onValueChange,
         shape = RoundedCornerShape(8.dp),
         label = {
-            Text(text = LocalI18nTexts.current[titleKey])
+            Text(text = title)
         },
         placeholder = {
-            Text(text = LocalI18nTexts.current[placeholderKey])
+            Text(text = placeholder)
         },
         isError = error != null,
         singleLine = singleLine,

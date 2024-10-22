@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -68,6 +69,29 @@ private fun PaymentMethodComposable(paymentMethod: PaymentMethod, isSelected: Bo
     }
 }
 
+private val PaymentMethod.displayName
+    @Composable
+    get() = when (this) {
+        is PaymentMethod.BankTransfer -> stringResource(R.string.komoju_bank_transfer)
+        is PaymentMethod.BitCash -> stringResource(R.string.komoju_bitcash)
+        is PaymentMethod.CreditCard -> stringResource(R.string.komoju_credit_card)
+        is PaymentMethod.Konbini -> stringResource(R.string.komoju_konbini)
+        is PaymentMethod.NetCash -> stringResource(R.string.komoju_netcash)
+        is PaymentMethod.OffSitePayment -> when (type) {
+            OffSitePaymentType.AU_PAY -> stringResource(R.string.komoju_aupay)
+            OffSitePaymentType.ALI_PAY -> stringResource(R.string.komoju_alipay)
+            OffSitePaymentType.MER_PAY -> stringResource(R.string.komoju_merpay)
+            OffSitePaymentType.PAY_PAY -> stringResource(R.string.komoju_paypay)
+            OffSitePaymentType.RAKUTEN_PAY -> stringResource(R.string.komoju_rakuten_pay)
+            OffSitePaymentType.LINE_PAY -> stringResource(R.string.komoju_line_pay)
+            OffSitePaymentType.UNKNOWN -> stringResource(R.string.komoju_unknown)
+        }
+        is PaymentMethod.Other -> stringResource(R.string.komoju_other)
+        is PaymentMethod.Paidy -> stringResource(R.string.komoju_paidy)
+        is PaymentMethod.PayEasy -> stringResource(R.string.komoju_payeasy)
+        is PaymentMethod.WebMoney -> stringResource(R.string.komoju_webmoney)
+    }
+
 private val PaymentMethod.displayIcon
     get() = when (this) {
         is PaymentMethod.OffSitePayment -> when (type) {
@@ -79,6 +103,7 @@ private val PaymentMethod.displayIcon
             OffSitePaymentType.LINE_PAY -> R.drawable.komoju_ic_linepay
             OffSitePaymentType.UNKNOWN -> R.drawable.komoju_ic_credit_card
         }
+
         is PaymentMethod.BankTransfer -> R.drawable.komoju_ic_bank_transfer
         is PaymentMethod.BitCash -> R.drawable.komoju_ic_bitcash
         is PaymentMethod.CreditCard -> R.drawable.komoju_ic_credit_card
@@ -101,7 +126,6 @@ private fun PaymentMethodComposablePreview() {
             amount = "0",
             additionalFields = listOf(),
             brands = listOf(),
-            displayName = "Credit Card",
         ),
         PaymentMethod.Konbini(
             hashedGateway = "",
@@ -111,7 +135,6 @@ private fun PaymentMethodComposablePreview() {
             additionalFields = listOf(),
             customerFee = 0,
             brands = listOf(),
-            displayName = "Konbini",
         ),
         PaymentMethod.OffSitePayment(
             hashedGateway = "",
@@ -119,7 +142,6 @@ private fun PaymentMethodComposablePreview() {
             currency = "",
             amount = "0",
             additionalFields = listOf(),
-            displayName = "PayPay",
             type = OffSitePaymentType.PAY_PAY,
         ),
     )
