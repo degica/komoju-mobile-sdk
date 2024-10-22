@@ -28,7 +28,7 @@
     <string name="komoju_payment_options">お支払いオプション</string>
     <string name="komoju_pay">%1$s を支払う</string>
     <string name="komoju_cardholder_name">カード所有者名</string>
-    <string name="komoju_full_name_on_card">カードのフルネーム</string>
+    <string name="komoju_full_name_on_card">TARO YAMADA</string>
     <string name="komoju_card_number">カード番号</string>
     <string name="komoju_mm_yy">MM/YY</string>
     <string name="komoju_cvv">CVV</string>

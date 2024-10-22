@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -72,19 +73,19 @@ internal data class KomojuPaymentScreen(private val sdkConfiguration: KomojuSDK.
         Box {
             if (uiState.session != null) {
                 Column {
-                    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                        PaymentSheetHandle(
-                            stringResource(R.string.komoju_payment_options),
-                            onCloseClicked = {
-                                screenViewModel.onCloseClicked()
-                            },
-                        )
-                        PaymentMethodsRow(
-                            paymentMethods = uiState.session!!.paymentMethods,
-                            selectedPaymentMethod = uiState.selectedPaymentMethod,
-                            onSelected = screenViewModel::onNewPaymentMethodSelected,
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
+                    PaymentSheetHandle(
+                        stringResource(R.string.komoju_payment_options),
+                        onCloseClicked = {
+                            screenViewModel.onCloseClicked()
+                        },
+                    )
+                    PaymentMethodsRow(
+                        paymentMethods = uiState.session!!.paymentMethods,
+                        selectedPaymentMethod = uiState.selectedPaymentMethod,
+                        onSelected = screenViewModel::onNewPaymentMethodSelected,
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Box(modifier = Modifier.weight(1f).verticalScroll(rememberScrollState())) {
                         uiState.selectedPaymentMethod?.let { paymentMethod ->
                             PaymentMethodForm(
                                 paymentMethod = paymentMethod,
@@ -106,9 +107,8 @@ internal data class KomojuPaymentScreen(private val sdkConfiguration: KomojuSDK.
                             )
                         }
                     }
-                    Spacer(Modifier.weight(1f))
                     Image(
-                        modifier = Modifier.padding(16.dp),
+                        modifier = Modifier.fillMaxWidth().height(54.dp).padding(horizontal = 16.dp),
                         painter = painterResource(R.drawable.komoju_img_payment_footer),
                         contentDescription = "payment footer",
                     )
