@@ -27,9 +27,6 @@ dependencies {
 }
 ```
 
-### iOS
-// WIP
-
 Find Platform specific guide below.
 * [Android](https://doc.komoju.com/docs/android)
 
