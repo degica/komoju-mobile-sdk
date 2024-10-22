@@ -82,6 +82,11 @@ mavenPublishing {
                 id.set("AmniX")
                 name.set("Aman Tonk")
                 url.set("https://github.com/AmniX/")
+                email.set("atonk@degica.com")
+                organization.set("Degica Co., Ltd.")
+                organizationUrl.set("https://degica.jp/")
+                roles.set(listOf("Developer", "Maintainer", "Contributor"))
+                timezone.set("Asia/Tokyo")
             }
         }
         scm {
