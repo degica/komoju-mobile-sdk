@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 internal class VerifyPaymentScreenModel(private val config: KomojuSDK.Configuration) : RouterStateScreenModel<Unit>(Unit) {
 
-    private val komojuApi: KomojuRemoteApi = KomojuRemoteApi.create(config.publishableKey, config.language.languageCode)
+    private val komojuApi: KomojuRemoteApi = KomojuRemoteApi.create(config.publishableKey)
 
     fun process(type: KomojuPaymentRoute.ProcessPayment.ProcessType) {
         screenModelScope.launch {

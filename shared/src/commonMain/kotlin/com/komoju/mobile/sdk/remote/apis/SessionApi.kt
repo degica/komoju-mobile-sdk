@@ -3,7 +3,6 @@ package com.komoju.mobile.sdk.remote.apis
 import com.komoju.mobile.sdk.entities.Payment
 import com.komoju.mobile.sdk.entities.PaymentRequest
 import com.komoju.mobile.sdk.entities.Session
-import com.komoju.mobile.sdk.i18n.I18nTexts
 import com.komoju.mobile.sdk.remote.dtos.PayByTokenRequestDto
 import com.komoju.mobile.sdk.remote.dtos.PaymentErrorResponseDto
 import com.komoju.mobile.sdk.remote.dtos.PaymentRequestDto
@@ -28,11 +27,11 @@ interface SessionApi {
     suspend fun verifyPaymentBySessionID(id: String): Result<Payment>
 }
 
-internal class SessionApiImpl(private val language: I18nTexts, private val networkClient: HttpClient) : SessionApi {
+internal class SessionApiImpl(private val networkClient: HttpClient) : SessionApi {
     override suspend fun show(id: String): Result<Session> = runCatching {
         networkClient.get("v1/sessions/$id").body<SessionResponse>()
     }.mapCatching { response ->
-        SessionMapper.map(response, language)
+        SessionMapper.map(response)
     }
 
     override suspend fun pay(id: String, paymentRequest: PaymentRequest) = runCatching {

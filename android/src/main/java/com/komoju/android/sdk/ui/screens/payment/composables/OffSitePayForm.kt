@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,7 +27,6 @@ import androidx.compose.ui.unit.sp
 import com.komoju.android.sdk.R
 import com.komoju.android.sdk.ui.composables.PrimaryButton
 import com.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
-import com.komoju.android.sdk.ui.theme.LocalI18nTexts
 import com.komoju.mobile.sdk.entities.PaymentMethod
 import com.komoju.mobile.sdk.types.OffSitePaymentType
 
@@ -34,45 +34,45 @@ import com.komoju.mobile.sdk.types.OffSitePaymentType
 internal fun OffSitePayForm(paymentMethod: PaymentMethod.OffSitePayment, onPayButtonClicked: () -> Unit) {
     val titleKey = remember(paymentMethod) {
         when (paymentMethod.type) {
-            OffSitePaymentType.ALI_PAY -> "PAYMENT_VIA_ALI_PAY"
-            OffSitePaymentType.AU_PAY -> "PAYMENT_VIA_AU_PAY"
-            OffSitePaymentType.MER_PAY -> "PAYMENT_VIA_MER_PAY"
-            OffSitePaymentType.PAY_PAY -> "PAYMENT_VIA_PAY_PAY"
-            OffSitePaymentType.RAKUTEN_PAY -> "PAYMENT_VIA_RAKUTEN"
-            OffSitePaymentType.LINE_PAY -> "PAYMENT_VIA_LINE_PAY"
+            OffSitePaymentType.ALI_PAY -> R.string.komoju_payment_via_alipay
+            OffSitePaymentType.AU_PAY -> R.string.komoju_payment_via_au_pay
+            OffSitePaymentType.MER_PAY -> R.string.komoju_payment_via_mer_pay
+            OffSitePaymentType.PAY_PAY -> R.string.komoju_payment_via_paypay
+            OffSitePaymentType.RAKUTEN_PAY -> R.string.komoju_payment_via_rakuten_pay
+            OffSitePaymentType.LINE_PAY -> R.string.komoju_payment_via_line_pay
             else -> null
         }
     }
 
     val messageKey = remember(paymentMethod) {
         when (paymentMethod.type) {
-            OffSitePaymentType.ALI_PAY -> "ALI_PAY_REDIRECT_MESSAGE"
-            OffSitePaymentType.AU_PAY -> "AU_PAY_REDIRECT_MESSAGE"
-            OffSitePaymentType.MER_PAY -> "MER_PAY_REDIRECT_MESSAGE"
-            OffSitePaymentType.PAY_PAY -> "PAY_PAY_REDIRECT_MESSAGE"
-            OffSitePaymentType.RAKUTEN_PAY -> "RAKUTEN_REDIRECT_MESSAGE"
-            OffSitePaymentType.LINE_PAY -> "LINE_PAY_REDIRECT_MESSAGE"
+            OffSitePaymentType.ALI_PAY -> R.string.komoju_you_will_be_redirected_to_alipay
+            OffSitePaymentType.AU_PAY -> R.string.komoju_you_will_be_redirected_to_au_pay
+            OffSitePaymentType.MER_PAY -> R.string.komoju_you_will_be_redirected_to_mer_pay
+            OffSitePaymentType.PAY_PAY -> R.string.komoju_you_will_be_redirected_to_paypay
+            OffSitePaymentType.RAKUTEN_PAY -> R.string.komoju_you_will_be_redirected_to_rakuten
+            OffSitePaymentType.LINE_PAY -> R.string.komoju_you_will_be_redirected_to_line_pay
             else -> null
         }
     }
 
     val paymentButtonKey = remember(paymentMethod) {
         when (paymentMethod.type) {
-            OffSitePaymentType.ALI_PAY -> "CONTINUE_TO_ALI_PAY"
-            OffSitePaymentType.AU_PAY -> "CONTINUE_TO_AU_PAY"
-            OffSitePaymentType.MER_PAY -> "CONTINUE_TO_MER_PAY"
-            OffSitePaymentType.PAY_PAY -> "CONTINUE_TO_PAY_PAY"
-            OffSitePaymentType.RAKUTEN_PAY -> "CONTINUE_TO_RAKUTEN"
-            OffSitePaymentType.LINE_PAY -> "CONTINUE_TO_LINE_PAY"
+            OffSitePaymentType.ALI_PAY -> R.string.komoju_continue_to_alipay
+            OffSitePaymentType.AU_PAY -> R.string.komoju_continue_to_aupay
+            OffSitePaymentType.MER_PAY -> R.string.komoju_continue_to_merpay
+            OffSitePaymentType.PAY_PAY -> R.string.komoju_continue_to_paypay
+            OffSitePaymentType.RAKUTEN_PAY -> R.string.komoju_continue_to_rakuten
+            OffSitePaymentType.LINE_PAY -> R.string.komoju_continue_to_linepay
             else -> null
         }
     }
 
     if (titleKey != null && messageKey != null && paymentButtonKey != null) {
         Column(modifier = Modifier.padding(all = 16.dp)) {
-            Text(text = LocalI18nTexts.current[titleKey], style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 24.sp))
+            Text(text = stringResource(titleKey), style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 24.sp))
             Spacer(modifier = Modifier.height(12.dp))
-            Text(text = LocalI18nTexts.current[messageKey])
+            Text(text = stringResource(messageKey))
             Spacer(modifier = Modifier.height(24.dp))
             Row(
                 modifier = Modifier
@@ -86,10 +86,10 @@ internal fun OffSitePayForm(paymentMethod: PaymentMethod.OffSitePayment, onPayBu
                     modifier = Modifier.size(32.dp),
                 )
                 Spacer(modifier = Modifier.width(16.dp))
-                Text(text = LocalI18nTexts.current["LIGHT_BOX_CONTENT"])
+                Text(text = stringResource(R.string.komoju_webview_open_info))
             }
             Spacer(modifier = Modifier.height(32.dp))
-            PrimaryButton(LocalI18nTexts.current[paymentButtonKey], modifier = Modifier.fillMaxWidth(), onPayButtonClicked)
+            PrimaryButton(stringResource(paymentButtonKey), modifier = Modifier.fillMaxWidth(), onPayButtonClicked)
         }
     }
 }
@@ -100,7 +100,6 @@ private fun AppPayFormPreview() {
     KomojuMobileSdkTheme {
         OffSitePayForm(
             PaymentMethod.OffSitePayment(
-                displayName = "PayPay",
                 hashedGateway = "paypay",
                 exchangeRate = 1.0,
                 currency = "JPY",

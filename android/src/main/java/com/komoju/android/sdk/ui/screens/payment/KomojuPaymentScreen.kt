@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -39,7 +40,6 @@ import com.komoju.android.sdk.ui.screens.RouterEffect
 import com.komoju.android.sdk.ui.screens.payment.composables.PaymentMethodForm
 import com.komoju.android.sdk.ui.screens.payment.composables.PaymentMethodsRow
 import com.komoju.android.sdk.ui.screens.payment.composables.PaymentSheetHandle
-import com.komoju.android.sdk.ui.theme.LocalI18nTexts
 import com.komoju.android.sdk.utils.OffsiteCustomTabResultContract
 import com.komoju.mobile.sdk.entities.PaymentMethod
 import kotlinx.parcelize.Parcelize
@@ -74,7 +74,7 @@ internal data class KomojuPaymentScreen(private val sdkConfiguration: KomojuSDK.
                 Column {
                     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                         PaymentSheetHandle(
-                            LocalI18nTexts.current["PAYMENT_OPTIONS"],
+                            stringResource(R.string.komoju_payment_options),
                             onCloseClicked = {
                                 screenViewModel.onCloseClicked()
                             },

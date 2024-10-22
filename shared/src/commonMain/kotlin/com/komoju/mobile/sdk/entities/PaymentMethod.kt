@@ -3,7 +3,6 @@ package com.komoju.mobile.sdk.entities
 import com.komoju.mobile.sdk.types.OffSitePaymentType
 
 sealed interface PaymentMethod {
-    val displayName: String
     val hashedGateway: String
     val exchangeRate: Double
     val currency: String
@@ -11,7 +10,6 @@ sealed interface PaymentMethod {
     val additionalFields: List<String>
 
     data class CreditCard(
-        override val displayName: String,
         override val hashedGateway: String,
         override val exchangeRate: Double,
         override val currency: String,
@@ -21,7 +19,6 @@ sealed interface PaymentMethod {
     ) : PaymentMethod
 
     data class OffSitePayment(
-        override val displayName: String,
         override val hashedGateway: String,
         override val exchangeRate: Double,
         override val currency: String,
@@ -31,7 +28,6 @@ sealed interface PaymentMethod {
     ) : PaymentMethod
 
     data class BankTransfer(
-        override val displayName: String,
         override val hashedGateway: String,
         override val exchangeRate: Double,
         override val currency: String,
@@ -41,7 +37,6 @@ sealed interface PaymentMethod {
     ) : PaymentMethod
 
     data class PayEasy(
-        override val displayName: String,
         override val hashedGateway: String,
         override val exchangeRate: Double,
         override val currency: String,
@@ -51,7 +46,6 @@ sealed interface PaymentMethod {
     ) : PaymentMethod
 
     data class WebMoney(
-        override val displayName: String,
         override val hashedGateway: String,
         override val exchangeRate: Double,
         override val currency: String,
@@ -60,7 +54,6 @@ sealed interface PaymentMethod {
     ) : PaymentMethod
 
     data class BitCash(
-        override val displayName: String,
         override val hashedGateway: String,
         override val exchangeRate: Double,
         override val currency: String,
@@ -69,7 +62,6 @@ sealed interface PaymentMethod {
     ) : PaymentMethod
 
     data class NetCash(
-        override val displayName: String,
         override val hashedGateway: String,
         override val exchangeRate: Double,
         override val currency: String,
@@ -78,7 +70,6 @@ sealed interface PaymentMethod {
     ) : PaymentMethod
 
     data class Paidy(
-        override val displayName: String,
         override val hashedGateway: String,
         override val exchangeRate: Double,
         override val currency: String,
@@ -88,7 +79,6 @@ sealed interface PaymentMethod {
     ) : PaymentMethod
 
     data class Konbini(
-        override val displayName: String,
         override val hashedGateway: String,
         override val exchangeRate: Double,
         override val currency: String,
@@ -115,7 +105,6 @@ sealed interface PaymentMethod {
     }
 
     data class Other(
-        override val displayName: String,
         override val hashedGateway: String,
         override val exchangeRate: Double,
         override val currency: String,

@@ -28,22 +28,22 @@ internal data class CommonDisplayData(
     val firstNamePhonetic: String = String.empty,
     val email: String = String.empty,
     val phoneNumber: String = String.empty,
-    val fullNameError: String? = null,
-    val lastNameError: String? = null,
-    val firstNameError: String? = null,
-    val lastNamePhoneticError: String? = null,
-    val firstNamePhoneticError: String? = null,
-    val emailError: String? = null,
-    val phoneNumberError: String? = null,
+    val fullNameErrorStringResource: Int? = null,
+    val lastNameErrorStringResource: Int? = null,
+    val firstNameErrorStringResource: Int? = null,
+    val lastNamePhoneticErrorStringResource: Int? = null,
+    val firstNamePhoneticErrorStringResource: Int? = null,
+    val emailErrorStringResource: Int? = null,
+    val phoneNumberErrorStringResource: Int? = null,
 )
 
 internal data class CreditCardDisplayData(
     val fullNameOnCard: String = String.empty,
-    val fullNameOnCardError: String? = null,
+    val fullNameOnCardErrorStringResource: Int? = null,
     val creditCardNumber: String = String.empty,
     val creditCardExpiryDate: String = String.empty,
     val creditCardCvv: String = String.empty,
-    val creditCardError: String? = null,
+    val creditCardErrorStringResource: Int? = null,
     val canSaveCard: Boolean = false,
     val saveCard: Boolean = false,
     val inlinePaymentEnabled: Boolean = false,
@@ -52,21 +52,21 @@ internal data class CreditCardDisplayData(
 
 internal data class KonbiniDisplayData(
     val receiptName: String = String.empty,
-    val receiptNameError: String? = null,
-    val receiptEmailError: String? = null,
+    val receiptNameErrorStringResource: Int? = null,
+    val receiptEmailErrorStringResource: Int? = null,
     val selectedKonbiniBrand: PaymentMethod.Konbini.KonbiniBrand? = null,
-    val konbiniBrandNullError: String? = null,
+    val konbiniBrandNullErrorStringResource: Int? = null,
 )
 
-internal data class BitCashDisplayData(val bitCashId: String = String.empty, val bitCashError: String? = null)
+internal data class BitCashDisplayData(val bitCashId: String = String.empty, val bitCashErrorStringResource: Int? = null)
 
-internal data class NetCashDisplayData(val netCashId: String = String.empty, val netCashError: String? = null)
+internal data class NetCashDisplayData(val netCashId: String = String.empty, val netCashErrorStringResource: Int? = null)
 
-internal data class WebMoneyDisplayData(val prepaidNumber: String = String.empty, val prepaidNumberError: String? = null)
+internal data class WebMoneyDisplayData(val prepaidNumber: String = String.empty, val prepaidNumberErrorStringResource: Int? = null)
 
 internal data class PaidyDisplayData(
     val fullName: String = String.empty,
-    val fullNameError: String? = null,
+    val fullNameErrorStringResource: Int? = null,
     val phoneNumber: String = String.empty,
-    val phoneNumberError: String? = null,
+    val phoneNumberErrorStringResource: Int? = null,
 )

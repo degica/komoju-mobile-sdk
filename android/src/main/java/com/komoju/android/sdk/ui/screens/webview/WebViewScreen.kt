@@ -28,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,6 +39,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import com.kevinnzou.web.LoadingState
 import com.kevinnzou.web.WebView
 import com.kevinnzou.web.rememberWebViewState
+import com.komoju.android.sdk.R
 import com.komoju.android.sdk.ui.screens.KomojuPaymentRoute
 import com.komoju.android.sdk.ui.screens.RouterEffect
 import com.komoju.android.sdk.ui.theme.LocalConfigurableTheme
@@ -139,7 +141,7 @@ private fun Screen.WebViewScreenContent(route: KomojuPaymentRoute.WebView) {
                 },
                 confirmButton = {
                     Text(
-                        text = "Yes",
+                        text = stringResource(R.string.komoju_yes),
                         modifier = Modifier
                             .clickable {
                                 screenModel.onBackPressed()
@@ -149,7 +151,7 @@ private fun Screen.WebViewScreenContent(route: KomojuPaymentRoute.WebView) {
                 },
                 dismissButton = {
                     Text(
-                        text = "No",
+                        text = stringResource(R.string.komoju_no),
                         modifier = Modifier
                             .clickable {
                                 showBackPressDialog = false
@@ -158,10 +160,13 @@ private fun Screen.WebViewScreenContent(route: KomojuPaymentRoute.WebView) {
                     )
                 },
                 text = {
-                    Text(text = "Are you sure you want to cancel the payment?", modifier = Modifier.padding(8.dp))
+                    Text(
+                        text = stringResource(R.string.komoju_are_you_sure_you_want_to_cancel_the_payment),
+                        modifier = Modifier.padding(8.dp),
+                    )
                 },
                 title = {
-                    Text(text = "Cancel Payment?")
+                    Text(text = stringResource(R.string.komoju_cancel_payment))
                 },
             )
         }
