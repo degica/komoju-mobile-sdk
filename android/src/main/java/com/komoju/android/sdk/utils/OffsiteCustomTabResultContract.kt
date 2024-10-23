@@ -2,6 +2,7 @@ package com.komoju.android.sdk.utils
 
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NO_HISTORY
 import android.graphics.Color
 import android.net.Uri
 import androidx.activity.result.contract.ActivityResultContract
@@ -29,6 +30,7 @@ internal class OffsiteCustomTabResultContract : ActivityResultContract<String, I
             .setToolbarCornerRadiusDp(10)
         val customTabsIntent = builder.build().intent
         customTabsIntent.setData(Uri.parse(input))
+        customTabsIntent.flags += FLAG_ACTIVITY_NO_HISTORY
         return customTabsIntent
     }
 
