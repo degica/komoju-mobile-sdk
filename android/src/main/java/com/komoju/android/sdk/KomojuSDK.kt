@@ -39,7 +39,7 @@ object KomojuSDK {
          * Builder class for creating a [Configuration] instance.
          * Offers a flexible way to set optional parameters.
          */
-        class Builder(private var publishableKey: String, private var sessionId: String) {
+        class Builder(private val publishableKey: String, private val sessionId: String) {
             private var language: Language = Language.ENGLISH // Default language is English.
             private var currency: Currency = Currency.JPY // Default currency is Japanese Yen.
             private var isDebugMode: Boolean = false // Debug mode is off by default.
@@ -108,6 +108,7 @@ object KomojuSDK {
      * Property that provides the contract to start the payment process
      * and receive the result (success or failure).
      */
+    @JvmStatic
     val KomojuPaymentResultContract: ActivityResultContract<Configuration, PaymentResult> get() = KomojuStartPaymentForResultContract()
 }
 
