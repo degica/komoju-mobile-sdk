@@ -9,7 +9,7 @@
 
 This **Komoju Mobile SDK** allows you to seamlessly integrate secure and reliable payment experiences into your Naive Android and iOS app.
 
-[API DOCS](https://cautious-adventure-g6zje9v.pages.github.io/)
+[API DOCS](https://tech.degica.com/komoju-mobile-sdk//)
 
 ## Get Started
 
