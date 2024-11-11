@@ -31,9 +31,6 @@ import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import com.komoju.mobile.sdk.KomojuMobileSDKConfiguration
 import com.komoju.mobile.sdk.entities.PaymentMethod
-import com.komoju.mobile.sdk.shared.generated.resources.Res
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_img_payment_footer
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_payment_options
 import com.komoju.mobile.sdk.ui.composables.InlinedWebView
 import com.komoju.mobile.sdk.ui.composables.ThemedCircularProgressIndicator
 import com.komoju.mobile.sdk.ui.composables.launchCustomTab
@@ -41,6 +38,9 @@ import com.komoju.mobile.sdk.ui.screens.RouterEffect
 import com.komoju.mobile.sdk.ui.screens.payment.composables.PaymentMethodForm
 import com.komoju.mobile.sdk.ui.screens.payment.composables.PaymentMethodsRow
 import com.komoju.mobile.sdk.ui.screens.payment.composables.PaymentSheetHandle
+import komoju_mobile_sdk.shared.generated.resources.Res
+import komoju_mobile_sdk.shared.generated.resources.komoju_img_payment_footer
+import komoju_mobile_sdk.shared.generated.resources.komoju_payment_options
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 

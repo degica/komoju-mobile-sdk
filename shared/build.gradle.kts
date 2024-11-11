@@ -28,7 +28,6 @@ kotlin {
         iosSimulatorArm64(),
     ).forEach {
         it.binaries.framework {
-            linkerOpts("-make_mergeable")
             xcf.add(this)
             baseName = "komojuShared"
             isStatic = true
@@ -70,6 +69,7 @@ kotlin {
             implementation(libs.ktor.client.okhttp)
             implementation(libs.kotlinx.coroutines.android)
             implementation(libs.androidx.browser)
+            implementation(libs.androidx.compose.ui.tooling.preview)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
@@ -96,11 +96,15 @@ android {
     resourcePrefix = "komoju_"
 }
 
+dependencies {
+    debugImplementation(libs.androidx.ui.tooling)
+}
+
 compose {
     resources {
-        publicResClass = false
-        packageOfResClass = "com.komoju.mobile.sdk.shared.generated.resources"
-        generateResClass = auto
+        publicResClass = true
+        //packageOfResClass = "com.komoju.mobile.sdk.shared.generated.resources"
+        generateResClass = always
     }
 }
 

@@ -22,16 +22,16 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
-import com.komoju.mobile.sdk.shared.generated.resources.Res
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_back_to_store
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_credit_card_error
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_error_other
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_error_user_cancel
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_ic_payment_status_failed
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_payment_failed
 import com.komoju.mobile.sdk.ui.composables.PrimaryButton
 import com.komoju.mobile.sdk.ui.screens.KomojuPaymentRoute
 import com.komoju.mobile.sdk.ui.screens.RouterEffect
+import komoju_mobile_sdk.shared.generated.resources.Res
+import komoju_mobile_sdk.shared.generated.resources.komoju_back_to_store
+import komoju_mobile_sdk.shared.generated.resources.komoju_credit_card_error
+import komoju_mobile_sdk.shared.generated.resources.komoju_error_other
+import komoju_mobile_sdk.shared.generated.resources.komoju_error_user_cancel
+import komoju_mobile_sdk.shared.generated.resources.komoju_ic_payment_status_failed
+import komoju_mobile_sdk.shared.generated.resources.komoju_payment_failed
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 

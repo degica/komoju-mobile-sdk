@@ -30,11 +30,7 @@ import cafe.adriel.voyager.core.annotation.InternalVoyagerApi
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.internal.BackHandler
-import com.komoju.mobile.sdk.shared.generated.resources.Res
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_are_you_sure_you_want_to_cancel_the_payment
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_cancel_payment
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_no
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_yes
+import komoju_mobile_sdk.shared.generated.resources.Res
 import com.komoju.mobile.sdk.ui.screens.KomojuPaymentRoute
 import com.komoju.mobile.sdk.ui.screens.RouterEffect
 import com.komoju.mobile.sdk.ui.theme.LocalConfigurableTheme
@@ -43,6 +39,10 @@ import com.multiplatform.webview.web.LoadingState
 import com.multiplatform.webview.web.WebView
 import com.multiplatform.webview.web.rememberWebViewNavigator
 import com.multiplatform.webview.web.rememberWebViewState
+import komoju_mobile_sdk.shared.generated.resources.komoju_are_you_sure_you_want_to_cancel_the_payment
+import komoju_mobile_sdk.shared.generated.resources.komoju_cancel_payment
+import komoju_mobile_sdk.shared.generated.resources.komoju_no
+import komoju_mobile_sdk.shared.generated.resources.komoju_yes
 import org.jetbrains.compose.resources.stringResource
 
 internal data class WebViewScreen(val route: KomojuPaymentRoute.WebView) : Screen {

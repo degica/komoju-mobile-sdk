@@ -4,12 +4,12 @@ import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import com.komoju.mobile.sdk.shared.generated.resources.Res
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_font_inter_bold
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_font_inter_light
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_font_inter_medium
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_font_inter_regular
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_font_inter_semibold
+import komoju_mobile_sdk.shared.generated.resources.Res
+import komoju_mobile_sdk.shared.generated.resources.komoju_font_inter_bold
+import komoju_mobile_sdk.shared.generated.resources.komoju_font_inter_light
+import komoju_mobile_sdk.shared.generated.resources.komoju_font_inter_medium
+import komoju_mobile_sdk.shared.generated.resources.komoju_font_inter_regular
+import komoju_mobile_sdk.shared.generated.resources.komoju_font_inter_semibold
 import org.jetbrains.compose.resources.Font
 
 @Composable

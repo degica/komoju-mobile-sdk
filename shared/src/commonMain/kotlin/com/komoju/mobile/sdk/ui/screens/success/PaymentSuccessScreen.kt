@@ -26,13 +26,13 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.komoju.mobile.sdk.KomojuMobileSDKPaymentResult
 import com.komoju.mobile.sdk.navigation.paymentResultScreenModel
-import com.komoju.mobile.sdk.shared.generated.resources.Res
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_back_to_store
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_ic_payment_status_completed
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_payment_success
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_thank_you_for_your_order
+import komoju_mobile_sdk.shared.generated.resources.Res
 import com.komoju.mobile.sdk.ui.composables.PrimaryButton
 import com.komoju.mobile.sdk.ui.screens.RouterEffect
+import komoju_mobile_sdk.shared.generated.resources.komoju_back_to_store
+import komoju_mobile_sdk.shared.generated.resources.komoju_ic_payment_status_completed
+import komoju_mobile_sdk.shared.generated.resources.komoju_payment_success
+import komoju_mobile_sdk.shared.generated.resources.komoju_thank_you_for_your_order
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 

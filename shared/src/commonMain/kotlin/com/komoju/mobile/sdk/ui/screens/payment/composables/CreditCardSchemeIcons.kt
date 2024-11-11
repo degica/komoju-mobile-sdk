@@ -8,13 +8,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.komoju.mobile.sdk.shared.generated.resources.Res
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_ic_amex
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_ic_diners
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_ic_jcb
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_ic_master
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_ic_visa
+import komoju_mobile_sdk.shared.generated.resources.Res
 import com.komoju.mobile.sdk.utils.CardScheme
+import komoju_mobile_sdk.shared.generated.resources.komoju_ic_amex
+import komoju_mobile_sdk.shared.generated.resources.komoju_ic_diners
+import komoju_mobile_sdk.shared.generated.resources.komoju_ic_jcb
+import komoju_mobile_sdk.shared.generated.resources.komoju_ic_master
+import komoju_mobile_sdk.shared.generated.resources.komoju_ic_visa
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 

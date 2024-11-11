@@ -12,13 +12,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.komoju.mobile.sdk.entities.PaymentMethod
-import com.komoju.mobile.sdk.shared.generated.resources.Res
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_pay
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_prepaid_number
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_webmoney_information
+import komoju_mobile_sdk.shared.generated.resources.Res
 import com.komoju.mobile.sdk.ui.composables.PrimaryButton
 import com.komoju.mobile.sdk.ui.screens.payment.WebMoneyDisplayData
 import com.komoju.mobile.sdk.utils.AmountUtils
+import komoju_mobile_sdk.shared.generated.resources.komoju_pay
+import komoju_mobile_sdk.shared.generated.resources.komoju_prepaid_number
+import komoju_mobile_sdk.shared.generated.resources.komoju_webmoney_information
 import org.jetbrains.compose.resources.stringResource
 
 @Composable

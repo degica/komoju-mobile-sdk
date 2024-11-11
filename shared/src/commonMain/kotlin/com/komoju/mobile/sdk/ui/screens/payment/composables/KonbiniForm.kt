@@ -19,18 +19,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.komoju.mobile.sdk.entities.PaymentMethod
 import com.komoju.mobile.sdk.entities.PaymentMethod.Konbini.KonbiniBrand
-import com.komoju.mobile.sdk.shared.generated.resources.Res
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_email
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_enter_your_email_address
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_full_name_on_receipt
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_name_shown_on_receipt
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_pay
+import komoju_mobile_sdk.shared.generated.resources.Res
 import com.komoju.mobile.sdk.ui.composables.PrimaryButton
 import com.komoju.mobile.sdk.ui.screens.payment.CommonDisplayData
 import com.komoju.mobile.sdk.ui.screens.payment.KonbiniDisplayData
 import com.komoju.mobile.sdk.ui.theme.KomojuMobileSdkTheme
 import com.komoju.mobile.sdk.ui.theme.Red600
 import com.komoju.mobile.sdk.utils.AmountUtils
+import komoju_mobile_sdk.shared.generated.resources.komoju_email
+import komoju_mobile_sdk.shared.generated.resources.komoju_enter_your_email_address
+import komoju_mobile_sdk.shared.generated.resources.komoju_full_name_on_receipt
+import komoju_mobile_sdk.shared.generated.resources.komoju_name_shown_on_receipt
+import komoju_mobile_sdk.shared.generated.resources.komoju_pay
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 

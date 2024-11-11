@@ -13,16 +13,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.komoju.mobile.sdk.entities.PaymentMethod
-import com.komoju.mobile.sdk.shared.generated.resources.Res
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_enter_your_name
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_enter_your_phone_number
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_full_name
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_pay
-import com.komoju.mobile.sdk.shared.generated.resources.komoju_phone_number
+import komoju_mobile_sdk.shared.generated.resources.Res
 import com.komoju.mobile.sdk.ui.composables.PrimaryButton
 import com.komoju.mobile.sdk.ui.screens.payment.PaidyDisplayData
 import com.komoju.mobile.sdk.ui.theme.KomojuMobileSdkTheme
 import com.komoju.mobile.sdk.utils.AmountUtils
+import komoju_mobile_sdk.shared.generated.resources.komoju_enter_your_name
+import komoju_mobile_sdk.shared.generated.resources.komoju_enter_your_phone_number
+import komoju_mobile_sdk.shared.generated.resources.komoju_full_name
+import komoju_mobile_sdk.shared.generated.resources.komoju_pay
+import komoju_mobile_sdk.shared.generated.resources.komoju_phone_number
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
