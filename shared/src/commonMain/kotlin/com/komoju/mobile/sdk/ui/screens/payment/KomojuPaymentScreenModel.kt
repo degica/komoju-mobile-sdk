@@ -97,7 +97,10 @@ internal class KomojuPaymentScreenModel(private val config: KomojuMobileSDKConfi
     }
 
     fun onCreditCardDisplayDataChange(creditCardDisplayData: CreditCardDisplayData) {
-        if (creditCardDisplayData.creditCardNumber.length <= 16 && creditCardDisplayData.creditCardExpiryDate.length <= 4 && creditCardDisplayData.creditCardCvv.length <= 7) {
+        if (creditCardDisplayData.creditCardNumber.length <= 16 &&
+            creditCardDisplayData.creditCardExpiryDate.length <= 4 &&
+            creditCardDisplayData.creditCardCvv.length <= 7
+        ) {
             mutableState.update {
                 it.copy(
                     creditCardDisplayData = creditCardDisplayData.copy(
@@ -243,14 +246,18 @@ internal class KomojuPaymentScreenModel(private val config: KomojuMobileSDKConfi
             is Payment.Konbini -> mutableRouter.value = Router.Replace(KomojuPaymentRoute.KonbiniAwaitingPayment(config, payment = this))
             is Payment.OffSitePayment -> when (currentPlatform) {
                 // we will use WebView in IOS first.
-                Platform.IOS -> mutableRouter.value =
-                    Router.Replace(KomojuPaymentRoute.WebView(config, url = redirectURL, isJavaScriptEnabled = true, canComeBack = false))
+                Platform.IOS ->
+                    mutableRouter.value =
+                        Router.Replace(
+                            KomojuPaymentRoute.WebView(config, url = redirectURL, isJavaScriptEnabled = true, canComeBack = false),
+                        )
 
                 else -> _offSitePaymentURL.value = redirectURL
             }
 
-            is Payment.Completed -> mutableRouter.value =
-                Router.SetPaymentResultAndPop(KomojuMobileSDKPaymentResult(isSuccessFul = status == PaymentStatus.CAPTURED))
+            is Payment.Completed ->
+                mutableRouter.value =
+                    Router.SetPaymentResultAndPop(KomojuMobileSDKPaymentResult(isSuccessFul = status == PaymentStatus.CAPTURED))
 
             is Payment.BankTransfer -> mutableRouter.value = Router.ReplaceAll(KomojuPaymentRoute.WebView(config, url = instructionURL))
             is Payment.PayEasy -> mutableRouter.value = Router.ReplaceAll(KomojuPaymentRoute.WebView(config, url = instructionURL))
@@ -267,7 +274,7 @@ internal class KomojuPaymentScreenModel(private val config: KomojuMobileSDKConfi
         is PaymentMethod.WebMoney -> state.value.webMoneyDisplayData.validate()
         is PaymentMethod.BankTransfer,
         is PaymentMethod.PayEasy,
-            -> state.value.commonDisplayData.validate()
+        -> state.value.commonDisplayData.validate()
 
         is PaymentMethod.OffSitePayment -> true // No input required for Offsite payment
         else -> false
@@ -305,7 +312,12 @@ internal class KomojuPaymentScreenModel(private val config: KomojuMobileSDKConfi
                 ),
             )
         }
-        return lastNameError == null && firstNameError == null && firstNamePhoneticError == null && lastNamePhoneticError == null && emailError == null && phoneNumberError == null
+        return lastNameError == null &&
+            firstNameError == null &&
+            firstNamePhoneticError == null &&
+            lastNamePhoneticError == null &&
+            emailError == null &&
+            phoneNumberError == null
     }
 
     private fun WebMoneyDisplayData.validate(): Boolean {

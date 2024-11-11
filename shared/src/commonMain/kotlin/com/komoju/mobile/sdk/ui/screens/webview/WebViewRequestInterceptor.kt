@@ -6,7 +6,8 @@ import com.multiplatform.webview.request.WebRequest
 import com.multiplatform.webview.request.WebRequestInterceptResult
 import com.multiplatform.webview.web.WebViewNavigator
 
-internal class WebViewRequestInterceptor(private val appScheme: String, private val onDeeplinkCaptured: (String) -> Unit) : RequestInterceptor {
+internal class WebViewRequestInterceptor(private val appScheme: String, private val onDeeplinkCaptured: (String) -> Unit) :
+    RequestInterceptor {
     override fun onInterceptUrlRequest(request: WebRequest, navigator: WebViewNavigator): WebRequestInterceptResult =
         request.checkAndOpen(appScheme, onDeeplinkCaptured)
 

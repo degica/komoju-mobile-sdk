@@ -15,24 +15,22 @@ internal val LocalViewController = compositionLocalOf<() -> UIViewController> {
     error("LocalViewController not provided")
 }
 
-fun MainViewController(
-    configuration: KomojuMobileSDKConfiguration,
-    onDismiss: (KomojuMobileSDKPaymentResult) -> Unit
-) = extendedComposeViewController(configuration, onDismiss)
+fun MainViewController(configuration: KomojuMobileSDKConfiguration, onDismiss: (KomojuMobileSDKPaymentResult) -> Unit) =
+    extendedComposeViewController(configuration, onDismiss)
 
 @OptIn(ExperimentalComposeApi::class)
 private fun extendedComposeViewController(
     configuration: KomojuMobileSDKConfiguration,
     onDismiss: (KomojuMobileSDKPaymentResult) -> Unit,
 ): UIViewController {
-    var platformResultScreenModel : PaymentResultScreenModel? = null
+    var platformResultScreenModel: PaymentResultScreenModel? = null
     var localViewController: UIViewController? = null
     return ComposeUIViewController(
         configure = {
             onFocusBehavior = OnFocusBehavior.FocusableAboveKeyboard
             opaque = false
             delegate = object : ComposeUIViewControllerDelegate {
-                override fun viewWillDisappear(animated: Boolean){
+                override fun viewWillDisappear(animated: Boolean) {
                     super.viewWillDisappear(animated)
                     onDismiss(platformResultScreenModel?.result ?: KomojuMobileSDKPaymentResult(isSuccessFul = false))
                 }
@@ -46,7 +44,6 @@ private fun extendedComposeViewController(
                         platformResultScreenModel = navigator.paymentResultScreenModel()
                     },
                 )
-
             }
         },
     ).also {

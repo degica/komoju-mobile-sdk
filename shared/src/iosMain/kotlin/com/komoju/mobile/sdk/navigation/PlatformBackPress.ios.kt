@@ -21,7 +21,6 @@ internal actual class PlatformBackPressDispatcher {
     }
 }
 
-
 @Composable
 internal actual fun rememberPlatformBackPressDispatcher(): PlatformBackPressDispatcher = remember {
     PlatformBackPressDispatcher()

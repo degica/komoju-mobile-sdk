@@ -6,7 +6,7 @@ import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.navigator.Navigator
 import com.komoju.mobile.sdk.KomojuMobileSDKPaymentResult
 
-class PaymentResultScreenModel internal constructor(): ScreenModel {
+class PaymentResultScreenModel internal constructor() : ScreenModel {
     var result: KomojuMobileSDKPaymentResult? = null
         private set
 

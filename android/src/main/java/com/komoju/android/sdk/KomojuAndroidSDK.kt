@@ -9,12 +9,12 @@ import com.komoju.android.sdk.types.Language
 import com.komoju.mobile.sdk.KomojuMobileSDKConfiguration
 import com.komoju.mobile.sdk.KomojuMobileSDKPaymentResult
 import com.komoju.mobile.sdk.canProcessPayment
+import com.komoju.mobile.sdk.ui.theme.ConfigurableTheme as CoreConfigurableTheme
 import com.komoju.mobile.sdk.ui.theme.DefaultConfigurableTheme
 import com.komoju.mobile.sdk.ui.theme.toColor
-import kotlinx.parcelize.Parcelize
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
-import com.komoju.mobile.sdk.ui.theme.ConfigurableTheme as CoreConfigurableTheme
+import kotlinx.parcelize.Parcelize
 
 object KomojuAndroidSDK {
     val activityResultContract: ActivityResultContract<Configuration, PaymentResult>
@@ -124,14 +124,12 @@ internal fun KomojuAndroidSDK.ConfigurableTheme.toKomojuConfigurableTheme(): Cor
     primaryShapeCornerRadiusInDp = this.primaryShapeCornerRadiusInDp,
 )
 
-internal fun CoreConfigurableTheme.toAndroidSDKConfigurableTheme(): KomojuAndroidSDK.ConfigurableTheme =
-    KomojuAndroidSDK.ConfigurableTheme(
-        primaryColorInt = primaryColor.toColor().toArgb(),
-        primaryContentColorInt = primaryContentColor.toColor().toArgb(),
-        loaderColorInt = loaderColor.toColor().toArgb(),
-        primaryShapeCornerRadiusInDp = primaryShapeCornerRadiusInDp,
-    )
-
+internal fun CoreConfigurableTheme.toAndroidSDKConfigurableTheme(): KomojuAndroidSDK.ConfigurableTheme = KomojuAndroidSDK.ConfigurableTheme(
+    primaryColorInt = primaryColor.toColor().toArgb(),
+    primaryContentColorInt = primaryContentColor.toColor().toArgb(),
+    loaderColorInt = loaderColor.toColor().toArgb(),
+    primaryShapeCornerRadiusInDp = primaryShapeCornerRadiusInDp,
+)
 
 /**
  * Extension function to check if the current configuration is valid for processing a payment.
@@ -169,8 +167,7 @@ internal fun KomojuAndroidSDK.Configuration.toMobileConfiguration(): KomojuMobil
     appScheme = this.appScheme,
 )
 
-
 internal fun KomojuMobileSDKPaymentResult.toParcelable(): KomojuAndroidSDK.PaymentResult = KomojuAndroidSDK.PaymentResult(this.isSuccessFul)
 
-internal fun KomojuAndroidSDK.PaymentResult.toPaymentResult(): KomojuMobileSDKPaymentResult = KomojuMobileSDKPaymentResult(this.isSuccessFul)
-
+internal fun KomojuAndroidSDK.PaymentResult.toPaymentResult(): KomojuMobileSDKPaymentResult =
+    KomojuMobileSDKPaymentResult(this.isSuccessFul)

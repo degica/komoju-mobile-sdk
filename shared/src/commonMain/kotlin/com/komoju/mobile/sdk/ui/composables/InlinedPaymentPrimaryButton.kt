@@ -30,10 +30,10 @@ import androidx.compose.ui.unit.dp
 import com.komoju.mobile.sdk.ui.theme.KomojuMobileSdkTheme
 import com.komoju.mobile.sdk.ui.theme.LocalConfigurableTheme
 import com.komoju.mobile.sdk.ui.theme.toColor
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import kotlin.time.Duration.Companion.seconds
 
 @Composable
 internal fun InlinedPaymentPrimaryButton(
