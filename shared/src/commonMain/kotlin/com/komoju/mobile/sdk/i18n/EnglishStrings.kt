@@ -12,7 +12,7 @@ object EnglishStrings : I18nStrings {
         I18nStringKey.awaiting_payment -> "Awaiting payment"
         I18nStringKey.your_payment_has_been_processed_successfully -> "Your payment has been processed successfully."
         I18nStringKey.your_payment_has_failed -> "Your payment has failed."
-        I18nStringKey.awaiting_payment_instruction -> "You need to go to your local %1s and make the payment to proceed."
+        I18nStringKey.awaiting_payment_instruction -> "You need to go to your local %s and make the payment to proceed."
         I18nStringKey.your_payment_is_awaiting_processing -> "Your payment is awaiting processing."
         I18nStringKey.error -> "Error"
         I18nStringKey.receipt_number -> "Receipt Number"
@@ -25,7 +25,7 @@ object EnglishStrings : I18nStrings {
         I18nStringKey.i_will_do_it_later -> "I will do it later"
         I18nStringKey.error_user_cancel ->
             "We noticed that you’ve canceled the payment process. " +
-                "If this was a mistake you cantry again to complete your purchase."
+                "If this was a mistake you can try again to complete your purchase."
         I18nStringKey.error_other ->
             "We attempted to process your payment but something went wrong. " +
                 "Please update your payment method below to continue."
@@ -34,7 +34,7 @@ object EnglishStrings : I18nStrings {
                 "Please update your payment method below to continue"
         I18nStringKey.back_to_store -> "Back to store"
         I18nStringKey.payment_options -> "Payment Options"
-        I18nStringKey.pay -> "Pay %1s"
+        I18nStringKey.pay -> "Pay %s"
         I18nStringKey.cardholder_name -> "Cardholder name"
         I18nStringKey.full_name_on_card -> "Full name on card"
         I18nStringKey.card_number -> "Card Number"
