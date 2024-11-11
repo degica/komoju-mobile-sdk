@@ -13,17 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.komoju.mobile.sdk.entities.PaymentMethod
-import komoju_mobile_sdk.shared.generated.resources.Res
+import com.komoju.mobile.sdk.i18n.I18nStringKey
+import com.komoju.mobile.sdk.i18n.i18nStringResource
 import com.komoju.mobile.sdk.ui.composables.PrimaryButton
 import com.komoju.mobile.sdk.ui.screens.payment.PaidyDisplayData
 import com.komoju.mobile.sdk.ui.theme.KomojuMobileSdkTheme
 import com.komoju.mobile.sdk.utils.AmountUtils
-import komoju_mobile_sdk.shared.generated.resources.komoju_enter_your_name
-import komoju_mobile_sdk.shared.generated.resources.komoju_enter_your_phone_number
-import komoju_mobile_sdk.shared.generated.resources.komoju_full_name
-import komoju_mobile_sdk.shared.generated.resources.komoju_pay
-import komoju_mobile_sdk.shared.generated.resources.komoju_phone_number
-import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -41,28 +36,28 @@ internal fun PaidyForm(
     Column {
         TextField(
             value = paidyDisplayData.fullName,
-            title = stringResource(Res.string.komoju_full_name),
-            placeholder = stringResource(Res.string.komoju_enter_your_name),
+            title = i18nStringResource(I18nStringKey.full_name),
+            placeholder = i18nStringResource(I18nStringKey.enter_your_name),
             onValueChange = {
                 onPaidyDisplayDataChange(paidyDisplayData.copy(fullName = it))
             },
-            error = paidyDisplayData.fullNameErrorStringResource?.let { stringResource(it) },
+            error = paidyDisplayData.fullNameErrorI18nStringKey?.let { i18nStringResource(it) },
         )
         TextField(
             value = paidyDisplayData.phoneNumber,
-            title = stringResource(Res.string.komoju_phone_number),
-            placeholder = stringResource(Res.string.komoju_enter_your_phone_number),
+            title = i18nStringResource(I18nStringKey.phone_number),
+            placeholder = i18nStringResource(I18nStringKey.enter_your_phone_number),
             keyboardType = KeyboardType.Phone,
             onValueChange = {
                 onPaidyDisplayDataChange(paidyDisplayData.copy(phoneNumber = it))
             },
-            error = paidyDisplayData.phoneNumberErrorStringResource?.let { stringResource(it) },
+            error = paidyDisplayData.phoneNumberErrorI18nStringKey?.let { i18nStringResource(it) },
         )
         PrimaryButton(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
-            text = stringResource(Res.string.komoju_pay, displayPayableAmount),
+            text = i18nStringResource(I18nStringKey.pay, displayPayableAmount),
             onClick = onPayButtonClicked,
         )
     }

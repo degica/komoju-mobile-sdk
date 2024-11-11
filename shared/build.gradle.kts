@@ -102,9 +102,7 @@ dependencies {
 
 compose {
     resources {
-        publicResClass = true
-        //packageOfResClass = "com.komoju.mobile.sdk.shared.generated.resources"
-        generateResClass = always
+        generateResClass = never
     }
 }
 

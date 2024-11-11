@@ -17,46 +17,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.komoju.mobile.sdk.entities.PaymentMethod
-import komoju_mobile_sdk.shared.generated.resources.Res
+import com.komoju.mobile.sdk.i18n.I18nStringKey
+import com.komoju.mobile.sdk.i18n.i18nStringResource
 import com.komoju.mobile.sdk.types.OffSitePaymentType
+import com.komoju.mobile.sdk.ui.icon.Alipay
+import com.komoju.mobile.sdk.ui.icon.AuPay
+import com.komoju.mobile.sdk.ui.icon.BankTransfer
+import com.komoju.mobile.sdk.ui.icon.Bitcash
+import com.komoju.mobile.sdk.ui.icon.CreditCard
+import com.komoju.mobile.sdk.ui.icon.KomojuIcon
+import com.komoju.mobile.sdk.ui.icon.Konbini
+import com.komoju.mobile.sdk.ui.icon.Linepay
+import com.komoju.mobile.sdk.ui.icon.Merpay
+import com.komoju.mobile.sdk.ui.icon.NetCash
+import com.komoju.mobile.sdk.ui.icon.Paidy
+import com.komoju.mobile.sdk.ui.icon.PayEasy
+import com.komoju.mobile.sdk.ui.icon.Paypay
+import com.komoju.mobile.sdk.ui.icon.RakutenPay
+import com.komoju.mobile.sdk.ui.icon.WebMoney
 import com.komoju.mobile.sdk.ui.theme.Gray200
 import com.komoju.mobile.sdk.ui.theme.KomojuDarkGreen
-import komoju_mobile_sdk.shared.generated.resources.komoju_alipay
-import komoju_mobile_sdk.shared.generated.resources.komoju_aupay
-import komoju_mobile_sdk.shared.generated.resources.komoju_bank_transfer
-import komoju_mobile_sdk.shared.generated.resources.komoju_bitcash
-import komoju_mobile_sdk.shared.generated.resources.komoju_credit_card
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_alipay
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_au_pay
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_bank_transfer
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_bitcash
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_credit_card
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_konbini
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_linepay
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_merpay
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_net_cash
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_paidy
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_pay_easy
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_paypay
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_rakuten_pay
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_web_money
-import komoju_mobile_sdk.shared.generated.resources.komoju_konbini
-import komoju_mobile_sdk.shared.generated.resources.komoju_line_pay
-import komoju_mobile_sdk.shared.generated.resources.komoju_merpay
-import komoju_mobile_sdk.shared.generated.resources.komoju_netcash
-import komoju_mobile_sdk.shared.generated.resources.komoju_other
-import komoju_mobile_sdk.shared.generated.resources.komoju_paidy
-import komoju_mobile_sdk.shared.generated.resources.komoju_payeasy
-import komoju_mobile_sdk.shared.generated.resources.komoju_paypay
-import komoju_mobile_sdk.shared.generated.resources.komoju_rakuten_pay
-import komoju_mobile_sdk.shared.generated.resources.komoju_unknown
-import komoju_mobile_sdk.shared.generated.resources.komoju_webmoney
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -90,7 +75,7 @@ private fun PaymentMethodComposable(paymentMethod: PaymentMethod, isSelected: Bo
             .padding(start = 12.dp, end = 12.dp, top = 12.dp, bottom = 8.dp),
     ) {
         Image(
-            painter = painterResource(paymentMethod.displayIcon),
+            painter = rememberVectorPainter(paymentMethod.displayIcon),
             contentDescription = "${paymentMethod.displayName} icon",
             modifier = Modifier.height(32.dp),
         )
@@ -102,47 +87,47 @@ private fun PaymentMethodComposable(paymentMethod: PaymentMethod, isSelected: Bo
 private val PaymentMethod.displayName
     @Composable
     get() = when (this) {
-        is PaymentMethod.BankTransfer -> stringResource(Res.string.komoju_bank_transfer)
-        is PaymentMethod.BitCash -> stringResource(Res.string.komoju_bitcash)
-        is PaymentMethod.CreditCard -> stringResource(Res.string.komoju_credit_card)
-        is PaymentMethod.Konbini -> stringResource(Res.string.komoju_konbini)
-        is PaymentMethod.NetCash -> stringResource(Res.string.komoju_netcash)
+        is PaymentMethod.BankTransfer -> i18nStringResource(I18nStringKey.bank_transfer)
+        is PaymentMethod.BitCash -> i18nStringResource(I18nStringKey.bitcash)
+        is PaymentMethod.CreditCard -> i18nStringResource(I18nStringKey.credit_card)
+        is PaymentMethod.Konbini -> i18nStringResource(I18nStringKey.konbini)
+        is PaymentMethod.NetCash -> i18nStringResource(I18nStringKey.netcash)
         is PaymentMethod.OffSitePayment -> when (type) {
-            OffSitePaymentType.AU_PAY -> stringResource(Res.string.komoju_aupay)
-            OffSitePaymentType.ALI_PAY -> stringResource(Res.string.komoju_alipay)
-            OffSitePaymentType.MER_PAY -> stringResource(Res.string.komoju_merpay)
-            OffSitePaymentType.PAY_PAY -> stringResource(Res.string.komoju_paypay)
-            OffSitePaymentType.RAKUTEN_PAY -> stringResource(Res.string.komoju_rakuten_pay)
-            OffSitePaymentType.LINE_PAY -> stringResource(Res.string.komoju_line_pay)
-            OffSitePaymentType.UNKNOWN -> stringResource(Res.string.komoju_unknown)
+            OffSitePaymentType.AU_PAY -> i18nStringResource(I18nStringKey.aupay)
+            OffSitePaymentType.ALI_PAY -> i18nStringResource(I18nStringKey.alipay)
+            OffSitePaymentType.MER_PAY -> i18nStringResource(I18nStringKey.merpay)
+            OffSitePaymentType.PAY_PAY -> i18nStringResource(I18nStringKey.paypay)
+            OffSitePaymentType.RAKUTEN_PAY -> i18nStringResource(I18nStringKey.rakuten_pay)
+            OffSitePaymentType.LINE_PAY -> i18nStringResource(I18nStringKey.line_pay)
+            OffSitePaymentType.UNKNOWN -> i18nStringResource(I18nStringKey.unknown)
         }
-        is PaymentMethod.Other -> stringResource(Res.string.komoju_other)
-        is PaymentMethod.Paidy -> stringResource(Res.string.komoju_paidy)
-        is PaymentMethod.PayEasy -> stringResource(Res.string.komoju_payeasy)
-        is PaymentMethod.WebMoney -> stringResource(Res.string.komoju_webmoney)
+        is PaymentMethod.Other -> i18nStringResource(I18nStringKey.other)
+        is PaymentMethod.Paidy -> i18nStringResource(I18nStringKey.paidy)
+        is PaymentMethod.PayEasy -> i18nStringResource(I18nStringKey.payeasy)
+        is PaymentMethod.WebMoney -> i18nStringResource(I18nStringKey.webmoney)
     }
 
 private val PaymentMethod.displayIcon
     get() = when (this) {
         is PaymentMethod.OffSitePayment -> when (type) {
-            OffSitePaymentType.ALI_PAY -> Res.drawable.komoju_ic_alipay
-            OffSitePaymentType.AU_PAY -> Res.drawable.komoju_ic_au_pay
-            OffSitePaymentType.MER_PAY -> Res.drawable.komoju_ic_merpay
-            OffSitePaymentType.PAY_PAY -> Res.drawable.komoju_ic_paypay
-            OffSitePaymentType.RAKUTEN_PAY -> Res.drawable.komoju_ic_rakuten_pay
-            OffSitePaymentType.LINE_PAY -> Res.drawable.komoju_ic_linepay
-            OffSitePaymentType.UNKNOWN -> Res.drawable.komoju_ic_credit_card
+            OffSitePaymentType.ALI_PAY -> KomojuIcon.Alipay
+            OffSitePaymentType.AU_PAY -> KomojuIcon.AuPay
+            OffSitePaymentType.MER_PAY -> KomojuIcon.Merpay
+            OffSitePaymentType.PAY_PAY -> KomojuIcon.Paypay
+            OffSitePaymentType.RAKUTEN_PAY -> KomojuIcon.RakutenPay
+            OffSitePaymentType.LINE_PAY -> KomojuIcon.Linepay
+            OffSitePaymentType.UNKNOWN -> KomojuIcon.CreditCard
         }
 
-        is PaymentMethod.BankTransfer -> Res.drawable.komoju_ic_bank_transfer
-        is PaymentMethod.BitCash -> Res.drawable.komoju_ic_bitcash
-        is PaymentMethod.CreditCard -> Res.drawable.komoju_ic_credit_card
-        is PaymentMethod.Konbini -> Res.drawable.komoju_ic_konbini
-        is PaymentMethod.NetCash -> Res.drawable.komoju_ic_net_cash
-        is PaymentMethod.Paidy -> Res.drawable.komoju_ic_paidy
-        is PaymentMethod.PayEasy -> Res.drawable.komoju_ic_pay_easy
-        is PaymentMethod.WebMoney -> Res.drawable.komoju_ic_web_money
-        is PaymentMethod.Other -> Res.drawable.komoju_ic_credit_card
+        is PaymentMethod.BankTransfer -> KomojuIcon.BankTransfer
+        is PaymentMethod.BitCash -> KomojuIcon.Bitcash
+        is PaymentMethod.CreditCard -> KomojuIcon.CreditCard
+        is PaymentMethod.Konbini -> KomojuIcon.Konbini
+        is PaymentMethod.NetCash -> KomojuIcon.NetCash
+        is PaymentMethod.Paidy -> KomojuIcon.Paidy
+        is PaymentMethod.PayEasy -> KomojuIcon.PayEasy
+        is PaymentMethod.WebMoney -> KomojuIcon.WebMoney
+        is PaymentMethod.Other -> KomojuIcon.CreditCard
     }
 
 @Composable

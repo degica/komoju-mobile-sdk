@@ -30,7 +30,8 @@ import cafe.adriel.voyager.core.annotation.InternalVoyagerApi
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.internal.BackHandler
-import komoju_mobile_sdk.shared.generated.resources.Res
+import com.komoju.mobile.sdk.i18n.I18nStringKey
+import com.komoju.mobile.sdk.i18n.i18nStringResource
 import com.komoju.mobile.sdk.ui.screens.KomojuPaymentRoute
 import com.komoju.mobile.sdk.ui.screens.RouterEffect
 import com.komoju.mobile.sdk.ui.theme.LocalConfigurableTheme
@@ -39,11 +40,6 @@ import com.multiplatform.webview.web.LoadingState
 import com.multiplatform.webview.web.WebView
 import com.multiplatform.webview.web.rememberWebViewNavigator
 import com.multiplatform.webview.web.rememberWebViewState
-import komoju_mobile_sdk.shared.generated.resources.komoju_are_you_sure_you_want_to_cancel_the_payment
-import komoju_mobile_sdk.shared.generated.resources.komoju_cancel_payment
-import komoju_mobile_sdk.shared.generated.resources.komoju_no
-import komoju_mobile_sdk.shared.generated.resources.komoju_yes
-import org.jetbrains.compose.resources.stringResource
 
 internal data class WebViewScreen(val route: KomojuPaymentRoute.WebView) : Screen {
     @Composable
@@ -131,7 +127,7 @@ private fun Screen.WebViewScreenContent(route: KomojuPaymentRoute.WebView) {
                 },
                 confirmButton = {
                     Text(
-                        text = stringResource(Res.string.komoju_yes),
+                        text = i18nStringResource(I18nStringKey.yes),
                         modifier = Modifier
                             .clickable {
                                 screenModel.onBackPressed()
@@ -141,7 +137,7 @@ private fun Screen.WebViewScreenContent(route: KomojuPaymentRoute.WebView) {
                 },
                 dismissButton = {
                     Text(
-                        text = stringResource(Res.string.komoju_no),
+                        text = i18nStringResource(I18nStringKey.no),
                         modifier = Modifier
                             .clickable {
                                 showBackPressDialog = false
@@ -151,12 +147,12 @@ private fun Screen.WebViewScreenContent(route: KomojuPaymentRoute.WebView) {
                 },
                 text = {
                     Text(
-                        text = stringResource(Res.string.komoju_are_you_sure_you_want_to_cancel_the_payment),
+                        text = i18nStringResource(I18nStringKey.are_you_sure_you_want_to_cancel_the_payment),
                         modifier = Modifier.padding(8.dp),
                     )
                 },
                 title = {
-                    Text(text = stringResource(Res.string.komoju_cancel_payment))
+                    Text(text = i18nStringResource(I18nStringKey.cancel_payment))
                 },
             )
         }

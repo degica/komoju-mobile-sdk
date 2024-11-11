@@ -32,39 +32,22 @@ import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import com.komoju.mobile.sdk.entities.Payment
 import com.komoju.mobile.sdk.entities.PaymentStatus
+import com.komoju.mobile.sdk.i18n.I18nStringKey
+import com.komoju.mobile.sdk.i18n.i18nStringResource
 import com.komoju.mobile.sdk.ui.composables.PrimaryButton
 import com.komoju.mobile.sdk.ui.composables.TextButton
 import com.komoju.mobile.sdk.ui.composables.ThemedCircularProgressIndicator
+import com.komoju.mobile.sdk.ui.icon.KomojuIcon
+import com.komoju.mobile.sdk.ui.icon.PaymentStatusCompleted
+import com.komoju.mobile.sdk.ui.icon.PaymentStatusFailed
+import com.komoju.mobile.sdk.ui.icon.PaymentStatusKonbiniPending
+import com.komoju.mobile.sdk.ui.icon.PaymentStatusPending
 import com.komoju.mobile.sdk.ui.screens.KomojuPaymentRoute
 import com.komoju.mobile.sdk.ui.screens.RouterEffect
 import com.komoju.mobile.sdk.ui.theme.Gray200
 import com.komoju.mobile.sdk.ui.theme.Gray50
 import com.komoju.mobile.sdk.ui.theme.Gray700
 import com.komoju.mobile.sdk.utils.AmountUtils
-import komoju_mobile_sdk.shared.generated.resources.Res
-import komoju_mobile_sdk.shared.generated.resources.komoju_awaiting_payment
-import komoju_mobile_sdk.shared.generated.resources.komoju_awaiting_payment_instruction
-import komoju_mobile_sdk.shared.generated.resources.komoju_confirmation_code
-import komoju_mobile_sdk.shared.generated.resources.komoju_done
-import komoju_mobile_sdk.shared.generated.resources.komoju_error
-import komoju_mobile_sdk.shared.generated.resources.komoju_have_a_question_contact_us
-import komoju_mobile_sdk.shared.generated.resources.komoju_i_will_do_it_later
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_payment_status_completed
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_payment_status_failed
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_payment_status_konbini_pending
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_payment_status_prenidng
-import komoju_mobile_sdk.shared.generated.resources.komoju_okay
-import komoju_mobile_sdk.shared.generated.resources.komoju_payment_failed
-import komoju_mobile_sdk.shared.generated.resources.komoju_payment_successful
-import komoju_mobile_sdk.shared.generated.resources.komoju_receipt_number
-import komoju_mobile_sdk.shared.generated.resources.komoju_total_payment
-import komoju_mobile_sdk.shared.generated.resources.komoju_update_payment_method
-import komoju_mobile_sdk.shared.generated.resources.komoju_view_instructions
-import komoju_mobile_sdk.shared.generated.resources.komoju_your_payment_has_been_processed_successfully
-import komoju_mobile_sdk.shared.generated.resources.komoju_your_payment_has_failed
-import komoju_mobile_sdk.shared.generated.resources.komoju_your_payment_is_awaiting_processing
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 
 internal data class KonbiniAwaitingPaymentScreen(val route: KomojuPaymentRoute.KonbiniAwaitingPayment) : Screen {
     @Composable
@@ -108,7 +91,7 @@ private fun ProcessForPaymentStatus(payment: Payment, onPrimaryButtonClicked: ()
             .padding(horizontal = 16.dp, vertical = 32.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Image(painterResource(payment.icon), "status_icon")
+        Image(payment.icon, "status_icon")
         Spacer(modifier = Modifier.padding(16.dp))
         Text(payment.title, fontSize = 32.sp, style = TextStyle(fontWeight = FontWeight.Medium))
         Spacer(modifier = Modifier.padding(8.dp))
@@ -124,7 +107,7 @@ private fun ProcessForPaymentStatus(payment: Payment, onPrimaryButtonClicked: ()
                 .padding(vertical = 16.dp),
         ) {
             Column(modifier = Modifier.background(Gray50, RoundedCornerShape(8.dp))) {
-                InformationItem(title = stringResource(Res.string.komoju_total_payment), displayPayableAmount)
+                InformationItem(title = i18nStringResource(I18nStringKey.total_payment), displayPayableAmount)
                 payment.additionalInformation.forEach {
                     HorizontalDivider(color = Gray200, modifier = Modifier.padding(horizontal = 16.dp))
                     InformationItem(it.first, it.second)
@@ -159,37 +142,37 @@ private fun InformationItem(title: String, description: String) {
 
 private val Payment.icon
     get() = when {
-        status == PaymentStatus.COMPLETED -> Res.drawable.komoju_ic_payment_status_completed
-        status == PaymentStatus.FAILED -> Res.drawable.komoju_ic_payment_status_failed
-        this is Payment.Konbini && status == PaymentStatus.AUTHORIZED -> Res.drawable.komoju_ic_payment_status_konbini_pending
-        else -> Res.drawable.komoju_ic_payment_status_prenidng
+        status == PaymentStatus.COMPLETED -> KomojuIcon.PaymentStatusCompleted
+        status == PaymentStatus.FAILED -> KomojuIcon.PaymentStatusFailed
+        this is Payment.Konbini && status == PaymentStatus.AUTHORIZED -> KomojuIcon.PaymentStatusKonbiniPending
+        else -> KomojuIcon.PaymentStatusPending
     }
 
 private val Payment.title
     @Composable
     get() = when (status) {
-        PaymentStatus.COMPLETED -> stringResource(Res.string.komoju_payment_successful)
-        PaymentStatus.FAILED -> stringResource(Res.string.komoju_payment_failed)
-        else -> stringResource(Res.string.komoju_awaiting_payment)
+        PaymentStatus.COMPLETED -> i18nStringResource(I18nStringKey.payment_successful)
+        PaymentStatus.FAILED -> i18nStringResource(I18nStringKey.payment_failed)
+        else -> i18nStringResource(I18nStringKey.awaiting_payment)
     }
 
 private val Payment.description
     @Composable
     get() = when {
-        status == PaymentStatus.COMPLETED -> stringResource(Res.string.komoju_your_payment_has_been_processed_successfully)
-        status == PaymentStatus.FAILED -> stringResource(Res.string.komoju_your_payment_has_failed)
+        status == PaymentStatus.COMPLETED -> i18nStringResource(I18nStringKey.your_payment_has_been_processed_successfully)
+        status == PaymentStatus.FAILED -> i18nStringResource(I18nStringKey.your_payment_has_failed)
         this is Payment.Konbini && status == PaymentStatus.AUTHORIZED ->
-            stringResource(Res.string.komoju_awaiting_payment_instruction, this.konbiniStoreKey)
-        else -> stringResource(Res.string.komoju_your_payment_is_awaiting_processing)
+            i18nStringResource(I18nStringKey.awaiting_payment_instruction, this.konbiniStoreKey)
+        else -> i18nStringResource(I18nStringKey.your_payment_is_awaiting_processing)
     }
 
 private val Payment.additionalInformation
     @Composable
     get() = when {
-        this is Payment.Error -> listOf(stringResource(Res.string.komoju_error) to code + message)
+        this is Payment.Error -> listOf(i18nStringResource(I18nStringKey.error) to code + message)
         this is Payment.Konbini && status == PaymentStatus.AUTHORIZED -> listOfNotNull(
-            receiptNumber?.let { stringResource(Res.string.komoju_receipt_number) to it },
-            confirmationCode?.let { stringResource(Res.string.komoju_confirmation_code) to it },
+            receiptNumber?.let { i18nStringResource(I18nStringKey.receipt_number) to it },
+            confirmationCode?.let { i18nStringResource(I18nStringKey.confirmation_code) to it },
         )
 
         else -> emptyList()
@@ -198,16 +181,16 @@ private val Payment.additionalInformation
 private val Payment.primaryButtonText
     @Composable
     get() = when {
-        status == PaymentStatus.COMPLETED -> stringResource(Res.string.komoju_done)
-        status == PaymentStatus.FAILED -> stringResource(Res.string.komoju_update_payment_method)
-        this is Payment.Konbini && status == PaymentStatus.AUTHORIZED -> stringResource(Res.string.komoju_view_instructions)
-        else -> stringResource(Res.string.komoju_okay)
+        status == PaymentStatus.COMPLETED -> i18nStringResource(I18nStringKey.done)
+        status == PaymentStatus.FAILED -> i18nStringResource(I18nStringKey.update_payment_method)
+        this is Payment.Konbini && status == PaymentStatus.AUTHORIZED -> i18nStringResource(I18nStringKey.view_instructions)
+        else -> i18nStringResource(I18nStringKey.okay)
     }
 
 private val Payment.secondaryButtonText
     @Composable
     get() = when {
-        status == PaymentStatus.FAILED -> stringResource(Res.string.komoju_have_a_question_contact_us)
-        this is Payment.Konbini && status == PaymentStatus.AUTHORIZED -> stringResource(Res.string.komoju_i_will_do_it_later)
+        status == PaymentStatus.FAILED -> i18nStringResource(I18nStringKey.have_a_question_contact_us)
+        this is Payment.Konbini && status == PaymentStatus.AUTHORIZED -> i18nStringResource(I18nStringKey.i_will_do_it_later)
         else -> null
     }

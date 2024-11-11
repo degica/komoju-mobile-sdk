@@ -23,3 +23,6 @@ ktlint_standard_filename = disabled
 ktlint_standard_package-name = disabled
 ktlint_standard_enum-entry-name-case = disabled
 ktlint_standard_function-naming = disabled
+
+[shared/src/commonMain/kotlin/com/komoju/mobile/sdk/ui/icon/**]
+ktlint_standard_backing-property-naming = disabled

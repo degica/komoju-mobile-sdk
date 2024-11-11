@@ -8,6 +8,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.graphics.Color
 import com.komoju.mobile.sdk.KomojuMobileSDKConfiguration
+import com.komoju.mobile.sdk.i18n.KomojuLanguage
 
 internal val KomojuLightGreen = Color(0xFF3CC239)
 internal val KomojuDarkGreen = Color(0xFF172E44)
@@ -18,6 +19,10 @@ internal val Gray700 = Color(0xFF45535E)
 internal val Red600 = Color(0xFFF04438)
 
 internal val LocalConfigurableTheme = compositionLocalOf<ConfigurableTheme> {
+    error("Use KomojuMobileSdkTheme to provide ConfigurableTheme")
+}
+
+internal val LocalKomojuLanguage = compositionLocalOf<KomojuLanguage> {
     error("Use KomojuMobileSdkTheme to provide ConfigurableTheme")
 }
 
@@ -34,9 +39,10 @@ internal fun KomojuMobileSdkTheme(configuration: KomojuMobileSDKConfiguration = 
     Surface(color = Color.White) {
         MaterialTheme(
             colorScheme = LightColorScheme,
-            typography = interTypography(),
             content = {
-                CompositionLocalProvider(LocalConfigurableTheme provides configuration.configurableTheme, content = content)
+                CompositionLocalProvider(LocalKomojuLanguage provides KomojuLanguage(configuration.language)) {
+                    CompositionLocalProvider(LocalConfigurableTheme provides configuration.configurableTheme, content = content)
+                }
             },
         )
     }

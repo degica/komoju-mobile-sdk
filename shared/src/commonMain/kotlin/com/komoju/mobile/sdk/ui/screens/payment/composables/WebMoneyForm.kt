@@ -12,14 +12,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.komoju.mobile.sdk.entities.PaymentMethod
-import komoju_mobile_sdk.shared.generated.resources.Res
+import com.komoju.mobile.sdk.i18n.I18nStringKey
+import com.komoju.mobile.sdk.i18n.i18nStringResource
 import com.komoju.mobile.sdk.ui.composables.PrimaryButton
 import com.komoju.mobile.sdk.ui.screens.payment.WebMoneyDisplayData
 import com.komoju.mobile.sdk.utils.AmountUtils
-import komoju_mobile_sdk.shared.generated.resources.komoju_pay
-import komoju_mobile_sdk.shared.generated.resources.komoju_prepaid_number
-import komoju_mobile_sdk.shared.generated.resources.komoju_webmoney_information
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun WebMoneyForm(
@@ -36,19 +33,19 @@ internal fun WebMoneyForm(
     Column {
         TextField(
             value = webMoneyDisplayData.prepaidNumber,
-            title = stringResource(Res.string.komoju_webmoney_information),
-            placeholder = stringResource(Res.string.komoju_prepaid_number),
+            title = i18nStringResource(I18nStringKey.webmoney_information),
+            placeholder = i18nStringResource(I18nStringKey.prepaid_number),
             onValueChange = {
                 onWebMoneyDisplayDataChange(webMoneyDisplayData.copy(prepaidNumber = it))
             },
-            error = webMoneyDisplayData.prepaidNumberErrorStringResource?.let { stringResource(it) },
+            error = webMoneyDisplayData.prepaidNumberErrorI18nStringKey?.let { i18nStringResource(it) },
         )
         Spacer(modifier = Modifier.height(16.dp))
         PrimaryButton(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
-            text = stringResource(Res.string.komoju_pay, displayPayableAmount),
+            text = i18nStringResource(I18nStringKey.pay, displayPayableAmount),
             onClick = onPayButtonClicked,
         )
     }

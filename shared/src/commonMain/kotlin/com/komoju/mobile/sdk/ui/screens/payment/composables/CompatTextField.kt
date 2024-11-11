@@ -13,6 +13,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.intl.LocaleList
 import androidx.compose.ui.unit.dp
+import com.komoju.mobile.sdk.i18n.I18nStringKey
+import com.komoju.mobile.sdk.i18n.i18nStringResource
 import com.komoju.mobile.sdk.ui.theme.Gray200
 import com.komoju.mobile.sdk.ui.theme.LocalConfigurableTheme
 import com.komoju.mobile.sdk.ui.theme.Red600
@@ -25,7 +27,7 @@ internal fun CompatTextField(
     title: String,
     placeholder: String,
     onValueChange: (String) -> Unit,
-    error: String? = null,
+    error: I18nStringKey? = null,
     keyboardType: KeyboardType = KeyboardType.Unspecified,
     capitalization: KeyboardCapitalization = KeyboardCapitalization.Unspecified,
     keyBoardLocale: Locale = Locale.current,
@@ -48,7 +50,7 @@ internal fun CompatTextField(
         singleLine = singleLine,
         supportingText = {
             if (error != null) {
-                Text(text = error, color = Red600)
+                Text(text = i18nStringResource(error), color = Red600)
             }
         },
         keyboardOptions = KeyboardOptions(

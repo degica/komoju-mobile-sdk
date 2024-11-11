@@ -22,18 +22,13 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
+import com.komoju.mobile.sdk.i18n.I18nStringKey
+import com.komoju.mobile.sdk.i18n.i18nStringResource
 import com.komoju.mobile.sdk.ui.composables.PrimaryButton
+import com.komoju.mobile.sdk.ui.icon.KomojuIcon
+import com.komoju.mobile.sdk.ui.icon.PaymentStatusFailed
 import com.komoju.mobile.sdk.ui.screens.KomojuPaymentRoute
 import com.komoju.mobile.sdk.ui.screens.RouterEffect
-import komoju_mobile_sdk.shared.generated.resources.Res
-import komoju_mobile_sdk.shared.generated.resources.komoju_back_to_store
-import komoju_mobile_sdk.shared.generated.resources.komoju_credit_card_error
-import komoju_mobile_sdk.shared.generated.resources.komoju_error_other
-import komoju_mobile_sdk.shared.generated.resources.komoju_error_user_cancel
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_payment_status_failed
-import komoju_mobile_sdk.shared.generated.resources.komoju_payment_failed
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 
 internal class PaymentFailedScreen(private val route: KomojuPaymentRoute.PaymentFailed) : Screen {
     @Composable
@@ -56,14 +51,14 @@ private fun Screen.PaymentFailedScreenContent(route: KomojuPaymentRoute.PaymentF
                     .clickable(onClick = screenModel::onCloseButtonClicked),
             )
         }
-        Image(painterResource(Res.drawable.komoju_ic_payment_status_failed), "status_icon")
+        Image(KomojuIcon.PaymentStatusFailed, "status_icon")
         Spacer(Modifier.height(16.dp))
-        Text(stringResource(Res.string.komoju_payment_failed), fontSize = 24.sp, fontWeight = FontWeight.Bold)
+        Text(i18nStringResource(I18nStringKey.payment_failed), fontSize = 24.sp, fontWeight = FontWeight.Bold)
         Text(
             text = when (route.reason) {
-                Reason.USER_CANCEL -> stringResource(Res.string.komoju_error_user_cancel)
-                Reason.OTHER -> stringResource(Res.string.komoju_error_other)
-                Reason.CREDIT_CARD_ERROR -> stringResource(Res.string.komoju_credit_card_error)
+                Reason.USER_CANCEL -> i18nStringResource(I18nStringKey.error_user_cancel)
+                Reason.OTHER -> i18nStringResource(I18nStringKey.error_other)
+                Reason.CREDIT_CARD_ERROR -> i18nStringResource(I18nStringKey.credit_card_error)
             },
             modifier = Modifier.padding(16.dp),
             textAlign = TextAlign.Center,
@@ -73,7 +68,7 @@ private fun Screen.PaymentFailedScreenContent(route: KomojuPaymentRoute.PaymentF
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            text = stringResource(Res.string.komoju_back_to_store),
+            text = i18nStringResource(I18nStringKey.back_to_store),
         ) {
             screenModel.onBackToStoreButtonClicked()
         }

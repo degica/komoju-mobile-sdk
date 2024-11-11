@@ -12,14 +12,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.komoju.mobile.sdk.entities.PaymentMethod
+import com.komoju.mobile.sdk.i18n.I18nStringKey
+import com.komoju.mobile.sdk.i18n.i18nStringResource
 import com.komoju.mobile.sdk.ui.composables.PrimaryButton
 import com.komoju.mobile.sdk.ui.screens.payment.BitCashDisplayData
 import com.komoju.mobile.sdk.utils.AmountUtils
-import komoju_mobile_sdk.shared.generated.resources.Res
-import komoju_mobile_sdk.shared.generated.resources.komoju_bitcash_information
-import komoju_mobile_sdk.shared.generated.resources.komoju_hiragana_id
-import komoju_mobile_sdk.shared.generated.resources.komoju_pay
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun BitCashForm(
@@ -36,19 +33,19 @@ internal fun BitCashForm(
     Column {
         TextField(
             value = bitCashDisplayData.bitCashId,
-            title = stringResource(Res.string.komoju_bitcash_information),
-            placeholder = stringResource(Res.string.komoju_hiragana_id),
+            title = i18nStringResource(I18nStringKey.bitcash_information),
+            placeholder = i18nStringResource(I18nStringKey.hiragana_id),
             onValueChange = {
                 onBitCashDisplayDataChange(bitCashDisplayData.copy(bitCashId = it))
             },
-            error = bitCashDisplayData.bitCashErrorStringResource?.let { stringResource(it) },
+            error = bitCashDisplayData.bitCashErrorI18nStringKey?.let { i18nStringResource(it) },
         )
         Spacer(modifier = Modifier.height(16.dp))
         PrimaryButton(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
-            text = stringResource(Res.string.komoju_pay, displayPayableAmount),
+            text = i18nStringResource(I18nStringKey.pay, displayPayableAmount),
             onClick = onPayButtonClicked,
         )
     }

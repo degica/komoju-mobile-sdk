@@ -17,27 +17,22 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.komoju.mobile.sdk.entities.PaymentMethod.Konbini.KonbiniBrand
-import komoju_mobile_sdk.shared.generated.resources.Res
+import com.komoju.mobile.sdk.i18n.I18nStringKey
+import com.komoju.mobile.sdk.i18n.i18nStringResource
+import com.komoju.mobile.sdk.ui.icon.DailyYamazaki
+import com.komoju.mobile.sdk.ui.icon.FamilyMart
+import com.komoju.mobile.sdk.ui.icon.KomojuIcon
+import com.komoju.mobile.sdk.ui.icon.Lawson
+import com.komoju.mobile.sdk.ui.icon.Ministop
+import com.komoju.mobile.sdk.ui.icon.SeicoMart
+import com.komoju.mobile.sdk.ui.icon.SevenEleven
 import com.komoju.mobile.sdk.ui.theme.Gray200
 import com.komoju.mobile.sdk.ui.theme.KomojuDarkGreen
 import com.komoju.mobile.sdk.ui.theme.KomojuMobileSdkTheme
-import komoju_mobile_sdk.shared.generated.resources.komoju__7_eleven
-import komoju_mobile_sdk.shared.generated.resources.komoju_daily_yamazaki
-import komoju_mobile_sdk.shared.generated.resources.komoju_family_mart
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_daily_yamazaki
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_family_mart
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_lawson
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_ministop
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_seico_mart
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_seven_eleven
-import komoju_mobile_sdk.shared.generated.resources.komoju_lawson
-import komoju_mobile_sdk.shared.generated.resources.komoju_ministop
-import komoju_mobile_sdk.shared.generated.resources.komoju_seicomart
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -67,7 +62,7 @@ private fun KonbiniBrand(konbiniBrand: KonbiniBrand, isSelected: Boolean, onSele
             .padding(8.dp),
     ) {
         Image(
-            painter = painterResource(konbiniBrand.displayIcon),
+            painter = rememberVectorPainter(konbiniBrand.displayIcon),
             contentDescription = "${konbiniBrand.key} icon",
             modifier = Modifier.size(32.dp),
         )
@@ -79,22 +74,22 @@ private fun KonbiniBrand(konbiniBrand: KonbiniBrand, isSelected: Boolean, onSele
 private val KonbiniBrand.displayText
     @Composable
     get() = when (this) {
-        is KonbiniBrand.DailyYamazaki -> stringResource(Res.string.komoju_daily_yamazaki)
-        is KonbiniBrand.FamilyMart -> stringResource(Res.string.komoju_family_mart)
-        is KonbiniBrand.Lawson -> stringResource(Res.string.komoju_lawson)
-        is KonbiniBrand.MiniStop -> stringResource(Res.string.komoju_ministop)
-        is KonbiniBrand.SeicoMart -> stringResource(Res.string.komoju_seicomart)
-        is KonbiniBrand.SevenEleven -> stringResource(Res.string.komoju__7_eleven)
+        is KonbiniBrand.DailyYamazaki -> i18nStringResource(I18nStringKey.daily_yamazaki)
+        is KonbiniBrand.FamilyMart -> i18nStringResource(I18nStringKey.family_mart)
+        is KonbiniBrand.Lawson -> i18nStringResource(I18nStringKey.lawson)
+        is KonbiniBrand.MiniStop -> i18nStringResource(I18nStringKey.ministop)
+        is KonbiniBrand.SeicoMart -> i18nStringResource(I18nStringKey.seicomart)
+        is KonbiniBrand.SevenEleven -> i18nStringResource(I18nStringKey._7_eleven)
     }
 
 private val KonbiniBrand.displayIcon
     get() = when (this) {
-        is KonbiniBrand.DailyYamazaki -> Res.drawable.komoju_ic_daily_yamazaki
-        is KonbiniBrand.FamilyMart -> Res.drawable.komoju_ic_family_mart
-        is KonbiniBrand.Lawson -> Res.drawable.komoju_ic_lawson
-        is KonbiniBrand.MiniStop -> Res.drawable.komoju_ic_ministop
-        is KonbiniBrand.SeicoMart -> Res.drawable.komoju_ic_seico_mart
-        is KonbiniBrand.SevenEleven -> Res.drawable.komoju_ic_seven_eleven
+        is KonbiniBrand.DailyYamazaki -> KomojuIcon.DailyYamazaki
+        is KonbiniBrand.FamilyMart -> KomojuIcon.FamilyMart
+        is KonbiniBrand.Lawson -> KomojuIcon.Lawson
+        is KonbiniBrand.MiniStop -> KomojuIcon.Ministop
+        is KonbiniBrand.SeicoMart -> KomojuIcon.SeicoMart
+        is KonbiniBrand.SevenEleven -> KomojuIcon.SevenEleven
     }
 
 @Composable

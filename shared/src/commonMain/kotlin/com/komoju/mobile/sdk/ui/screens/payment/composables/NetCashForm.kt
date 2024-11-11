@@ -12,14 +12,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.komoju.mobile.sdk.entities.PaymentMethod
-import komoju_mobile_sdk.shared.generated.resources.Res
+import com.komoju.mobile.sdk.i18n.I18nStringKey
+import com.komoju.mobile.sdk.i18n.i18nStringResource
 import com.komoju.mobile.sdk.ui.composables.PrimaryButton
 import com.komoju.mobile.sdk.ui.screens.payment.NetCashDisplayData
 import com.komoju.mobile.sdk.utils.AmountUtils
-import komoju_mobile_sdk.shared.generated.resources.komoju_net_cash_id
-import komoju_mobile_sdk.shared.generated.resources.komoju_net_cash_information
-import komoju_mobile_sdk.shared.generated.resources.komoju_pay
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun NetCashForm(
@@ -36,19 +33,19 @@ internal fun NetCashForm(
     Column {
         TextField(
             value = netCashDisplayData.netCashId,
-            title = stringResource(Res.string.komoju_net_cash_information),
-            placeholder = stringResource(Res.string.komoju_net_cash_id),
+            title = i18nStringResource(I18nStringKey.net_cash_information),
+            placeholder = i18nStringResource(I18nStringKey.net_cash_id),
             onValueChange = {
                 onNetCashDisplayDataChange(netCashDisplayData.copy(netCashId = it))
             },
-            error = netCashDisplayData.netCashErrorStringResource?.let { stringResource(it) },
+            error = netCashDisplayData.netCashErrorI18nStringKey?.let { i18nStringResource(it) },
         )
         Spacer(modifier = Modifier.height(16.dp))
         PrimaryButton(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
-            text = stringResource(Res.string.komoju_pay, displayPayableAmount),
+            text = i18nStringResource(I18nStringKey.pay, displayPayableAmount),
             onClick = onPayButtonClicked,
         )
     }

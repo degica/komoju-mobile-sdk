@@ -24,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -31,18 +32,17 @@ import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import com.komoju.mobile.sdk.KomojuMobileSDKConfiguration
 import com.komoju.mobile.sdk.entities.PaymentMethod
+import com.komoju.mobile.sdk.i18n.I18nStringKey
+import com.komoju.mobile.sdk.i18n.i18nStringResource
 import com.komoju.mobile.sdk.ui.composables.InlinedWebView
 import com.komoju.mobile.sdk.ui.composables.ThemedCircularProgressIndicator
 import com.komoju.mobile.sdk.ui.composables.launchCustomTab
+import com.komoju.mobile.sdk.ui.icon.KomojuIcon
+import com.komoju.mobile.sdk.ui.icon.KomojuImgPaymentFooter
 import com.komoju.mobile.sdk.ui.screens.RouterEffect
 import com.komoju.mobile.sdk.ui.screens.payment.composables.PaymentMethodForm
 import com.komoju.mobile.sdk.ui.screens.payment.composables.PaymentMethodsRow
 import com.komoju.mobile.sdk.ui.screens.payment.composables.PaymentSheetHandle
-import komoju_mobile_sdk.shared.generated.resources.Res
-import komoju_mobile_sdk.shared.generated.resources.komoju_img_payment_footer
-import komoju_mobile_sdk.shared.generated.resources.komoju_payment_options
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 
 internal data class KomojuPaymentScreen(private val sdkConfiguration: KomojuMobileSDKConfiguration) : Screen {
     @Composable
@@ -70,7 +70,7 @@ internal data class KomojuPaymentScreen(private val sdkConfiguration: KomojuMobi
             if (uiState.session != null) {
                 Column {
                     PaymentSheetHandle(
-                        stringResource(Res.string.komoju_payment_options),
+                        i18nStringResource(I18nStringKey.payment_options),
                         onCloseClicked = {
                             screenViewModel.onCloseClicked()
                         },
@@ -105,7 +105,7 @@ internal data class KomojuPaymentScreen(private val sdkConfiguration: KomojuMobi
                     }
                     Image(
                         modifier = Modifier.fillMaxWidth().height(54.dp).padding(horizontal = 16.dp),
-                        painter = painterResource(Res.drawable.komoju_img_payment_footer),
+                        painter = rememberVectorPainter(KomojuIcon.KomojuImgPaymentFooter),
                         contentDescription = "payment footer",
                     )
                 }

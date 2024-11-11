@@ -19,19 +19,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.komoju.mobile.sdk.entities.PaymentMethod
 import com.komoju.mobile.sdk.entities.PaymentMethod.Konbini.KonbiniBrand
-import komoju_mobile_sdk.shared.generated.resources.Res
+import com.komoju.mobile.sdk.i18n.I18nStringKey
+import com.komoju.mobile.sdk.i18n.i18nStringResource
 import com.komoju.mobile.sdk.ui.composables.PrimaryButton
 import com.komoju.mobile.sdk.ui.screens.payment.CommonDisplayData
 import com.komoju.mobile.sdk.ui.screens.payment.KonbiniDisplayData
 import com.komoju.mobile.sdk.ui.theme.KomojuMobileSdkTheme
 import com.komoju.mobile.sdk.ui.theme.Red600
 import com.komoju.mobile.sdk.utils.AmountUtils
-import komoju_mobile_sdk.shared.generated.resources.komoju_email
-import komoju_mobile_sdk.shared.generated.resources.komoju_enter_your_email_address
-import komoju_mobile_sdk.shared.generated.resources.komoju_full_name_on_receipt
-import komoju_mobile_sdk.shared.generated.resources.komoju_name_shown_on_receipt
-import komoju_mobile_sdk.shared.generated.resources.komoju_pay
-import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -51,18 +46,18 @@ internal fun KonbiniForm(
     Column {
         TextField(
             konbiniDisplayData.receiptName,
-            title = stringResource(Res.string.komoju_name_shown_on_receipt),
-            placeholder = stringResource(Res.string.komoju_full_name_on_receipt),
-            error = konbiniDisplayData.receiptNameErrorStringResource?.let { stringResource(it) },
+            title = i18nStringResource(I18nStringKey.name_shown_on_receipt),
+            placeholder = i18nStringResource(I18nStringKey.full_name_on_receipt),
+            error = konbiniDisplayData.receiptNameErrorI18nStringKey?.let { i18nStringResource(it) },
             onValueChange = {
                 onKonbiniDisplayDataChange(konbiniDisplayData.copy(receiptName = it))
             },
         )
         TextField(
             commonDisplayData.email,
-            title = stringResource(Res.string.komoju_email),
-            placeholder = stringResource(Res.string.komoju_enter_your_email_address),
-            error = konbiniDisplayData.receiptEmailErrorStringResource?.let { stringResource(it) },
+            title = i18nStringResource(I18nStringKey.email),
+            placeholder = i18nStringResource(I18nStringKey.enter_your_email_address),
+            error = konbiniDisplayData.receiptEmailErrorI18nStringKey?.let { i18nStringResource(it) },
             onValueChange = {
                 onCommonDisplayDataChange(commonDisplayData.copy(email = it))
             },
@@ -80,14 +75,14 @@ internal fun KonbiniForm(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
-            text = konbiniDisplayData.konbiniBrandNullErrorStringResource?.let { stringResource(it) }.orEmpty(),
+            text = konbiniDisplayData.konbiniBrandNullErrorI18nStringKey?.let { i18nStringResource(it) }.orEmpty(),
             style = TextStyle(fontSize = 16.sp, color = Red600),
         )
         PrimaryButton(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
-            text = stringResource(Res.string.komoju_pay, displayPayableAmount),
+            text = i18nStringResource(I18nStringKey.pay, displayPayableAmount),
             onClick = onPayButtonClicked,
         )
     }

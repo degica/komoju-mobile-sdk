@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,16 +26,13 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.komoju.mobile.sdk.KomojuMobileSDKPaymentResult
+import com.komoju.mobile.sdk.i18n.I18nStringKey
+import com.komoju.mobile.sdk.i18n.i18nStringResource
 import com.komoju.mobile.sdk.navigation.paymentResultScreenModel
-import komoju_mobile_sdk.shared.generated.resources.Res
 import com.komoju.mobile.sdk.ui.composables.PrimaryButton
+import com.komoju.mobile.sdk.ui.icon.KomojuIcon
+import com.komoju.mobile.sdk.ui.icon.PaymentStatusCompleted
 import com.komoju.mobile.sdk.ui.screens.RouterEffect
-import komoju_mobile_sdk.shared.generated.resources.komoju_back_to_store
-import komoju_mobile_sdk.shared.generated.resources.komoju_ic_payment_status_completed
-import komoju_mobile_sdk.shared.generated.resources.komoju_payment_success
-import komoju_mobile_sdk.shared.generated.resources.komoju_thank_you_for_your_order
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 
 internal class PaymentSuccessScreen : Screen {
     @Composable
@@ -64,17 +62,17 @@ private fun Screen.PaymentSuccessScreenContent() {
                     },
             )
         }
-        Image(painterResource(Res.drawable.komoju_ic_payment_status_completed), "status_icon")
+        Image(rememberVectorPainter(KomojuIcon.PaymentStatusCompleted), "status_icon")
         Spacer(Modifier.height(16.dp))
-        Text(stringResource(Res.string.komoju_payment_success), fontSize = 24.sp, fontWeight = FontWeight.Bold)
+        Text(i18nStringResource(I18nStringKey.payment_success), fontSize = 24.sp, fontWeight = FontWeight.Bold)
         Spacer(Modifier.height(16.dp))
-        Text(stringResource(Res.string.komoju_thank_you_for_your_order))
+        Text(i18nStringResource(I18nStringKey.thank_you_for_your_order))
         Spacer(Modifier.weight(1f))
         PrimaryButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            text = stringResource(Res.string.komoju_back_to_store),
+            text = i18nStringResource(I18nStringKey.back_to_store),
         ) {
             screenModel.onBackToStoreButtonClicked()
         }

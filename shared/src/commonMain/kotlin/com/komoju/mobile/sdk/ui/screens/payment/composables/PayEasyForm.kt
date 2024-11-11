@@ -14,20 +14,11 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.komoju.mobile.sdk.entities.PaymentMethod
-import komoju_mobile_sdk.shared.generated.resources.Res
+import com.komoju.mobile.sdk.i18n.I18nStringKey
+import com.komoju.mobile.sdk.i18n.i18nStringResource
 import com.komoju.mobile.sdk.ui.composables.PrimaryButton
 import com.komoju.mobile.sdk.ui.screens.payment.CommonDisplayData
 import com.komoju.mobile.sdk.utils.AmountUtils
-import komoju_mobile_sdk.shared.generated.resources.komoju_email
-import komoju_mobile_sdk.shared.generated.resources.komoju_enter_your_email_address
-import komoju_mobile_sdk.shared.generated.resources.komoju_enter_your_phone_number
-import komoju_mobile_sdk.shared.generated.resources.komoju_first_name
-import komoju_mobile_sdk.shared.generated.resources.komoju_first_name_phonetic
-import komoju_mobile_sdk.shared.generated.resources.komoju_last_name
-import komoju_mobile_sdk.shared.generated.resources.komoju_last_name_phonetic
-import komoju_mobile_sdk.shared.generated.resources.komoju_pay
-import komoju_mobile_sdk.shared.generated.resources.komoju_phone_number
-import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun PayEasyForm(
@@ -47,38 +38,38 @@ internal fun PayEasyForm(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
             value = commonDisplayData.lastName,
-            title = stringResource(Res.string.komoju_last_name),
-            placeholder = stringResource(Res.string.komoju_last_name),
+            title = i18nStringResource(I18nStringKey.last_name),
+            placeholder = i18nStringResource(I18nStringKey.last_name),
             onValueChange = {
                 onCommonDisplayDataChange(commonDisplayData.copy(lastName = it))
             },
             keyboardType = KeyboardType.Text,
             imeActions = ImeAction.Next,
             singleLine = true,
-            error = commonDisplayData.lastNameErrorStringResource?.let { stringResource(it) },
+            error = commonDisplayData.lastNameErrorI18nStringKey,
         )
         CompatTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
             value = commonDisplayData.firstName,
-            title = stringResource(Res.string.komoju_first_name),
-            placeholder = stringResource(Res.string.komoju_first_name),
+            title = i18nStringResource(I18nStringKey.first_name),
+            placeholder = i18nStringResource(I18nStringKey.first_name),
             onValueChange = {
                 onCommonDisplayDataChange(commonDisplayData.copy(firstName = it))
             },
             keyboardType = KeyboardType.Text,
             imeActions = ImeAction.Next,
             singleLine = true,
-            error = commonDisplayData.firstNameErrorStringResource?.let { stringResource(it) },
+            error = commonDisplayData.firstNameErrorI18nStringKey,
         )
         CompatTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
             value = commonDisplayData.lastNamePhonetic,
-            title = stringResource(Res.string.komoju_last_name_phonetic),
-            placeholder = stringResource(Res.string.komoju_last_name_phonetic),
+            title = i18nStringResource(I18nStringKey.last_name_phonetic),
+            placeholder = i18nStringResource(I18nStringKey.last_name_phonetic),
             onValueChange = {
                 onCommonDisplayDataChange(commonDisplayData.copy(lastNamePhonetic = it))
             },
@@ -86,15 +77,15 @@ internal fun PayEasyForm(
             keyBoardLocale = JAPANESE_LOCALE,
             imeActions = ImeAction.Next,
             singleLine = true,
-            error = commonDisplayData.lastNamePhoneticErrorStringResource?.let { stringResource(it) },
+            error = commonDisplayData.lastNamePhoneticErrorI18nStringKey,
         )
         CompatTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
             value = commonDisplayData.firstNamePhonetic,
-            title = stringResource(Res.string.komoju_first_name_phonetic),
-            placeholder = stringResource(Res.string.komoju_first_name_phonetic),
+            title = i18nStringResource(I18nStringKey.first_name_phonetic),
+            placeholder = i18nStringResource(I18nStringKey.first_name_phonetic),
             onValueChange = {
                 onCommonDisplayDataChange(commonDisplayData.copy(firstNamePhonetic = it))
             },
@@ -102,44 +93,44 @@ internal fun PayEasyForm(
             keyBoardLocale = JAPANESE_LOCALE,
             imeActions = ImeAction.Next,
             singleLine = true,
-            error = commonDisplayData.firstNamePhoneticErrorStringResource?.let { stringResource(it) },
+            error = commonDisplayData.firstNamePhoneticErrorI18nStringKey,
         )
         CompatTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
             value = commonDisplayData.email,
-            title = stringResource(Res.string.komoju_email),
-            placeholder = stringResource(Res.string.komoju_enter_your_email_address),
+            title = i18nStringResource(I18nStringKey.email),
+            placeholder = i18nStringResource(I18nStringKey.enter_your_email_address),
             onValueChange = {
                 onCommonDisplayDataChange(commonDisplayData.copy(email = it))
             },
             keyboardType = KeyboardType.Email,
             imeActions = ImeAction.Next,
             singleLine = true,
-            error = commonDisplayData.emailErrorStringResource?.let { stringResource(it) },
+            error = commonDisplayData.emailErrorI18nStringKey,
         )
         CompatTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
             value = commonDisplayData.phoneNumber,
-            title = stringResource(Res.string.komoju_phone_number),
-            placeholder = stringResource(Res.string.komoju_enter_your_phone_number),
+            title = i18nStringResource(I18nStringKey.phone_number),
+            placeholder = i18nStringResource(I18nStringKey.enter_your_phone_number),
             onValueChange = {
                 onCommonDisplayDataChange(commonDisplayData.copy(phoneNumber = it))
             },
             keyboardType = KeyboardType.Number,
             imeActions = ImeAction.Done,
             singleLine = true,
-            error = commonDisplayData.phoneNumberErrorStringResource?.let { stringResource(it) },
+            error = commonDisplayData.phoneNumberErrorI18nStringKey,
         )
         Spacer(modifier = Modifier.height(16.dp))
         PrimaryButton(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
-            text = stringResource(Res.string.komoju_pay, displayPayableAmount),
+            text = i18nStringResource(I18nStringKey.pay, displayPayableAmount),
             onClick = onPayButtonClicked,
         )
     }

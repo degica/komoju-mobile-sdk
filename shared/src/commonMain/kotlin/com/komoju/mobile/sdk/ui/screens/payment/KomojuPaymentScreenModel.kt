@@ -14,6 +14,7 @@ import com.komoju.mobile.sdk.entities.SecureTokenResponse.Status.NEEDS_VERIFY
 import com.komoju.mobile.sdk.entities.SecureTokenResponse.Status.OK
 import com.komoju.mobile.sdk.entities.SecureTokenResponse.Status.SKIPPED
 import com.komoju.mobile.sdk.entities.SecureTokenResponse.Status.UNKNOWN
+import com.komoju.mobile.sdk.i18n.I18nStringKey
 import com.komoju.mobile.sdk.navigation.RouterStateScreenModel
 import com.komoju.mobile.sdk.remote.apis.KomojuRemoteApi
 import com.komoju.mobile.sdk.ui.composables.InlinedPaymentPrimaryButtonState
@@ -32,35 +33,12 @@ import com.komoju.mobile.sdk.utils.isDigitsOnly
 import com.komoju.mobile.sdk.utils.isKanaOnly
 import com.komoju.mobile.sdk.utils.isValidEmail
 import com.komoju.mobile.sdk.utils.verifyTokenAndProcessPayment
-import komoju_mobile_sdk.shared.generated.resources.Res
-import komoju_mobile_sdk.shared.generated.resources.komoju_cadrholder_name_cannot_be_empty
-import komoju_mobile_sdk.shared.generated.resources.komoju_please_select_a_konbini_brand
-import komoju_mobile_sdk.shared.generated.resources.komoju_the_entered_bit_cash_id_cannot_be_empty
-import komoju_mobile_sdk.shared.generated.resources.komoju_the_entered_bit_cash_id_is_not_valid
-import komoju_mobile_sdk.shared.generated.resources.komoju_the_entered_card_number_is_not_valid
-import komoju_mobile_sdk.shared.generated.resources.komoju_the_entered_cardholder_name_is_not_valid
-import komoju_mobile_sdk.shared.generated.resources.komoju_the_entered_cvv_is_not_valid
-import komoju_mobile_sdk.shared.generated.resources.komoju_the_entered_email_is_not_valid
-import komoju_mobile_sdk.shared.generated.resources.komoju_the_entered_expiry_date_is_not_valid
-import komoju_mobile_sdk.shared.generated.resources.komoju_the_entered_first_name_cannot_be_empty
-import komoju_mobile_sdk.shared.generated.resources.komoju_the_entered_first_name_phonetic_cannot_be_empty
-import komoju_mobile_sdk.shared.generated.resources.komoju_the_entered_first_name_phonetic_must_be_a_kana
-import komoju_mobile_sdk.shared.generated.resources.komoju_the_entered_last_name_cannot_be_empty
-import komoju_mobile_sdk.shared.generated.resources.komoju_the_entered_last_name_phonetic_cannot_be_empty
-import komoju_mobile_sdk.shared.generated.resources.komoju_the_entered_last_name_phonetic_must_be_a_kana
-import komoju_mobile_sdk.shared.generated.resources.komoju_the_entered_name_cannot_be_empty
-import komoju_mobile_sdk.shared.generated.resources.komoju_the_entered_net_cash_id_cannot_be_empty
-import komoju_mobile_sdk.shared.generated.resources.komoju_the_entered_net_cash_id_is_not_valid
-import komoju_mobile_sdk.shared.generated.resources.komoju_the_entered_phone_number_cannot_be_empty
-import komoju_mobile_sdk.shared.generated.resources.komoju_the_entered_phone_number_is_not_valid
-import komoju_mobile_sdk.shared.generated.resources.komoju_the_entered_prepaid_number_cannot_be_empty
-import komoju_mobile_sdk.shared.generated.resources.komoju_the_entered_prepaid_number_is_not_valid
+import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlin.time.Duration.Companion.milliseconds
 
 internal class KomojuPaymentScreenModel(private val config: KomojuMobileSDKConfiguration) :
     RouterStateScreenModel<KomojuPaymentUIState>(KomojuPaymentUIState()) {
@@ -104,8 +82,8 @@ internal class KomojuPaymentScreenModel(private val config: KomojuMobileSDKConfi
             mutableState.update {
                 it.copy(
                     creditCardDisplayData = creditCardDisplayData.copy(
-                        creditCardErrorStringResource = null,
-                        fullNameOnCardErrorStringResource = null,
+                        creditCardErrorI18nStringKey = null,
+                        fullNameOnCardErrorI18nStringKey = null,
                     ),
                 )
             }
@@ -281,34 +259,34 @@ internal class KomojuPaymentScreenModel(private val config: KomojuMobileSDKConfi
     }
 
     private fun CommonDisplayData.validate(): Boolean {
-        val lastNameError = if (lastName.isBlank()) Res.string.komoju_the_entered_last_name_cannot_be_empty else null
-        val firstNameError = if (firstName.isBlank()) Res.string.komoju_the_entered_first_name_cannot_be_empty else null
+        val lastNameError = if (lastName.isBlank()) I18nStringKey.the_entered_last_name_cannot_be_empty else null
+        val firstNameError = if (firstName.isBlank()) I18nStringKey.the_entered_first_name_cannot_be_empty else null
         val firstNamePhoneticError = when {
-            firstNamePhonetic.isBlank() -> Res.string.komoju_the_entered_first_name_phonetic_cannot_be_empty
-            firstNamePhonetic.isKanaOnly.not() -> Res.string.komoju_the_entered_first_name_phonetic_must_be_a_kana
+            firstNamePhonetic.isBlank() -> I18nStringKey.the_entered_first_name_phonetic_cannot_be_empty
+            firstNamePhonetic.isKanaOnly.not() -> I18nStringKey.the_entered_first_name_phonetic_must_be_a_kana
             else -> null
         }
         val lastNamePhoneticError = when {
-            lastNamePhonetic.isBlank() -> Res.string.komoju_the_entered_last_name_phonetic_cannot_be_empty
-            lastNamePhonetic.isKanaOnly.not() -> Res.string.komoju_the_entered_last_name_phonetic_must_be_a_kana
+            lastNamePhonetic.isBlank() -> I18nStringKey.the_entered_last_name_phonetic_cannot_be_empty
+            lastNamePhonetic.isKanaOnly.not() -> I18nStringKey.the_entered_last_name_phonetic_must_be_a_kana
             else -> null
         }
-        val emailError = if (email.isValidEmail.not()) Res.string.komoju_the_entered_email_is_not_valid else null
+        val emailError = if (email.isValidEmail.not()) I18nStringKey.the_entered_email_is_not_valid else null
         val phoneNumberError = when {
-            phoneNumber.isBlank() -> Res.string.komoju_the_entered_phone_number_cannot_be_empty
-            phoneNumber.length < 7 -> Res.string.komoju_the_entered_phone_number_is_not_valid
-            phoneNumber.isDigitsOnly.not() -> Res.string.komoju_the_entered_phone_number_is_not_valid
+            phoneNumber.isBlank() -> I18nStringKey.the_entered_phone_number_cannot_be_empty
+            phoneNumber.length < 7 -> I18nStringKey.the_entered_phone_number_is_not_valid
+            phoneNumber.isDigitsOnly.not() -> I18nStringKey.the_entered_phone_number_is_not_valid
             else -> null
         }
         mutableState.update {
             it.copy(
                 commonDisplayData = it.commonDisplayData.copy(
-                    lastNameErrorStringResource = lastNameError,
-                    firstNameErrorStringResource = firstNameError,
-                    firstNamePhoneticErrorStringResource = firstNamePhoneticError,
-                    lastNamePhoneticErrorStringResource = lastNamePhoneticError,
-                    emailErrorStringResource = emailError,
-                    phoneNumberErrorStringResource = phoneNumberError,
+                    lastNameErrorI18nStringKey = lastNameError,
+                    firstNameErrorI18nStringKey = firstNameError,
+                    firstNamePhoneticErrorI18nStringKey = firstNamePhoneticError,
+                    lastNamePhoneticErrorI18nStringKey = lastNamePhoneticError,
+                    emailErrorI18nStringKey = emailError,
+                    phoneNumberErrorI18nStringKey = phoneNumberError,
                 ),
             )
         }
@@ -322,14 +300,14 @@ internal class KomojuPaymentScreenModel(private val config: KomojuMobileSDKConfi
 
     private fun WebMoneyDisplayData.validate(): Boolean {
         val prepaidNumberError = when {
-            prepaidNumber.isBlank() -> Res.string.komoju_the_entered_prepaid_number_cannot_be_empty
-            prepaidNumber.length != 16 -> Res.string.komoju_the_entered_prepaid_number_is_not_valid
+            prepaidNumber.isBlank() -> I18nStringKey.the_entered_prepaid_number_cannot_be_empty
+            prepaidNumber.length != 16 -> I18nStringKey.the_entered_prepaid_number_is_not_valid
             else -> null
         }
         mutableState.update {
             it.copy(
                 webMoneyDisplayData = it.webMoneyDisplayData.copy(
-                    prepaidNumberErrorStringResource = prepaidNumberError,
+                    prepaidNumberErrorI18nStringKey = prepaidNumberError,
                 ),
             )
         }
@@ -338,14 +316,14 @@ internal class KomojuPaymentScreenModel(private val config: KomojuMobileSDKConfi
 
     private fun BitCashDisplayData.validate(): Boolean {
         val idError = when {
-            bitCashId.isBlank() -> Res.string.komoju_the_entered_bit_cash_id_cannot_be_empty
-            bitCashId.length != 16 -> Res.string.komoju_the_entered_bit_cash_id_is_not_valid
+            bitCashId.isBlank() -> I18nStringKey.the_entered_bit_cash_id_cannot_be_empty
+            bitCashId.length != 16 -> I18nStringKey.the_entered_bit_cash_id_is_not_valid
             else -> null
         }
         mutableState.update {
             it.copy(
                 bitCashDisplayData = it.bitCashDisplayData.copy(
-                    bitCashErrorStringResource = idError,
+                    bitCashErrorI18nStringKey = idError,
                 ),
             )
         }
@@ -354,14 +332,14 @@ internal class KomojuPaymentScreenModel(private val config: KomojuMobileSDKConfi
 
     private fun NetCashDisplayData.validate(): Boolean {
         val idError = when {
-            netCashId.isBlank() -> Res.string.komoju_the_entered_net_cash_id_cannot_be_empty
-            netCashId.length !in 16..20 -> Res.string.komoju_the_entered_net_cash_id_is_not_valid
+            netCashId.isBlank() -> I18nStringKey.the_entered_net_cash_id_cannot_be_empty
+            netCashId.length !in 16..20 -> I18nStringKey.the_entered_net_cash_id_is_not_valid
             else -> null
         }
         mutableState.update {
             it.copy(
                 netCashDisplayData = it.netCashDisplayData.copy(
-                    netCashErrorStringResource = idError,
+                    netCashErrorI18nStringKey = idError,
                 ),
             )
         }
@@ -370,20 +348,20 @@ internal class KomojuPaymentScreenModel(private val config: KomojuMobileSDKConfi
 
     private fun PaidyDisplayData.validate(): Boolean {
         val fullNameError = when {
-            fullName.isBlank() -> Res.string.komoju_the_entered_name_cannot_be_empty
+            fullName.isBlank() -> I18nStringKey.the_entered_name_cannot_be_empty
             else -> null
         }
         val phoneNumberError = when {
-            phoneNumber.isBlank() -> Res.string.komoju_the_entered_phone_number_cannot_be_empty
-            phoneNumber.length < 7 -> Res.string.komoju_the_entered_phone_number_is_not_valid
-            phoneNumber.isDigitsOnly.not() -> Res.string.komoju_the_entered_phone_number_is_not_valid
+            phoneNumber.isBlank() -> I18nStringKey.the_entered_phone_number_cannot_be_empty
+            phoneNumber.length < 7 -> I18nStringKey.the_entered_phone_number_is_not_valid
+            phoneNumber.isDigitsOnly.not() -> I18nStringKey.the_entered_phone_number_is_not_valid
             else -> null
         }
         mutableState.update {
             it.copy(
                 paidyDisplayData = it.paidyDisplayData.copy(
-                    fullNameErrorStringResource = fullNameError,
-                    phoneNumberErrorStringResource = phoneNumberError,
+                    fullNameErrorI18nStringKey = fullNameError,
+                    phoneNumberErrorI18nStringKey = phoneNumberError,
                 ),
             )
         }
@@ -392,23 +370,23 @@ internal class KomojuPaymentScreenModel(private val config: KomojuMobileSDKConfi
 
     private fun CreditCardDisplayData.validate(): Boolean {
         val fullNameOnCardError = when {
-            fullNameOnCard.isBlank() -> Res.string.komoju_cadrholder_name_cannot_be_empty
+            fullNameOnCard.isBlank() -> I18nStringKey.cadrholder_name_cannot_be_empty
             fullNameOnCard.all { char -> char.isValidCardHolderNameChar() } -> null
-            else -> Res.string.komoju_the_entered_cardholder_name_is_not_valid
+            else -> I18nStringKey.the_entered_cardholder_name_is_not_valid
         }
         val creditCardError = run {
             when {
-                creditCardNumber.isValidCardNumber().not() -> Res.string.komoju_the_entered_card_number_is_not_valid
-                creditCardExpiryDate.isValidExpiryDate().not() -> Res.string.komoju_the_entered_expiry_date_is_not_valid
-                creditCardCvv.isValidCVV().not() -> Res.string.komoju_the_entered_cvv_is_not_valid
+                creditCardNumber.isValidCardNumber().not() -> I18nStringKey.the_entered_card_number_is_not_valid
+                creditCardExpiryDate.isValidExpiryDate().not() -> I18nStringKey.the_entered_expiry_date_is_not_valid
+                creditCardCvv.isValidCVV().not() -> I18nStringKey.the_entered_cvv_is_not_valid
                 else -> null
             }
         }
         mutableState.update {
             it.copy(
                 creditCardDisplayData = it.creditCardDisplayData.copy(
-                    fullNameOnCardErrorStringResource = fullNameOnCardError,
-                    creditCardErrorStringResource = creditCardError,
+                    fullNameOnCardErrorI18nStringKey = fullNameOnCardError,
+                    creditCardErrorI18nStringKey = creditCardError,
                 ),
             )
         }
@@ -416,15 +394,15 @@ internal class KomojuPaymentScreenModel(private val config: KomojuMobileSDKConfi
     }
 
     private fun KonbiniDisplayData.validate(commonDisplayData: CommonDisplayData): Boolean {
-        val nameError = if (receiptName.trim().isEmpty()) Res.string.komoju_the_entered_name_cannot_be_empty else null
-        val emailError = if (commonDisplayData.email.isValidEmail.not()) Res.string.komoju_the_entered_email_is_not_valid else null
-        val konbiniBrandNullError = if (selectedKonbiniBrand == null) Res.string.komoju_please_select_a_konbini_brand else null
+        val nameError = if (receiptName.trim().isEmpty()) I18nStringKey.the_entered_name_cannot_be_empty else null
+        val emailError = if (commonDisplayData.email.isValidEmail.not()) I18nStringKey.the_entered_email_is_not_valid else null
+        val konbiniBrandNullError = if (selectedKonbiniBrand == null) I18nStringKey.please_select_a_konbini_brand else null
         mutableState.update {
             it.copy(
                 konbiniDisplayData = it.konbiniDisplayData.copy(
-                    receiptNameErrorStringResource = nameError,
-                    receiptEmailErrorStringResource = emailError,
-                    konbiniBrandNullErrorStringResource = konbiniBrandNullError,
+                    receiptNameErrorI18nStringKey = nameError,
+                    receiptEmailErrorI18nStringKey = emailError,
+                    konbiniBrandNullErrorI18nStringKey = konbiniBrandNullError,
                 ),
             )
         }
