@@ -46,7 +46,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.komoju.android.R
-import com.komoju.android.sdk.KomojuSDK
+import com.komoju.android.sdk.KomojuAndroidSDK
 import com.komoju.android.sdk.canProcessPayment
 import com.komoju.android.ui.theme.KomojuDarkGreen
 
@@ -60,7 +60,7 @@ data class FakeItemDetailScreen(private val index: Int) : Screen {
         val uiState by screenModel.uiState.collectAsStateWithLifecycle()
         val item by remember { derivedStateOf { uiState.items[index] } }
         val komojuSDKConfiguration by screenModel.komojuSDKConfiguration.collectAsStateWithLifecycle()
-        val komojuPaymentLauncher = rememberLauncherForActivityResult(KomojuSDK.KomojuPaymentResultContract) {
+        val komojuPaymentLauncher = rememberLauncherForActivityResult(KomojuAndroidSDK.activityResultContract) {
             screenModel.onKomojuPaymentCompleted()
             navigator.push(if (it.isSuccessFul) FakeOrderSuccessScreen() else FakeOrderFailedScreen())
         }

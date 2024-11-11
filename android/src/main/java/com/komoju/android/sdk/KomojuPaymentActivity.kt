@@ -14,7 +14,6 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -30,13 +29,10 @@ import androidx.core.content.IntentCompat
 import androidx.core.util.Consumer
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import cafe.adriel.voyager.navigator.Navigator
-import cafe.adriel.voyager.transitions.SlideTransition
-import com.komoju.android.sdk.navigation.PaymentResultScreenModel
-import com.komoju.android.sdk.navigation.paymentResultScreenModel
-import com.komoju.android.sdk.ui.screens.RouterEffect
-import com.komoju.android.sdk.ui.screens.payment.KomojuPaymentScreen
-import com.komoju.android.sdk.ui.theme.KomojuMobileSdkTheme
+import com.komoju.mobile.sdk.navigation.PaymentResultScreenModel
+import com.komoju.mobile.sdk.navigation.paymentResultScreenModel
+import com.komoju.mobile.sdk.ui.screens.KomojuPaymentEntryPoint
+import com.komoju.mobile.sdk.ui.screens.RouterEffect
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.callbackFlow
@@ -55,7 +51,7 @@ internal class KomojuPaymentActivity : ComponentActivity() {
                     /* name = */
                     KomojuStartPaymentForResultContract.CONFIGURATION_KEY,
                     /* clazz = */
-                    KomojuSDK.Configuration::class.java,
+                    KomojuAndroidSDK.Configuration::class.java,
                 ) ?: error("komoju sdk configuration is null"),
             )
         },
@@ -87,21 +83,10 @@ internal class KomojuPaymentActivity : ComponentActivity() {
                             .navigationBarsPadding(),
                         contentAlignment = Alignment.BottomCenter,
                     ) {
-                        KomojuMobileSdkTheme(viewModel.configuration) {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .fillMaxHeight(.9f),
-                            ) {
-                                Navigator(
-                                    KomojuPaymentScreen(viewModel.configuration),
-                                ) { navigator ->
-                                    commonScreenModel = navigator.paymentResultScreenModel()
-                                    SlideTransition(navigator)
-                                    RouterEffect(viewModel.router.collectAsStateWithLifecycle(), viewModel::onRouteConsumed)
-                                    NewIntentEffect(LocalContext.current, viewModel::onNewDeeplink)
-                                }
-                            }
+                        KomojuPaymentEntryPoint(viewModel.configuration) { navigator ->
+                            RouterEffect(viewModel.router.collectAsStateWithLifecycle(), viewModel::onRouteConsumed)
+                            commonScreenModel = navigator.paymentResultScreenModel()
+                            NewIntentEffect(LocalContext.current, viewModel::onNewDeeplink)
                         }
                     }
                 }
@@ -128,7 +113,7 @@ internal class KomojuPaymentActivity : ComponentActivity() {
         setResult(
             RESULT_OK,
             Intent().apply {
-                putExtra(KomojuStartPaymentForResultContract.RESULT_KEY, commonScreenModel?.result)
+                putExtra(KomojuStartPaymentForResultContract.RESULT_KEY, commonScreenModel?.result?.toParcelable())
             },
         )
         lifecycleScope.launch {

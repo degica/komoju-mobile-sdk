@@ -1,6 +1,6 @@
 package com.komoju.android.sdk.types
 
-import java.util.Locale
+import androidx.compose.ui.text.intl.Locale
 
 /**
  * Enum class representing supported languages with their respective language codes.
@@ -19,17 +19,7 @@ enum class Language(val languageCode: String) {
     JAPANESE(languageCode = "ja"),
     ;
 
-    /**
-     * Converts the current language to its corresponding locale.
-     *
-     * @return [Locale] for the language.
-     * - ENGLISH returns [Locale.ENGLISH]
-     * - JAPANESE returns [Locale.JAPANESE]
-     */
-    internal fun toLocale(): Locale = when (this) {
-        ENGLISH -> Locale.ENGLISH
-        JAPANESE -> Locale.JAPANESE
-    }
+    override fun toString(): String = languageCode
 
     companion object {
         /**
@@ -40,9 +30,11 @@ enum class Language(val languageCode: String) {
          * - Returns [ENGLISH] for all other cases.
          */
         val default
-            get() = when (Locale.getDefault().language) {
-                Locale.JAPANESE.language -> JAPANESE
+            get() = when (Locale.current.language) {
+                "ja" -> JAPANESE
                 else -> ENGLISH
             }
+
+        fun parse(languageCode: String?): Language = entries.find { it.languageCode == languageCode } ?: default
     }
 }

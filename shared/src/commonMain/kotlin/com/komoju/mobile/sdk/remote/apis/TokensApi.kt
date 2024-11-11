@@ -14,7 +14,7 @@ import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 
-interface TokensApi {
+internal interface TokensApi {
     suspend fun generateSecureToken(request: SecureTokenRequest): Result<SecureTokenResponse>
     suspend fun verifySecureToken(token: String): Result<Boolean>
 }

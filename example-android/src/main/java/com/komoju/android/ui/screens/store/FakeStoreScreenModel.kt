@@ -3,12 +3,12 @@ package com.komoju.android.ui.screens.store
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import com.komoju.android.BuildConfig
-import com.komoju.android.sdk.ExperimentalKomojuPaymentApi
-import com.komoju.android.sdk.KomojuSDK
+import com.komoju.android.sdk.KomojuAndroidSDK
+import com.komoju.android.sdk.annotations.ExperimentalKomojuPaymentApi
 import com.komoju.android.sdk.types.Currency
 import com.komoju.android.sdk.types.Language
-import com.komoju.android.ui.remote.RemoteApiService
-import com.komoju.android.ui.remote.dtos.CreateSessionRequest
+import com.komoju.android.remote.RemoteApiService
+import com.komoju.android.remote.dtos.CreateSessionRequest
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,7 +21,7 @@ class FakeStoreScreenModel : ScreenModel {
 
     private val remoteApiService = RemoteApiService.create()
     private var publishableKey: String? = null
-    private val _komojuSDKConfiguration = MutableStateFlow<KomojuSDK.Configuration?>(null)
+    private val _komojuSDKConfiguration = MutableStateFlow<KomojuAndroidSDK.Configuration?>(null)
     val komojuSDKConfiguration = _komojuSDKConfiguration.asStateFlow()
     private val _uiState = MutableStateFlow(FakeStoreUiState())
     val uiState = _uiState.onStart {
@@ -65,7 +65,7 @@ class FakeStoreScreenModel : ScreenModel {
     fun onBuyClicked(item: Item) {
         screenModelScope.launch {
             createSession(item)?.let { sessionId ->
-                KomojuSDK.Configuration.Builder(
+                KomojuAndroidSDK.Configuration.Builder(
                     requireNotNull(publishableKey),
                     sessionId,
                 ).setLanguage(language)

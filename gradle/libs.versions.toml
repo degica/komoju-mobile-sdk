@@ -1,11 +1,12 @@
 [versions]
 agp = "8.7.2"
 browser = "1.8.0"
+humanReadable = "1.10.0"
 kotlin = "2.0.21"
 leakcanaryAndroid = "2.14"
 nexus-publish = "2.0.0"
 android-minSdk = "24"
-android-compileSdk = "34"
+android-compileSdk = "35"
 coreKtx = "1.15.0"
 fragmentKtx = "1.8.5"
 junit = "4.13.2"
@@ -21,18 +22,20 @@ ktor = "3.0.1"
 coroutines = "1.9.0"
 datetime = "0.6.1"
 uiTooling = "1.7.5"
-composeWebView = "0.33.6"
+composeWebView = "1.9.40-alpha04"
 konlinXJson = "1.7.3"
+uriKmp = "0.0.18"
 voyager = "1.1.0-beta03"
 mavenPublish = "0.30.0"
-nmcp = "0.0.7"
 dokka = "1.9.20"
+compose-multiplatform = "1.7.0"
+jetbrainsComposeLifecycle = "2.8.3"
 
 [libraries]
 androidx-browser = { module = "androidx.browser:browser", version.ref = "browser" }
+human-readable = { module = "nl.jacobras:Human-Readable", version.ref = "humanReadable" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanaryAndroid" }
-nexus-publish = { module = "io.github.gradle-nexus.publish-plugin:io.github.gradle-nexus.publish-plugin.gradle.plugin", version.ref = "nexus-publish" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -58,15 +61,18 @@ ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "kto
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "konlinXJson" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "datetime" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "uiTooling" }
-compose-webview = { group = "io.github.kevinnzou", name = "compose-webview", version.ref = "composeWebView" }
+compose-webview-multiplatform = { group = "io.github.kevinnzou", name = "compose-webview-multiplatform", version.ref = "composeWebView" }
+uri-kmp = { module = "com.eygraber:uri-kmp", version.ref = "uriKmp" }
 voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
 voyager-screenModel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager" }
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
+jetbrains-compose-lifecycle = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "jetbrainsComposeLifecycle" }
 
 [plugins]
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
@@ -75,7 +81,8 @@ kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize",  version.ref = "kotlin"  }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "mavenPublish" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-jetbrains-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka"}
+jetbrains-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }

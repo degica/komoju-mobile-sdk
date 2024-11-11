@@ -2,7 +2,7 @@ package com.komoju.mobile.sdk.entities
 
 import com.komoju.mobile.sdk.types.OffSitePaymentType
 
-sealed interface PaymentMethod {
+internal sealed interface PaymentMethod {
     val hashedGateway: String
     val exchangeRate: Double
     val currency: String
