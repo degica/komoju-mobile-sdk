@@ -19,7 +19,7 @@ fun KomojuPaymentEntryPoint(configuration: KomojuMobileSDKConfiguration, onCreat
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(.9f),
+                .fillMaxHeight(maxHeightFraction),
         ) {
             Navigator(
                 KomojuPaymentScreen(configuration),
@@ -30,3 +30,5 @@ fun KomojuPaymentEntryPoint(configuration: KomojuMobileSDKConfiguration, onCreat
         }
     }
 }
+
+internal expect val maxHeightFraction: Float
