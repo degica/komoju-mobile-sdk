@@ -33,7 +33,7 @@ internal fun WebMoneyForm(
     Column {
         TextField(
             value = webMoneyDisplayData.prepaidNumber,
-            title = i18nStringResource(I18nStringKey.webmoney_information),
+            title = i18nStringResource(I18nStringKey.web_money_information),
             placeholder = i18nStringResource(I18nStringKey.prepaid_number),
             onValueChange = {
                 onWebMoneyDisplayDataChange(webMoneyDisplayData.copy(prepaidNumber = it))

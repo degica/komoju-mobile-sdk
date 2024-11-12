@@ -88,14 +88,14 @@ private val PaymentMethod.displayName
     @Composable
     get() = when (this) {
         is PaymentMethod.BankTransfer -> i18nStringResource(I18nStringKey.bank_transfer)
-        is PaymentMethod.BitCash -> i18nStringResource(I18nStringKey.bitcash)
+        is PaymentMethod.BitCash -> i18nStringResource(I18nStringKey.bit_cash)
         is PaymentMethod.CreditCard -> i18nStringResource(I18nStringKey.credit_card)
         is PaymentMethod.Konbini -> i18nStringResource(I18nStringKey.konbini)
-        is PaymentMethod.NetCash -> i18nStringResource(I18nStringKey.netcash)
+        is PaymentMethod.NetCash -> i18nStringResource(I18nStringKey.net_cash)
         is PaymentMethod.OffSitePayment -> when (type) {
-            OffSitePaymentType.AU_PAY -> i18nStringResource(I18nStringKey.aupay)
+            OffSitePaymentType.AU_PAY -> i18nStringResource(I18nStringKey.au_pay)
             OffSitePaymentType.ALI_PAY -> i18nStringResource(I18nStringKey.alipay)
-            OffSitePaymentType.MER_PAY -> i18nStringResource(I18nStringKey.merpay)
+            OffSitePaymentType.MER_PAY -> i18nStringResource(I18nStringKey.mer_pay)
             OffSitePaymentType.PAY_PAY -> i18nStringResource(I18nStringKey.paypay)
             OffSitePaymentType.RAKUTEN_PAY -> i18nStringResource(I18nStringKey.rakuten_pay)
             OffSitePaymentType.LINE_PAY -> i18nStringResource(I18nStringKey.line_pay)
@@ -103,8 +103,8 @@ private val PaymentMethod.displayName
         }
         is PaymentMethod.Other -> i18nStringResource(I18nStringKey.other)
         is PaymentMethod.Paidy -> i18nStringResource(I18nStringKey.paidy)
-        is PaymentMethod.PayEasy -> i18nStringResource(I18nStringKey.payeasy)
-        is PaymentMethod.WebMoney -> i18nStringResource(I18nStringKey.webmoney)
+        is PaymentMethod.PayEasy -> i18nStringResource(I18nStringKey.pay_easy)
+        is PaymentMethod.WebMoney -> i18nStringResource(I18nStringKey.web_money)
     }
 
 private val PaymentMethod.displayIcon

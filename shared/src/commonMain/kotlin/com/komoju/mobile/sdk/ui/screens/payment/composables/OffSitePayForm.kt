@@ -61,11 +61,11 @@ internal fun OffSitePayForm(paymentMethod: PaymentMethod.OffSitePayment, onPayBu
     val paymentButtonKey = remember(paymentMethod) {
         when (paymentMethod.type) {
             OffSitePaymentType.ALI_PAY -> I18nStringKey.continue_to_alipay
-            OffSitePaymentType.AU_PAY -> I18nStringKey.continue_to_aupay
-            OffSitePaymentType.MER_PAY -> I18nStringKey.continue_to_merpay
+            OffSitePaymentType.AU_PAY -> I18nStringKey.continue_to_au_pay
+            OffSitePaymentType.MER_PAY -> I18nStringKey.continue_to_mer_pay
             OffSitePaymentType.PAY_PAY -> I18nStringKey.continue_to_paypay
             OffSitePaymentType.RAKUTEN_PAY -> I18nStringKey.continue_to_rakuten
-            OffSitePaymentType.LINE_PAY -> I18nStringKey.continue_to_linepay
+            OffSitePaymentType.LINE_PAY -> I18nStringKey.continue_to_line_pay
             else -> null
         }
     }

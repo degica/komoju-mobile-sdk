@@ -33,7 +33,7 @@ internal fun BitCashForm(
     Column {
         TextField(
             value = bitCashDisplayData.bitCashId,
-            title = i18nStringResource(I18nStringKey.bitcash_information),
+            title = i18nStringResource(I18nStringKey.bit_cash_information),
             placeholder = i18nStringResource(I18nStringKey.hiragana_id),
             onValueChange = {
                 onBitCashDisplayDataChange(bitCashDisplayData.copy(bitCashId = it))

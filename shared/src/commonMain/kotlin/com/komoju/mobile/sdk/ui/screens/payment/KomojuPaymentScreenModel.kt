@@ -370,7 +370,7 @@ internal class KomojuPaymentScreenModel(private val config: KomojuMobileSDKConfi
 
     private fun CreditCardDisplayData.validate(): Boolean {
         val fullNameOnCardError = when {
-            fullNameOnCard.isBlank() -> I18nStringKey.cadrholder_name_cannot_be_empty
+            fullNameOnCard.isBlank() -> I18nStringKey.cardholder_name_cannot_be_empty
             fullNameOnCard.all { char -> char.isValidCardHolderNameChar() } -> null
             else -> I18nStringKey.the_entered_cardholder_name_is_not_valid
         }

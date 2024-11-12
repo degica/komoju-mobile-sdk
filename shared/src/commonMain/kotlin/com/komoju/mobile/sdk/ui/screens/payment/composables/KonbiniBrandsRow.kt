@@ -77,9 +77,9 @@ private val KonbiniBrand.displayText
         is KonbiniBrand.DailyYamazaki -> i18nStringResource(I18nStringKey.daily_yamazaki)
         is KonbiniBrand.FamilyMart -> i18nStringResource(I18nStringKey.family_mart)
         is KonbiniBrand.Lawson -> i18nStringResource(I18nStringKey.lawson)
-        is KonbiniBrand.MiniStop -> i18nStringResource(I18nStringKey.ministop)
-        is KonbiniBrand.SeicoMart -> i18nStringResource(I18nStringKey.seicomart)
-        is KonbiniBrand.SevenEleven -> i18nStringResource(I18nStringKey._7_eleven)
+        is KonbiniBrand.MiniStop -> i18nStringResource(I18nStringKey.mini_stop)
+        is KonbiniBrand.SeicoMart -> i18nStringResource(I18nStringKey.seico_mart)
+        is KonbiniBrand.SevenEleven -> i18nStringResource(I18nStringKey.seven_eleven)
     }
 
 private val KonbiniBrand.displayIcon
