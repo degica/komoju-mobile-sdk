@@ -25,5 +25,7 @@
     <string name="retry_payment">支払いを再試行する</string>
     <string name="thank_you_for_your_order">ご注文ありがとうございます。ご注文は確認されました。発送の詳細は、ご登録のメールアドレスにすぐに送信されます。</string>
     <string name="order_confirmed">注文確定</string>
+    <string name="payment_failed">支払いに失敗しました</string>
+    <string name="payment_failed_description">申し訳ありません！お支払いに失敗したため、ご注文の際にエラーが発生したようです。もう一度お試しいただくか、問題を報告してください。差し引かれた金額は 7 日以内に返金されます。</string>
 
 </resources>

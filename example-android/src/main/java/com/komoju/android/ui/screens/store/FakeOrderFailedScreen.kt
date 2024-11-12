@@ -55,10 +55,10 @@ private fun FakeOrderFailedScreenContent() {
             contentDescription = null,
         )
 
-        Text("Payment Failed", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+        Text(stringResource(R.string.payment_failed), fontSize = 24.sp, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.padding(16.dp))
         Text(
-            "Oops! Seems like there was an error placing your order because of a failed payment, please try again or report an issue. If any money is deducted then it will be refunded within 7 days",
+            stringResource(R.string.payment_failed_description),
             fontSize = 16.sp,
             textAlign = TextAlign.Center,
         )

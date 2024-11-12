@@ -24,4 +24,6 @@
     <string name="retry_payment">Retry Payment</string>
     <string name="thank_you_for_your_order">Thank you for your Order, it has been confirmed, Shipping Details will be shared on your registered email address soon</string>
     <string name="order_confirmed">Order Confirmed</string>
+    <string name="payment_failed">Payment Failed</string>
+    <string name="payment_failed_description">Oops! Seems like there was an error placing your order because of a failed payment, please try again or report an issue. If any money is deducted then it will be refunded within 7 days</string>
 </resources>
