@@ -12,8 +12,8 @@
 		7C0964882CE2E92600D5AE76 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 7C0964872CE2E92600D5AE76 /* Localizable.xcstrings */; };
 		7C0964D82CE30CB300D5AE76 /* FakeStoreSuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0964D72CE30CB300D5AE76 /* FakeStoreSuccessView.swift */; };
 		7C0964DA2CE3484600D5AE76 /* FakeStoreFailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0964D92CE3484600D5AE76 /* FakeStoreFailedView.swift */; };
-		7CA94A032CE1DD4B008A3649 /* ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CA94A012CE1DD3E008A3649 /* ios.framework */; };
-		7CA94A042CE1DD4B008A3649 /* ios.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7CA94A012CE1DD3E008A3649 /* ios.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7C0966D52CE4523300D5AE76 /* KomojuSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0966D42CE4522F00D5AE76 /* KomojuSDK.framework */; };
+		7C0966D62CE4523300D5AE76 /* KomojuSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0966D42CE4522F00D5AE76 /* KomojuSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7CA94A212CE21506008A3649 /* FakeItemDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA94A1A2CE21506008A3649 /* FakeItemDetailScreen.swift */; };
 		7CA94A222CE21506008A3649 /* FakeStoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA94A1E2CE21506008A3649 /* FakeStoreViewModel.swift */; };
 		7CA94A232CE21506008A3649 /* CreateSessionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA94A152CE21506008A3649 /* CreateSessionResponse.swift */; };
@@ -26,12 +26,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		7CA94A002CE1DD3E008A3649 /* PBXContainerItemProxy */ = {
+		7C0966D32CE4522F00D5AE76 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 7CA949F92CE1DD3E008A3649 /* ios.xcodeproj */;
+			containerPortal = 7C0966CE2CE4522F00D5AE76 /* KomojuSDK.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 7CA949EC2CE1DD20008A3649;
-			remoteInfo = ios;
+			remoteGlobalIDString = 7CCCA0A82CCA23C600615A83;
+			remoteInfo = KomojuSDK;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -42,7 +42,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				7CA94A042CE1DD4B008A3649 /* ios.framework in Embed Frameworks */,
+				7C0966D62CE4523300D5AE76 /* KomojuSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -56,9 +56,10 @@
 		7C0964872CE2E92600D5AE76 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		7C0964D72CE30CB300D5AE76 /* FakeStoreSuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeStoreSuccessView.swift; sourceTree = "<group>"; };
 		7C0964D92CE3484600D5AE76 /* FakeStoreFailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeStoreFailedView.swift; sourceTree = "<group>"; };
+		7C0966C72CE4522F00D5AE76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7C0966CC2CE4522F00D5AE76 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		7C0966CE2CE4522F00D5AE76 /* KomojuSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = KomojuSDK.xcodeproj; sourceTree = "<group>"; };
 		7CA949BE2CE1D9AF008A3649 /* KomojuIosSDKExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KomojuIosSDKExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		7CA949F72CE1DD3E008A3649 /* ios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ios.h; sourceTree = "<group>"; };
-		7CA949F92CE1DD3E008A3649 /* ios.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = ios.xcodeproj; sourceTree = "<group>"; };
 		7CA94A112CE21421008A3649 /* dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = dev.xcconfig; sourceTree = "<group>"; };
 		7CA94A122CE21421008A3649 /* live.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = live.xcconfig; sourceTree = "<group>"; };
 		7CA94A142CE21506008A3649 /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
@@ -77,7 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7CA94A032CE1DD4B008A3649 /* ios.framework in Frameworks */,
+				7C0966D52CE4523300D5AE76 /* KomojuSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,7 +96,7 @@
 		42799AB246E5F90AF97AA0EF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7CA949FA2CE1DD3E008A3649 /* ios */,
+				7C0966CF2CE4522F00D5AE76 /* komoju-ios-sdk */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -133,28 +134,45 @@
 			path = "example-ios";
 			sourceTree = "<group>";
 		};
-		7CA949F82CE1DD3E008A3649 /* ios */ = {
+		7C0966C62CE4522F00D5AE76 /* types */ = {
 			isa = PBXGroup;
 			children = (
-				7CA949F72CE1DD3E008A3649 /* ios.h */,
 			);
-			path = ios;
+			path = types;
 			sourceTree = "<group>";
 		};
-		7CA949FA2CE1DD3E008A3649 /* ios */ = {
+		7C0966CB2CE4522F00D5AE76 /* KomojuSDK */ = {
 			isa = PBXGroup;
 			children = (
-				7CA949F82CE1DD3E008A3649 /* ios */,
-				7CA949F92CE1DD3E008A3649 /* ios.xcodeproj */,
+				7C0966C62CE4522F00D5AE76 /* types */,
+				7C0966C72CE4522F00D5AE76 /* Assets.xcassets */,
 			);
-			name = ios;
-			path = ../ios;
+			path = KomojuSDK;
 			sourceTree = "<group>";
 		};
-		7CA949FB2CE1DD3E008A3649 /* Products */ = {
+		7C0966CD2CE4522F00D5AE76 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				7CA94A012CE1DD3E008A3649 /* ios.framework */,
+				7C0966CC2CE4522F00D5AE76 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		7C0966CF2CE4522F00D5AE76 /* komoju-ios-sdk */ = {
+			isa = PBXGroup;
+			children = (
+				7C0966CB2CE4522F00D5AE76 /* KomojuSDK */,
+				7C0966CD2CE4522F00D5AE76 /* Preview Content */,
+				7C0966CE2CE4522F00D5AE76 /* KomojuSDK.xcodeproj */,
+			);
+			name = "komoju-ios-sdk";
+			path = "../komoju-ios-sdk";
+			sourceTree = "<group>";
+		};
+		7C0966D02CE4522F00D5AE76 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7C0966D42CE4522F00D5AE76 /* KomojuSDK.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -206,8 +224,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7555FFA5242A565B00829871 /* Build configuration list for PBXNativeTarget "example-ios" */;
 			buildPhases = (
-				7555FF77242A565900829871 /* Sources */,
 				B92378962B6B1156000C7307 /* Frameworks */,
+				7555FF77242A565900829871 /* Sources */,
 				7555FF79242A565900829871 /* Resources */,
 				7CA94A052CE1DD4B008A3649 /* Embed Frameworks */,
 			);
@@ -253,8 +271,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 7CA949FB2CE1DD3E008A3649 /* Products */;
-					ProjectRef = 7CA949F92CE1DD3E008A3649 /* ios.xcodeproj */;
+					ProductGroup = 7C0966D02CE4522F00D5AE76 /* Products */;
+					ProjectRef = 7C0966CE2CE4522F00D5AE76 /* KomojuSDK.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -265,11 +283,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		7CA94A012CE1DD3E008A3649 /* ios.framework */ = {
+		7C0966D42CE4522F00D5AE76 /* KomojuSDK.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = ios.framework;
-			remoteRef = 7CA94A002CE1DD3E008A3649 /* PBXContainerItemProxy */;
+			path = KomojuSDK.framework;
+			remoteRef = 7C0966D32CE4522F00D5AE76 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

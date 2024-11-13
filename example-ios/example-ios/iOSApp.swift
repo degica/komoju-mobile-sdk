@@ -1,4 +1,4 @@
-import ios
+import KomojuSDK
 import SwiftUI
 
 @main

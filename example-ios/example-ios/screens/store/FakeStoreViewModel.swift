@@ -1,5 +1,5 @@
 import Foundation
-import ios
+import KomojuSDK
 import SwiftUI
 
 class FakeStoreViewModel: ObservableObject {

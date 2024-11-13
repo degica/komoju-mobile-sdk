@@ -7,34 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C0966E52CE452F300D5AE76 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0966E42CE452F000D5AE76 /* Language.swift */; };
+		7C0966E62CE452F300D5AE76 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0966E32CE452EE00D5AE76 /* Currency.swift */; };
+		7C0966E72CE452F300D5AE76 /* KomojuPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0966E22CE452DE00D5AE76 /* KomojuPaymentView.swift */; };
+		7C0966E82CE452F300D5AE76 /* KomojuIosSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0966E12CE452DC00D5AE76 /* KomojuIosSDK.swift */; };
 		7CCCA0B72CCA25E600615A83 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7CCCA0B52CCA25E600615A83 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7CCCA0A82CCA23C600615A83 /* ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C0966DC2CE452D900D5AE76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7C0966E12CE452DC00D5AE76 /* KomojuIosSDK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KomojuIosSDK.swift; sourceTree = "<group>"; };
+		7C0966E22CE452DE00D5AE76 /* KomojuPaymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KomojuPaymentView.swift; sourceTree = "<group>"; };
+		7C0966E32CE452EE00D5AE76 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
+		7C0966E42CE452F000D5AE76 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
+		7CCCA0A82CCA23C600615A83 /* KomojuSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KomojuSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CCCA0B52CCA25E600615A83 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		7CCCA0AD2CCA23C600615A83 /* Exceptions for "ios" folder in "ios" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			publicHeaders = (
-				ios.h,
-			);
-			target = 7CCCA0A72CCA23C600615A83 /* ios */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		7CCCA0AA2CCA23C600615A83 /* ios */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				7CCCA0AD2CCA23C600615A83 /* Exceptions for "ios" folder in "ios" target */,
-			);
-			path = ios;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		7CCCA0A52CCA23C600615A83 /* Frameworks */ = {
@@ -47,11 +35,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7C0966DB2CE452D900D5AE76 /* types */ = {
+			isa = PBXGroup;
+			children = (
+				7C0966E42CE452F000D5AE76 /* Language.swift */,
+				7C0966E32CE452EE00D5AE76 /* Currency.swift */,
+			);
+			path = types;
+			sourceTree = "<group>";
+		};
+		7C0966E02CE452D900D5AE76 /* KomojuSDK */ = {
+			isa = PBXGroup;
+			children = (
+				7C0966DB2CE452D900D5AE76 /* types */,
+				7C0966DC2CE452D900D5AE76 /* Assets.xcassets */,
+				7C0966E22CE452DE00D5AE76 /* KomojuPaymentView.swift */,
+				7C0966E12CE452DC00D5AE76 /* KomojuIosSDK.swift */,
+			);
+			path = KomojuSDK;
+			sourceTree = "<group>";
+		};
 		7CCCA09E2CCA23C600615A83 = {
 			isa = PBXGroup;
 			children = (
+				7C0966E02CE452D900D5AE76 /* KomojuSDK */,
 				7CCCA0B62CCA25E600615A83 /* Preview Content */,
-				7CCCA0AA2CCA23C600615A83 /* ios */,
 				7CCCA0A92CCA23C600615A83 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -59,7 +67,7 @@
 		7CCCA0A92CCA23C600615A83 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7CCCA0A82CCA23C600615A83 /* ios.framework */,
+				7CCCA0A82CCA23C600615A83 /* KomojuSDK.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -85,9 +93,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		7CCCA0A72CCA23C600615A83 /* ios */ = {
+		7CCCA0A72CCA23C600615A83 /* KomojuSDK */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7CCCA0AE2CCA23C600615A83 /* Build configuration list for PBXNativeTarget "ios" */;
+			buildConfigurationList = 7CCCA0AE2CCA23C600615A83 /* Build configuration list for PBXNativeTarget "KomojuSDK" */;
 			buildPhases = (
 				7CCCA0B82CCA27B900615A83 /* Compile Kotlin MultiPlatform Framework */,
 				7CCCA0A32CCA23C600615A83 /* Headers */,
@@ -99,14 +107,11 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				7CCCA0AA2CCA23C600615A83 /* ios */,
-			);
-			name = ios;
+			name = KomojuSDK;
 			packageProductDependencies = (
 			);
 			productName = ios;
-			productReference = 7CCCA0A82CCA23C600615A83 /* ios.framework */;
+			productReference = 7CCCA0A82CCA23C600615A83 /* KomojuSDK.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -124,7 +129,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 7CCCA0A22CCA23C600615A83 /* Build configuration list for PBXProject "ios" */;
+			buildConfigurationList = 7CCCA0A22CCA23C600615A83 /* Build configuration list for PBXProject "KomojuSDK" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -139,7 +144,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7CCCA0A72CCA23C600615A83 /* ios */,
+				7CCCA0A72CCA23C600615A83 /* KomojuSDK */,
 			);
 		};
 /* End PBXProject section */
@@ -181,6 +186,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C0966E52CE452F300D5AE76 /* Language.swift in Sources */,
+				7C0966E62CE452F300D5AE76 /* Currency.swift in Sources */,
+				7C0966E72CE452F300D5AE76 /* KomojuPaymentView.swift in Sources */,
+				7C0966E82CE452F300D5AE76 /* KomojuIosSDK.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,7 +403,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7CCCA0A22CCA23C600615A83 /* Build configuration list for PBXProject "ios" */ = {
+		7CCCA0A22CCA23C600615A83 /* Build configuration list for PBXProject "KomojuSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7CCCA0B12CCA23C600615A83 /* Debug */,
@@ -403,7 +412,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7CCCA0AE2CCA23C600615A83 /* Build configuration list for PBXNativeTarget "ios" */ = {
+		7CCCA0AE2CCA23C600615A83 /* Build configuration list for PBXNativeTarget "KomojuSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7CCCA0AF2CCA23C600615A83 /* Debug */,
