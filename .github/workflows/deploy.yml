@@ -22,7 +22,7 @@ jobs:
           #            os: macos-latest
           - target: :shared:publishAllPublicationsToMavenCentralRepository
             os: ubuntu-latest
-          - target: :android:publishAllPublicationsToMavenCentralRepository
+          - target: :komoju-android-sdk:publishAllPublicationsToMavenCentralRepository
             os: ubuntu-latest
     runs-on: ${{ matrix.os }}
     steps:

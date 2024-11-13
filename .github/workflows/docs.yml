@@ -24,7 +24,7 @@ jobs:
           java-version: '17'
 
       - name: Generate Docs
-        run: chmod +x gradlew && ./gradlew :android:dokkaHtml
+        run: chmod +x gradlew && ./gradlew :komoju-android-sdk:dokkaHtml
 
       - name: Push
         uses: s0/git-publish-subdir-action@develop
