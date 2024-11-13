@@ -5,7 +5,7 @@ import UIKit
 public struct KomojuPaymentView: View {
     @State var isVisible: Bool = false
     @State private var sheetHeight: CGFloat = .zero
-    @State private var deeplinkUrl: String? = nil
+    @State private var deeplinkUrl: String?
 
     let configuration: KomojuIosSDK.Configuration
     let onDismiss: (KomojuIosSDK.PaymentResult) -> Void
@@ -29,7 +29,7 @@ public struct KomojuPaymentView: View {
             .ignoresSafeArea(.keyboard)
         }.onOpenURL(perform: onNewDeeplink)
     }
-    
+
     private func onNewDeeplink(_ url: URL) {
         deeplinkUrl = url.absoluteString
     }
