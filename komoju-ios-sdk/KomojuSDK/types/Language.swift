@@ -1,13 +1,13 @@
 import Foundation
 
 public enum Language {
-    case English
-    case Japanese
+    case english
+    case japanese
 
     public var languageCode: String {
         switch self {
-        case .English: return "en"
-        case .Japanese: return "ja"
+        case .english: return "en"
+        case .japanese: return "ja"
         }
     }
 }
@@ -15,7 +15,7 @@ public enum Language {
 public extension Language {
     var useSystemLanguage: Language {
         return if Locale.current.languageCode == "en" {
-            .English
+            .english
         } else {
             self
         }
@@ -23,8 +23,8 @@ public extension Language {
 
     func parse(from string: String) -> Language {
         return switch string {
-        case "en": .English
-        case "ja": .Japanese
+        case "en": .english
+        case "ja": .japanese
         default: useSystemLanguage
         }
     }

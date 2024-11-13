@@ -17,7 +17,7 @@ public class KomojuIosSDK {
         public class Builder {
             private var publishableKey: String
             private var sessionId: String
-            private var language: Language = .Japanese // Default language is Japanese.
+            private var language: Language = .japanese // Default language is Japanese.
             private var currency: Currency = .JPY // Default currency is Japanese Yen.
             private var isDebugMode: Bool = false // Debug mode is off by default.
             private var configurableTheme: ConfigurableTheme = ConfigurableThemeCompanion().default_.toIosTheme()

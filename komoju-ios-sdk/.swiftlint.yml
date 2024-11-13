@@ -1,0 +1,7 @@
+strict: true
+line_length: 180
+
+nesting:
+  type_level:
+    warning: 6
+    error: 6

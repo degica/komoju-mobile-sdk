@@ -59,7 +59,7 @@ class FakeStoreViewModel: ObservableObject {
     }
 
     private func createSessionAsync(item: Item) async {
-        apiServices.createSession(amount: item.price, currency: Currency.JPY.currencyCode, language: Language.English.useSystemLanguage.languageCode, onSuccess: { sessionId in
+        apiServices.createSession(amount: item.price, currency: Currency.JPY.currencyCode, language: Language.english.useSystemLanguage.languageCode, onSuccess: { sessionId in
             self.uiState.isCreatingSession = false
             self.komojuPaymentConfiguration = KomojuIosSDK.Configuration.Builder(
                 publishableKey: self.publisherKey!,
@@ -71,7 +71,7 @@ class FakeStoreViewModel: ObservableObject {
                 primaryButtonCornerRadius: 16
             ))
             .setInlinedProcessing(true)
-            .setLanguage(Language.English.useSystemLanguage)
+            .setLanguage(Language.english.useSystemLanguage)
             .setCurrency(Currency.JPY)
             .setDebugMode(true)
             .build()

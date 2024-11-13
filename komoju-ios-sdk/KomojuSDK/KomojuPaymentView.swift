@@ -19,15 +19,14 @@ public struct KomojuPaymentView: View {
             isVisible = true
         }
         .sheet(isPresented: $isVisible, onDismiss: {
-            debugPrint("Being dismissed")
             isVisible = false
-        }) {
+        }, content: {
             ComposeView(
                 configuration: configuration.toMobileConfiguration(),
                 onDismiss: onDismiss,
                 deepLinkUrl: deeplinkUrl)
             .ignoresSafeArea(.keyboard)
-        }.onOpenURL(perform: onNewDeeplink)
+        }).onOpenURL(perform: onNewDeeplink)
     }
 
     private func onNewDeeplink(_ url: URL) {
@@ -40,8 +39,8 @@ private struct ComposeView: UIViewControllerRepresentable {
     let onDismiss: (KomojuIosSDK.PaymentResult) -> Void
     let deepLinkUrl: String?
     func makeUIViewController(context _: Context) -> UIViewController {
-        MainViewControllerKt.MainViewController(configuration: configuration) { KomojuMobileSDKPaymentResult in
-            self.onDismiss(KomojuIosSDK.PaymentResult(isSuccess: KomojuMobileSDKPaymentResult.isSuccessFul))
+        MainViewControllerKt.MainViewController(configuration: configuration) { result in
+            self.onDismiss(KomojuIosSDK.PaymentResult(isSuccess: result.isSuccessFul))
         }
     }
 
