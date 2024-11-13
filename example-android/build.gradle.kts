@@ -69,7 +69,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":komoju-sdk-android"))
+    implementation(project(":komoju-android-sdk"))
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.lifecycle.runtime.ktx)

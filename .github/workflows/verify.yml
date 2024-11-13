@@ -42,4 +42,4 @@ jobs:
           distribution: zulu
           java-version: 17
       - name: Run Gradle
-        run: ./gradlew :android:lintDebug
+        run: ./gradlew :komoju-android-sdk:lintDebug
