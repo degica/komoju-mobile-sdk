@@ -45,6 +45,8 @@ jobs:
         run: ./gradlew :komoju-android-sdk:lintDebug
   swiftlint:
     runs-on: ubuntu-latest
+    name: SwiftLint
+    if: github.event.pull_request.draft == false
     steps:
       - uses: actions/checkout@v1
       - name: swiftLint on ios sdk
