@@ -16,5 +16,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "komoju-mobile-sdk"
 include(":shared")
-include(":android")
+include(":komoju-sdk-android")
 include(":example-android")
