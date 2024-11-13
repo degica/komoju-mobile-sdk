@@ -9,12 +9,12 @@ import com.komoju.android.sdk.types.Language
 import com.komoju.mobile.sdk.KomojuMobileSDKConfiguration
 import com.komoju.mobile.sdk.KomojuMobileSDKPaymentResult
 import com.komoju.mobile.sdk.canProcessPayment
+import com.komoju.mobile.sdk.ui.theme.ConfigurableTheme as CoreConfigurableTheme
 import com.komoju.mobile.sdk.ui.theme.DefaultConfigurableTheme
 import com.komoju.mobile.sdk.ui.theme.toColor
-import kotlinx.parcelize.Parcelize
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
-import com.komoju.mobile.sdk.ui.theme.ConfigurableTheme as CoreConfigurableTheme
+import kotlinx.parcelize.Parcelize
 
 /**
  * Singleton object providing the main SDK functionalities for Komoju Android integration.
