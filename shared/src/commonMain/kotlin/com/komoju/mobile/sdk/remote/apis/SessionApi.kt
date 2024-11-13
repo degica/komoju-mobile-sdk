@@ -20,7 +20,7 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 
-interface SessionApi {
+internal interface SessionApi {
     suspend fun show(id: String): Result<Session>
     suspend fun pay(id: String, paymentRequest: PaymentRequest): Result<Payment>
     suspend fun pay(sessionID: String, token: String, amount: String, currency: String): Result<Payment>

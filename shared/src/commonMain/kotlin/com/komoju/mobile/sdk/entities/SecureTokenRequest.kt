@@ -1,6 +1,6 @@
 package com.komoju.mobile.sdk.entities
 
-data class SecureTokenRequest(
+internal data class SecureTokenRequest(
     val amount: String,
     val currency: String,
     val returnUrl: String,

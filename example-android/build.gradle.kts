@@ -14,7 +14,7 @@ val localProperties = Properties().apply {
 
 android {
     namespace = "com.komoju.android"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24

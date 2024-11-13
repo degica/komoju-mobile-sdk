@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SecureTokenRequestDto(
+internal data class SecureTokenRequestDto(
     @SerialName("amount") val amount: String? = null,
     @SerialName("currency") val currency: String? = null,
     @SerialName("return_url") val returnUrl: String? = null,

@@ -1,18 +1,19 @@
 package com.komoju.mobile.sdk.remote.apis
 
+import com.komoju.mobile.sdk.KomojuMobileSDKConfiguration
 import com.komoju.mobile.sdk.remote.createNetworkClient
 
-interface KomojuRemoteApi : AutoCloseable {
+internal interface KomojuRemoteApi : AutoCloseable {
     val sessions: SessionApi
     val tokens: TokensApi
 
     companion object {
-        fun create(publishableKey: String?): KomojuRemoteApi = KomojuRemoteApiImpl(publishableKey)
+        fun create(configuration: KomojuMobileSDKConfiguration): KomojuRemoteApi = KomojuRemoteApiImpl(configuration)
     }
 }
 
-internal class KomojuRemoteApiImpl(publishableKey: String?) : KomojuRemoteApi {
-    private val networkClient by lazy { createNetworkClient(publishableKey) }
+internal class KomojuRemoteApiImpl(configuration: KomojuMobileSDKConfiguration) : KomojuRemoteApi {
+    private val networkClient by lazy { createNetworkClient(configuration) }
 
     override val sessions: SessionApi by lazy { SessionApiImpl(networkClient) }
 

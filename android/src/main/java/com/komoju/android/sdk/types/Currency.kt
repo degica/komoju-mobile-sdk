@@ -1,7 +1,5 @@
 package com.komoju.android.sdk.types
 
-import java.util.Locale
-
 /**
  * Enum class representing supported currencies with corresponding ISO 4217 currency codes.
  * Each currency is associated with a specific locale.
@@ -18,18 +16,6 @@ enum class Currency(val currencyCode: String) {
      */
     USD(currencyCode = "USD"),
     ;
-
-    /**
-     * Converts the current currency to its corresponding locale.
-     *
-     * @return [Locale] for the currency.
-     * - JPY returns [Locale.JAPAN]
-     * - USD returns [Locale.US]
-     */
-    fun toLocale(): Locale = when (this) {
-        JPY -> Locale.JAPAN
-        USD -> Locale.US
-    }
 
     companion object {
         /**

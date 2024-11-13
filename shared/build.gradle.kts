@@ -1,12 +1,16 @@
+
 import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlin.plugin.serialization)
     alias(libs.plugins.maven.publish)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.composeMultiplatform)
 }
 
 kotlin {
@@ -17,18 +21,46 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_17)
         }
     }
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
+    val xcf = XCFramework()
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64(),
+    ).forEach {
+        it.binaries.framework {
+            xcf.add(this)
+            baseName = "komojuShared"
+            isStatic = true
+        }
+    }
 
     sourceSets {
         commonMain.dependencies {
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.ui)
+            implementation(compose.components.resources)
+            implementation(compose.components.uiToolingPreview)
+            implementation(libs.jetbrains.compose.lifecycle)
+
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.ktor.client.logging)
+
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.datetime)
+
+            implementation(libs.voyager.navigator)
+            implementation(libs.voyager.screenModel)
+            implementation(libs.voyager.transitions)
+
+            implementation(libs.compose.webview.multiplatform)
+
+            implementation(libs.human.readable)
+            implementation(libs.uri.kmp)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -36,6 +68,8 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.ktor.client.okhttp)
             implementation(libs.kotlinx.coroutines.android)
+            implementation(libs.androidx.browser)
+            implementation(libs.androidx.compose.ui.tooling.preview)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
@@ -58,6 +92,17 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+    resourcePrefix = "komoju_"
+}
+
+dependencies {
+    debugImplementation(libs.androidx.ui.tooling)
+}
+
+compose {
+    resources {
+        generateResClass = never
     }
 }
 

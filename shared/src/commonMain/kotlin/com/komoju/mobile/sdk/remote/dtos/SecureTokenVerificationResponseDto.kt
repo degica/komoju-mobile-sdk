@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SecureTokenVerificationResponseDto(
+internal data class SecureTokenVerificationResponseDto(
     @SerialName("secure_token") val secureToken: String? = null,
     @SerialName("verification_status") val verificationStatus: String? = null,
 )

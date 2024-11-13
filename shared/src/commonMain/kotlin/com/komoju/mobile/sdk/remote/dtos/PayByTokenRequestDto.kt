@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PayByTokenRequestDto(
+internal data class PayByTokenRequestDto(
     @SerialName("amount") val amount: String? = null,
     @SerialName("currency") val currency: String? = null,
     @SerialName("payment_details") val paymentDetails: String? = null,

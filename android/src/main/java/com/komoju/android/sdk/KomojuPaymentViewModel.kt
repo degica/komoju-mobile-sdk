@@ -2,13 +2,14 @@ package com.komoju.android.sdk
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.komoju.android.sdk.ui.screens.KomojuPaymentRoute
-import com.komoju.android.sdk.ui.screens.Router
-import com.komoju.android.sdk.utils.DeeplinkEntity
+import com.komoju.mobile.sdk.KomojuMobileSDKConfiguration
+import com.komoju.mobile.sdk.ui.screens.KomojuPaymentRoute
+import com.komoju.mobile.sdk.ui.screens.Router
+import com.komoju.mobile.sdk.utils.DeeplinkEntity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-internal class KomojuPaymentViewModel(internal val configuration: KomojuSDK.Configuration) : ViewModel() {
+internal class KomojuPaymentViewModel(internal val configuration: KomojuMobileSDKConfiguration) : ViewModel() {
 
     private val _isVisible = MutableStateFlow(false)
     val isVisible = _isVisible.asStateFlow()
@@ -35,6 +36,7 @@ internal class KomojuPaymentViewModel(internal val configuration: KomojuSDK.Conf
                         amount = deeplinkEntity.amount,
                         currency = deeplinkEntity.currency,
                     )
+
                     DeeplinkEntity.Verify.BySessionId -> KomojuPaymentRoute.ProcessPayment.ProcessType.Session
                 },
             ),
@@ -42,9 +44,10 @@ internal class KomojuPaymentViewModel(internal val configuration: KomojuSDK.Conf
     }
 }
 
-internal class KomojuPaymentViewModelFactory(private val configuration: KomojuSDK.Configuration) : ViewModelProvider.NewInstanceFactory() {
+internal class KomojuPaymentViewModelFactory(private val configuration: KomojuAndroidSDK.Configuration) :
+    ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST")
-        return KomojuPaymentViewModel(configuration) as T
+        return KomojuPaymentViewModel(configuration.toMobileConfiguration()) as T
     }
 }

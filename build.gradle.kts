@@ -10,4 +10,5 @@ plugins {
     alias(libs.plugins.kotlin.parcelize) apply false
     alias(libs.plugins.jetbrains.kotlin.jvm) apply false
     alias(libs.plugins.jetbrains.dokka) apply false
+    alias(libs.plugins.composeMultiplatform) apply false
 }
