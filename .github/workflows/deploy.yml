@@ -58,6 +58,11 @@ jobs:
       - uses: actions/checkout@v4
       - name: Validate Gradle Wrapper
         uses: gradle/actions/wrapper-validation@v4
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.konan
+          key: ${{ runner.os }}-${{ hashFiles('**/.lock') }}
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -87,11 +92,16 @@ jobs:
 
   deploy-ios-sdk:
     name: Deploy iOS SDK
-    runs-on: macos-latest
+    runs-on: macos-latest-xlarge
     steps:
       - uses: actions/checkout@v4
       - name: Validate Gradle Wrapper
         uses: gradle/actions/wrapper-validation@v4
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.konan
+          key: ${{ runner.os }}-${{ hashFiles('**/.lock') }}
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: '16.0.0'
@@ -116,11 +126,9 @@ jobs:
           -framework ./shared/build/bin/iosSimulatorArm64/releaseFramework/komojuShared.framework \
           -output ./build/outputs/xcframework/KomojuSharedSDK.xcframework
           
-          zip -r KomojuSharedSDK-$SDK_VERSION.zip ./build/outputs/xcframework/KomojuSharedSDK.xcframework
+          zip -r KomojuSharedSDK.zip ./build/outputs/xcframework/KomojuSharedSDK.xcframework
 
-        env:
-          SDK_VERSION: ${{ env.SDK_VERSION }}
-      - name: Build iOS SDK Wrapper
+      - name: Build Shared SDK Swift Wrapper
         working-directory: ./komoju-ios-sdk
         run: |
           # Build & Archive for iOS
@@ -153,22 +161,17 @@ jobs:
           -framework ./build/xcframework/komoju_ios_simulators.xcarchive/Products/Library/Frameworks/KomojuSDK.framework \
           -output ./build/outputs/xcframework/KomojuIosSDK.xcframework
           
-          zip -r KomojuIosSDK-$SDK_VERSION.zip ./build/outputs/xcframework/KomojuIosSDK.xcframework
-        env:
-          SDK_VERSION: ${{ env.SDK_VERSION }}
+          zip -r KomojuIosSDK.zip ./build/outputs/xcframework/KomojuIosSDK.xcframework
       - name: Publish Shared SDK Framework!
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: KomojuSharedSDK-$SDK_VERSION.zip
+          file: KomojuSharedSDK.zip
           make_latest: false
-        env:
-          SDK_VERSION: ${{ env.SDK_VERSION }}
       - name: Publish iOS SDK Framework!
+        working-directory: ./komoju-ios-sdk
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: KomojuIosSDK-$SDK_VERSION.zip
+          file: KomojuIosSDK.zip
           make_latest: false
-        env:
-          SDK_VERSION: ${{ env.SDK_VERSION }}
