@@ -169,9 +169,8 @@ jobs:
           file: KomojuSharedSDK.zip
           make_latest: false
       - name: Publish iOS SDK Framework!
-        working-directory: ./komoju-ios-sdk
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: KomojuIosSDK.zip
+          file: komoju-ios-sdk/KomojuIosSDK.zip
           make_latest: false
