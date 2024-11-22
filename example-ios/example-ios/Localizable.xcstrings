@@ -1,0 +1,472 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    ", " : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ","
+          }
+        }
+      }
+    },
+    "black" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Black"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ブラック"
+          }
+        }
+      }
+    },
+    "blue" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blue"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ブルー"
+          }
+        }
+      }
+    },
+    "bud" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bud!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バド"
+          }
+        }
+      }
+    },
+    "buy_this_item" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buy this item"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この商品を購入する"
+          }
+        }
+      }
+    },
+    "close" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "近い"
+          }
+        }
+      }
+    },
+    "continue_shopping" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue Shopping"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "買い物を続ける"
+          }
+        }
+      }
+    },
+    "description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium Sound Shopping App"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プレミアムサウンドショッピングアプリ"
+          }
+        }
+      }
+    },
+    "earphone_description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "These wireless earphones are designed to deliver high-quality sound and a comfortable, secure fit. Featuring advanced noise isolation technology, they block out external noise, allowing for an immersive listening experience. The ergonomic design ensures the earphones stay in place, even during intense activities, making them ideal for workouts or daily commutes. Equipped with long battery life, you can enjoy continuous playtime throughout the day. The earphones also feature touch controls for easy access to music, calls, and voice assistants, making them a versatile companion for all your audio needs."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "これらのワイヤレスイヤホンは、高音質なサウンドと快適でしっかりとしたフィット感を提供するよう設計されています。高度なノイズアイソレーション技術を搭載し、外部のノイズを遮断することで、没入感のあるリスニング体験を実現します。人間工学に基づいたデザインにより、激しい運動中でもイヤホンが外れにくく、トレーニングや通勤に最適です。長時間のバッテリー寿命により、一日中連続して音楽を楽しむことができます。また、タッチコントロールを搭載しているため、音楽、通話、音声アシスタントに簡単にアクセスでき、あらゆるオーディオニーズに対応する万能なパートナーです。"
+          }
+        }
+      }
+    },
+    "earphone_name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium Wireless Earphone"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プレミアムワイヤレスイヤホン"
+          }
+        }
+      }
+    },
+    "gold" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gold"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ゴルド"
+          }
+        }
+      }
+    },
+    "headphone_description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The technology with two noise sensors and two microphones on each ear cup detects ambient noise and sends the data to the HD noise minimization processor QN1. Using a new algorithm, the QN1 then processes and minimizes noise for different acoustic environments in real time. Together with a new Bluetooth Audio SoC (System on Chip), the system can adapt and deliver sound based on real-time feedback, ensuring optimal performance across a variety of conditions. This results in enhanced noise cancellation capabilities, making the device effective in environments like airplanes, busy streets, or open offices, while maintaining high-quality audio output. The combination of the QN1 processor and Bluetooth Audio SoC ensures not only active noise cancellation but also stable, high-resolution audio streaming. This provides listeners with a seamless experience, whether they are enjoying music, taking calls, or simply trying to block out distractions."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2つのノイズセンサーと各イヤーカップに搭載された2つのマイクロフォンを使用して周囲のノイズを検出し、そのデータをHDノイズ低減プロセッサ「QN1」に送信します。新しいアルゴリズムを使用して、QN1はリアルタイムで異なる音響環境に応じてノイズを処理・低減します。さらに、新しいBluetoothオーディオSoC（システム・オン・チップ）と連携し、リアルタイムのフィードバックに基づいてサウンドを適応させ、さまざまな状況下で最適なパフォーマンスを提供します。  これにより、飛行機や賑やかな通り、オフィスなどの環境でも効果的なノイズキャンセリング機能が実現しながら、高音質なオーディオ出力を維持できます。QN1プロセッサとBluetoothオーディオSoCの組み合わせにより、アクティブなノイズキャンセリングだけでなく、安定した高解像度オーディオストリーミングも実現します。これにより、音楽を楽しむとき、通話をするとき、あるいは単に外部の雑音を遮断したいときでも、シームレスな体験が提供されます。"
+          }
+        }
+      }
+    },
+    "headphone_name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium Wireless Headphone"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プレミアムワイヤレスヘッドフォン"
+          }
+        }
+      }
+    },
+    "mic_description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This premium microphone is designed for professionals who demand crystal-clear audio quality for recording, streaming, and podcasting. Equipped with a large diaphragm condenser, it captures rich, detailed sound with exceptional accuracy. The microphone features multiple pickup patterns, including cardioid, bidirectional, and omnidirectional, making it versatile for various recording environments. Its durable, sleek design not only looks great but ensures long-lasting performance. With low self-noise and high sensitivity, this microphone is ideal for voice work, music production, or any setting where superior sound quality is essential. USB or XLR connectivity options make it compatible with a wide range of devices."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このプレミアムマイクは、録音、ストリーミング、ポッドキャストにおいてクリアで高品質な音声を求めるプロフェッショナル向けに設計されています。ラージダイアフラムコンデンサーを搭載しており、豊かで細部まで正確な音を捉えます。カーディオイド、双方向、全指向性など複数の指向性パターンを備えているため、さまざまな録音環境に適応できる汎用性があります。耐久性がありスタイリッシュなデザインは、見た目の美しさだけでなく、長期間にわたって優れたパフォーマンスを提供します。低いセルフノイズと高い感度により、ナレーション、音楽制作、または高音質が求められるあらゆる状況に最適です。USBまたはXLR接続オプションにより、さまざまなデバイスに対応しています。"
+          }
+        }
+      }
+    },
+    "mic_name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium wireless Microphone"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プレミアム ワイヤレス マイク"
+          }
+        }
+      }
+    },
+    "model" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Model"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "モデル"
+          }
+        }
+      }
+    },
+    "off_white" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Off White"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オフホワイト"
+          }
+        }
+      }
+    },
+    "off-white" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Off White"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オフホワイト"
+          }
+        }
+      }
+    },
+    "order_confirmed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Order confirmed"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "注文確定"
+          }
+        }
+      }
+    },
+    "order_failed_description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oops! Seems like there was an error placing your order because of a failed payment, please try again or report an issue. If any money is deducted then it will be refunded within 7 days"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "申し訳ありません！お支払いに失敗したため、ご注文の際にエラーが発生したようです。もう一度お試しいただくか、問題を報告してください。差し引かれた金額は 7 日以内に返金されます。"
+          }
+        }
+      }
+    },
+    "order_failed_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Order Failed"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "注文が失敗しました"
+          }
+        }
+      }
+    },
+    "pink" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pink"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ピンク"
+          }
+        }
+      }
+    },
+    "purple" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Purple"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "パプル"
+          }
+        }
+      }
+    },
+    "retry_payment" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retry payment"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "支払いを再試行する"
+          }
+        }
+      }
+    },
+    "share" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "共有"
+          }
+        }
+      }
+    },
+    "sound" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sound"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サウンド"
+          }
+        }
+      }
+    },
+    "thank_you_for_your_order" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thank you for your Order, it has been confirmed, Shipping Details will be shared on your registered email address soon"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ご注文ありがとうございます。ご注文は確認されました。発送の詳細は、ご登録のメールアドレスにすぐに送信されます。"
+          }
+        }
+      }
+    },
+    "white" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "White"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ホワイト"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

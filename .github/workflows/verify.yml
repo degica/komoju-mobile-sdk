@@ -2,7 +2,7 @@ name: Verify PR
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
+    types: [ opened, synchronize, reopened, ready_for_review ]
 
 concurrency:
   group: github-${{ github.ref }}
@@ -43,3 +43,15 @@ jobs:
           java-version: 17
       - name: Run Gradle
         run: ./gradlew :komoju-android-sdk:lintDebug
+  swiftlint:
+    runs-on: ubuntu-latest
+    name: SwiftLint
+    if: github.event.pull_request.draft == false
+    steps:
+      - uses: actions/checkout@v1
+      - name: swiftLint on ios sdk
+        uses: norio-nomura/action-swiftlint@3.2.1
+        with:
+          args: --strict
+        env:
+          WORKING_DIRECTORY: komoju-ios-sdk
