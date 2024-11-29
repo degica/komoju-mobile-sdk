@@ -12,36 +12,9 @@ This **Komoju Mobile SDK** allows you to seamlessly integrate secure and reliabl
 [API DOCS](https://tech.degica.com/komoju-mobile-sdk//)
 
 ## Get Started
-
-### Android
-#### Requirements
-* Android API 24+
-* Gradle 8.X.X+
-
-The Android SDK utilize the latest version of jetpack compose.
-
-#### Setup
-```kotlin
-dependencies {
-    implementation("com.komoju.mobile.sdk:android:<latest-version-here>")
-}
-```
-
-Find Platform specific guide below.
-* [Android](https://doc.komoju.com/docs/android)
-
-Or you can browse the [Android Sample](https://github.com/degica/komoju-mobile-sdk/tree/main/example-android) :)
-
-### Contribute
-#### Android
-
-* Need Android Studio
-* Make sure your server provides key and session or setup your own test server as per https://github.com/degica/komoju-mobile-sdk/tree/main/server
-* create `local.properties` file and put server urls inside it, e.g. `TEST_SERVER_URL=<your_server_url>`
-* You should be able to run the demo app now.
-* Raise Your PR.
-* We will review, discuss and merge as per requirements
-
+Please follow the Platform specific docs as per below
+* Android [https://doc.komoju.com/docs/android]
+* iOS [https://doc.komoju.com/docs/ios]
 ## License
 
 MIT License
