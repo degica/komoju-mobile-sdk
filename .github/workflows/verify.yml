@@ -48,7 +48,7 @@ jobs:
     name: SwiftLint
     if: github.event.pull_request.draft == false
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
       - name: swiftLint on ios sdk
         uses: norio-nomura/action-swiftlint@3.2.1
         with:
