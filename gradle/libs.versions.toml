@@ -30,7 +30,7 @@ mavenPublish = "0.30.0"
 dokka = "1.9.20"
 compose-multiplatform = "1.7.1"
 jetbrainsComposeLifecycle = "2.8.4"
-androidx-ui-tooling = "1.7.5"
+androidx-ui-tooling = "1.7.6"
 
 [libraries]
 androidx-browser = { module = "androidx.browser:browser", version.ref = "browser" }
